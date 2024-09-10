@@ -14,7 +14,7 @@ android {
     defaultConfig {
         applicationId = "com.erendogan6.translateify"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
