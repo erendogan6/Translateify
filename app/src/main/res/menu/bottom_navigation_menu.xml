@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Kelimeler Sekmesi -->
+    <item
+        android:id="@+id/nav_words"
+        android:icon="@drawable/ic_words"
+        android:title="Kelimeler" />
+
+    <!-- Favoriler Sekmesi -->
+    <item
+        android:id="@+id/nav_favorites"
+        android:icon="@drawable/ic_favorites"
+        android:title="Favoriler" />
+</menu>
