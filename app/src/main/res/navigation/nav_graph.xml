@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_randomWordsFragment_to_wordDetailFragment"
             app:destination="@id/wordDetailFragment" />
+        <action
+            android:id="@+id/action_randomWordsFragment_to_addWordFragment"
+            app:destination="@id/addWordFragment" />
     </fragment>
 
     <fragment
@@ -49,4 +52,8 @@
             android:id="@+id/action_learnedWordsFragment_to_wordDetailFragment"
             app:destination="@id/wordDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addWordFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.AddWordFragment"
+        android:label="AddWordFragment" />
 </navigation>

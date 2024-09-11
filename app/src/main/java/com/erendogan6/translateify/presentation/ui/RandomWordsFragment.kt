@@ -68,6 +68,10 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
                 binding.swipeRefreshLayout.isRefreshing = false
             }
         }
+
+        binding.btnAddWord.setOnClickListener {
+            findNavController().navigate(R.id.action_randomWordsFragment_to_addWordFragment)
+        }
     }
 
     private fun navigateToDetail(word: Word) {

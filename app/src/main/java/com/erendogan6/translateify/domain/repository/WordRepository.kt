@@ -4,6 +4,8 @@ import com.erendogan6.translateify.domain.model.Word
 import kotlinx.coroutines.flow.Flow
 
 interface WordRepository {
+    suspend fun addWord(word: Word)
+
     fun getRandomWords(): Flow<List<Word>>
 
     fun getLearnedWords(): Flow<List<Word>>

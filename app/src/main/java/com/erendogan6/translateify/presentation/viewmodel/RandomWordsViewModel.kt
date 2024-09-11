@@ -17,6 +17,7 @@ class RandomWordsViewModel
     constructor(
         private val getRandomWordsUseCase: GetRandomWordsUseCase,
         private val updateLearnedStatusUseCase: UpdateLearnedStatusUseCase,
+        private val addWordUseCase: AddWordUseCase,
     ) : ViewModel() {
         private val _words = MutableStateFlow<List<Word>>(emptyList())
         val words: StateFlow<List<Word>> = _words
@@ -25,6 +26,11 @@ class RandomWordsViewModel
             loadRandomWords()
         }
 
+        fun addWord(word: Word) {
+            viewModelScope.launch {
+                addWordUseCase(word)
+            }
+        }
         fun loadRandomWords(shuffle: Boolean = false) {
             viewModelScope.launch {
                 getRandomWordsUseCase().collect { wordList ->

@@ -46,4 +46,9 @@ object AppModule {
     @Singleton
     fun provideUpdateLearnedStatusUseCase(wordRepository: WordRepository): UpdateLearnedStatusUseCase =
         UpdateLearnedStatusUseCase(wordRepository)
+
+    @Provides
+    @Singleton
+    fun provideAddWordUseCase(wordRepository: WordRepository): AddWordUseCase = AddWordUseCase(wordRepository)
+
 }

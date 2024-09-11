@@ -24,4 +24,9 @@ class WordRepositoryImpl(
     override suspend fun updateLearnedStatus(word: Word) {
         wordDao.updateWord(word.toEntity())
     }
+
+    override suspend fun addWord(word: Word) {
+        wordDao.insertWord(word.toEntity())
+    }
+
 }

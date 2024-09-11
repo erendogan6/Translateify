@@ -38,6 +38,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    packagingOptions {
+        resources {
+            excludes += "META-INF/*"
+            excludes += "META-INF"
+        }
+    }
 }
 
 dependencies {
