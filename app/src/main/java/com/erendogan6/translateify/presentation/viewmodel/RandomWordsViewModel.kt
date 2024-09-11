@@ -1,9 +1,13 @@
 package com.erendogan6.translateify.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.erendogan6.translateify.domain.model.Word
+import com.erendogan6.translateify.domain.usecase.AddWordUseCase
 import com.erendogan6.translateify.domain.usecase.GetRandomWordsUseCase
+import com.erendogan6.translateify.domain.usecase.GetWordImageUseCase
+import com.erendogan6.translateify.domain.usecase.GetWordTranslationUseCase
 import com.erendogan6.translateify.domain.usecase.UpdateLearnedStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,6 +31,9 @@ class RandomWordsViewModel
         private val _translation = MutableStateFlow<String?>(null)
         val translation: StateFlow<String?> get() = _translation
 
+        private val _imageUrl = MutableStateFlow<String?>(null)
+        val imageUrl: StateFlow<String?> get() = _imageUrl
+
         init {
             loadRandomWords()
         }
@@ -40,6 +47,18 @@ class RandomWordsViewModel
         fun fetchTranslation(word: String) {
             viewModelScope.launch {
                 _translation.value = getWordTranslationUseCase(word)
+            }
+        }
+
+        fun fetchWordImage(word: String) {
+            viewModelScope.launch {
+                try {
+                    val imageUrl = getWordImageUseCase(word)
+                    _imageUrl.value = imageUrl
+                    Log.d("WordViewModel", "Fetched image URL: $imageUrl")
+                } catch (e: Exception) {
+                    Log.e("WordViewModel", "Error fetching image: ${e.message}")
+                }
             }
         }
 

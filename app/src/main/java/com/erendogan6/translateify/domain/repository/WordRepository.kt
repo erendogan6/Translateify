@@ -14,4 +14,5 @@ interface WordRepository {
 
     suspend fun getWordTranslation(word: String): String
 
+    suspend fun getWordImage(word: String): String?
 }

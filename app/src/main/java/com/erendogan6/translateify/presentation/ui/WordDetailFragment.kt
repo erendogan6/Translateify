@@ -16,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentWordDetailBinding
 import com.erendogan6.translateify.domain.model.Word
@@ -92,6 +93,19 @@ class WordDetailFragment :
                         val html = renderer.render(document)
 
                         binding.tvTranslationDetail.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+                    }
+                }
+            }
+
+            viewModel.fetchWordImage(word.english)
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.imageUrl.collect { imageUrl ->
+                    imageUrl?.let {
+                        Glide
+                            .with(requireContext())
+                            .load(it)
+                            .into(binding.imageView)
                     }
                 }
             }

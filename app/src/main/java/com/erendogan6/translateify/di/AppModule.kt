@@ -5,6 +5,8 @@ import androidx.room.Room
 import com.erendogan6.translateify.data.local.AppDatabase
 import com.erendogan6.translateify.data.local.WordDao
 import com.erendogan6.translateify.data.remote.GeminiService
+import com.erendogan6.translateify.data.remote.PexelsClient
+import com.erendogan6.translateify.data.remote.PexelsService
 import com.erendogan6.translateify.data.repository.WordRepositoryImpl
 import com.erendogan6.translateify.domain.repository.WordRepository
 import com.erendogan6.translateify.domain.usecase.AddWordUseCase
@@ -35,11 +37,14 @@ object AppModule {
     fun provideWordDao(database: AppDatabase): WordDao = database.wordDao()
 
     @Provides
+    @Singleton
+    fun providePexelsService(): PexelsService = PexelsClient.create()
 
     @Provides
     fun provideWordRepository(
         wordDao: WordDao,
         geminiService: GeminiService,
+        pexelsService: PexelsService,
     ): WordRepository = WordRepositoryImpl(wordDao, geminiService, pexelsService)
 
     @Provides
