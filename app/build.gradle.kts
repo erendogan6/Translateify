@@ -19,6 +19,12 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val geminiApiKey: String = project.properties["GEMINI_API_KEY"] as String
+        val pexelsApiKey: String = project.properties["PEXELS_API_KEY"] as String
+
+        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+        buildConfigField("String", "PEXELS_API_KEY", "\"$pexelsApiKey\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -37,6 +43,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     packagingOptions {
         resources {
@@ -47,6 +54,12 @@ android {
 }
 
 dependencies {
+
+    // Generative AI
+    implementation(libs.generativeai)
+
+    // Flexmark
+    implementation(libs.flexmark.all)
 
     // Retrofit
     implementation(libs.retrofit)

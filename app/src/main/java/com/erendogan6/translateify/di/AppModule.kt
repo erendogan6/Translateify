@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Room
 import com.erendogan6.translateify.data.local.AppDatabase
 import com.erendogan6.translateify.data.local.WordDao
+import com.erendogan6.translateify.data.remote.GeminiService
 import com.erendogan6.translateify.data.repository.WordRepositoryImpl
 import com.erendogan6.translateify.domain.repository.WordRepository
+import com.erendogan6.translateify.domain.usecase.AddWordUseCase
 import com.erendogan6.translateify.domain.usecase.GetLearnedWordsUseCase
 import com.erendogan6.translateify.domain.usecase.GetRandomWordsUseCase
 import com.erendogan6.translateify.domain.usecase.UpdateLearnedStatusUseCase
+import com.erendogan6.translateify.utils.ResourcesProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,7 +35,12 @@ object AppModule {
     fun provideWordDao(database: AppDatabase): WordDao = database.wordDao()
 
     @Provides
-    fun provideWordRepository(wordDao: WordDao): WordRepository = WordRepositoryImpl(wordDao)
+
+    @Provides
+    fun provideWordRepository(
+        wordDao: WordDao,
+        geminiService: GeminiService,
+    ): WordRepository = WordRepositoryImpl(wordDao, geminiService, pexelsService)
 
     @Provides
     @Singleton
@@ -51,4 +59,7 @@ object AppModule {
     @Singleton
     fun provideAddWordUseCase(wordRepository: WordRepository): AddWordUseCase = AddWordUseCase(wordRepository)
 
+    @Provides
+    @Singleton
+    fun provideGeminiService(resourcesProvider: ResourcesProvider): GeminiService = GeminiService(resourcesProvider)
 }

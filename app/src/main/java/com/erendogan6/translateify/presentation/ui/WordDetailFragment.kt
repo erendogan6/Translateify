@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +13,17 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentWordDetailBinding
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.presentation.viewmodel.RandomWordsViewModel
+import com.vladsch.flexmark.html.HtmlRenderer
+import com.vladsch.flexmark.parser.Parser
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -72,6 +77,24 @@ class WordDetailFragment :
 
             binding.btnToggleLearned.text =
                 if (word.isLearned) getString(R.string.unlearn_word) else getString(R.string.learn_word)
+
+            binding.btnFetchTranslation.setOnClickListener {
+                viewModel.fetchTranslation(word.english)
+            }
+
+            lifecycleScope.launch {
+                viewModel.translation.collect { translation ->
+                    translation?.let {
+                        val markdownText = it
+                        val parser = Parser.builder().build()
+                        val document = parser.parse(markdownText)
+                        val renderer = HtmlRenderer.builder().build()
+                        val html = renderer.render(document)
+
+                        binding.tvTranslationDetail.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+                    }
+                }
+            }
 
             binding.btnToggleLearned.setOnClickListener {
                 viewModel.toggleLearnedStatus(word)

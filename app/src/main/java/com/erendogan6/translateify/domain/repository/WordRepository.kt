@@ -11,4 +11,7 @@ interface WordRepository {
     fun getLearnedWords(): Flow<List<Word>>
 
     suspend fun updateLearnedStatus(word: Word)
+
+    suspend fun getWordTranslation(word: String): String
+
 }
