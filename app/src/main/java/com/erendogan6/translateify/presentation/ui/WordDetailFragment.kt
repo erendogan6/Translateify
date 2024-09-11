@@ -47,15 +47,11 @@ class WordDetailFragment : Fragment(R.layout.fragment_word_detail) {
             binding.tvTranslationDetail.text = word.translation
 
             binding.btnToggleLearned.text =
-                if (word.isLearned) {
-                    "Unlearned"
-                } else {
-                    "Learned"
-                }
+                if (word.isLearned) getString(R.string.unlearn_word) else getString(R.string.learn_word)
 
             binding.btnToggleLearned.setOnClickListener {
                 viewModel.toggleLearnedStatus(word)
-                requireActivity().onBackPressed()
+                findNavController().popBackStack()
             }
 
             binding.btnPronounce.setOnClickListener {

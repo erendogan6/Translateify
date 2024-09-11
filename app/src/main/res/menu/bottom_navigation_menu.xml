@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Kelimeler Sekmesi -->
     <item
-        android:id="@+id/nav_words"
+        android:id="@+id/randomWordsFragment"
         android:icon="@drawable/ic_words"
-        android:title="Kelimeler" />
+        android:title="Random Words" />
 
-    <!-- Favoriler Sekmesi -->
     <item
-        android:id="@+id/nav_favorites"
+        android:id="@+id/learnedWordsFragment"
         android:icon="@drawable/ic_favorites"
-        android:title="Favoriler" />
+        android:title="Learned Words" />
 </menu>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentLearnedWordsBinding
@@ -58,15 +59,8 @@ class LearnedWordsFragment : Fragment(R.layout.fragment_learned_words) {
     }
 
     private fun navigateToDetail(word: Word) {
-        val detailFragment = WordDetailFragment()
-        val args = Bundle().apply { putParcelable("word", word) }
-        detailFragment.arguments = args
-
-        parentFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, detailFragment)
-            .addToBackStack(null)
-            .commit()
+        val action = LearnedWordsFragmentDirections.actionLearnedWordsFragmentToWordDetailFragment(word)
+        requireView().findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

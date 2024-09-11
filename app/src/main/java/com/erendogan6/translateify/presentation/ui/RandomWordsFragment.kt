@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentRandomWordsBinding
@@ -41,6 +42,10 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = layoutManager
 
+        binding.btnStartQuiz.setOnClickListener {
+            findNavController().navigate(R.id.action_randomWordsFragment_to_quizFragment)
+        }
+
         adapter =
             WordAdapter(
                 onItemClick = { word -> navigateToDetail(word) },
@@ -66,18 +71,8 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
     }
 
     private fun navigateToDetail(word: Word) {
-        val detailFragment = WordDetailFragment()
-        val args =
-            Bundle().apply {
-                putParcelable("word", word)
-            }
-        detailFragment.arguments = args
-
-        parentFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, detailFragment)
-            .addToBackStack(null)
-            .commit()
+        val action = RandomWordsFragmentDirections.actionRandomWordsFragmentToWordDetailFragment(word)
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
