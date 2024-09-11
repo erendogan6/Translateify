@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -14,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.erendogan6.translateify"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -73,7 +74,7 @@ dependencies {
     debugImplementation(libs.library)
     releaseImplementation(libs.library.no.op)
 
-    // Glide for Image Loading
+    // Glide
     implementation(libs.glide)
     kapt(libs.compiler)
 
@@ -82,6 +83,8 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     // Compose
     implementation(libs.androidx.material3)
