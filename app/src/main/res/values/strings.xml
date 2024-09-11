@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Translateify</string>
-</resources>
+    <string name="pronounce">Pronounce</string>
+    <string name="toggle_learned">Toggle Learned</string>
+    <string name="speech_to_text">Speech to Text</string>
+    <string name="speak_prompt">Please speak now</string>
+    <string name="learn_word">Learned</string>
+    <string name="unlearn_word">Unlearned</string>
+    <string name="speech_not_recognized">Speech Not Recognized</string>
+    <string name="detected_word">Detected Word: %S</string>
+    </resources>
