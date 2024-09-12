@@ -12,7 +12,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
@@ -23,9 +22,10 @@ class WordRepositoryImpl(
     private val pexelsService: PexelsService,
     private val firestore: FirebaseFirestore,
 ) : WordRepository {
-    private val wordsFlow = MutableStateFlow<List<Word>>(emptyList())
-
-    override fun getRandomWords(): Flow<List<Word>> = wordsFlow
+    override fun getRandomWords(): Flow<List<Word>> =
+        wordDao.getRandomWords().map { entities ->
+            entities.map { it.toDomainModel() }
+        }
 
     override fun getLearnedWords(): Flow<List<Word>> =
         wordDao
@@ -134,13 +134,12 @@ class WordRepositoryImpl(
                     wordsList
                 }
 
-            wordsFlow.value = finalWordsList.shuffled()
-            Log.d("WordRepositoryImpl", "Fetched words: $finalWordsList")
+            wordDao.insertWords(finalWordsList.map { it.toEntity() })
 
-            return wordsFlow
+            return getRandomWords()
         } catch (e: Exception) {
             Log.e("WordRepositoryImpl", "Error fetching words from Firestore: ${e.message}")
-            return wordsFlow
+            return getRandomWords()
         }
     }
 

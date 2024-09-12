@@ -16,15 +16,12 @@ interface WordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertWords(words: List<WordEntity>)
 
-    @Query("SELECT * FROM words WHERE isLearned = 0 ORDER BY id")
-    fun getRandomWords(): Flow<List<WordEntity>>
+    @Query("SELECT * FROM words WHERE isLearned = 0 LIMIT :limit")
+    fun getRandomWords(limit: Int = 120): Flow<List<WordEntity>>
 
     @Query("SELECT * FROM words WHERE isLearned = 1")
     fun getLearnedWords(): Flow<List<WordEntity>>
 
     @Update
     suspend fun updateWord(word: WordEntity)
-
-    @Query("SELECT COUNT(*) FROM words")
-    suspend fun getWordsCount(): Int
 }

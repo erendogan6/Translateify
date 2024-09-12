@@ -26,13 +26,13 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
     private var _binding: FragmentRandomWordsBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: WordAdapter
+    private var isSwipeToRefresh: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        fetchUserPreferencesAndLoadWords()
         _binding = FragmentRandomWordsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -60,16 +60,24 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
 
         binding.recyclerView.adapter = adapter
 
+        if (viewModel.words.value.isEmpty()) {
+            fetchUserPreferencesAndLoadWords()
+        }
+
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.loadRandomWords(shuffle = true)
+            isSwipeToRefresh = true
+            viewModel.shuffleWords()
+            binding.swipeRefreshLayout.isRefreshing = false
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.words.collect { words ->
                 adapter.submitList(words) {
-                    binding.recyclerView.scrollToPosition(0)
+                    if (isSwipeToRefresh) {
+                        binding.recyclerView.scrollToPosition(0)
+                        isSwipeToRefresh = false
+                    }
                 }
-                binding.swipeRefreshLayout.isRefreshing = false
             }
         }
 

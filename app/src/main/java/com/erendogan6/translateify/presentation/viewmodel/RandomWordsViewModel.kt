@@ -41,7 +41,7 @@ class RandomWordsViewModel
                 try {
                     loadWordsUseCase(selectedCategories).collect { wordList ->
                         _words.value = wordList
-                        Log.d("RandomWordsViewModel", "Loaded words: $wordList") // Verileri logla
+                        Log.d("RandomWordsViewModel", "Loaded words: $wordList")
                     }
                 } catch (e: Exception) {
                     Log.e("RandomWordsViewModel", "Error loading words: ${e.message}")
@@ -72,12 +72,9 @@ class RandomWordsViewModel
             }
         }
 
-        fun loadRandomWords(shuffle: Boolean = false) {
-            viewModelScope.launch {
-                getRandomWordsUseCase().collect { wordList ->
-                    _words.value = if (shuffle) wordList.shuffled() else wordList
-                }
-            }
+        fun shuffleWords() {
+            _words.value = _words.value.shuffled()
+            Log.d("RandomWordsViewModel", "Shuffled words: ${_words.value}")
         }
 
         fun toggleLearnedStatus(word: Word) {
