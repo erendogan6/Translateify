@@ -6,6 +6,7 @@ plugins {
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -18,12 +19,6 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
-        val geminiApiKey: String = project.properties["GEMINI_API_KEY"] as String
-        val pexelsApiKey: String = project.properties["PEXELS_API_KEY"] as String
-
-        buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
-        buildConfigField("String", "PEXELS_API_KEY", "\"$pexelsApiKey\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -54,6 +49,14 @@ android {
 }
 
 dependencies {
+
+    // Firebase
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.database.ktx)
 
     // Generative AI
     implementation(libs.generativeai)
