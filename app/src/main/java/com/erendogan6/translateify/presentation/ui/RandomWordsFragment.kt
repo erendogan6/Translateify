@@ -46,10 +46,6 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
         val layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.layoutManager = layoutManager
 
-        binding.btnStartQuiz.setOnClickListener {
-            findNavController().navigate(R.id.action_randomWordsFragment_to_quizFragment)
-        }
-
         adapter =
             WordAdapter(
                 onItemClick = { word -> navigateToDetail(word) },
@@ -79,10 +75,6 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
                     }
                 }
             }
-        }
-
-        binding.btnAddWord.setOnClickListener {
-            findNavController().navigate(R.id.action_randomWordsFragment_to_addWordFragment)
         }
     }
 

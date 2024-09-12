@@ -56,4 +56,26 @@
         android:id="@+id/addWordFragment"
         android:name="com.erendogan6.translateify.presentation.ui.AddWordFragment"
         android:label="AddWordFragment" />
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.GameFragment"
+        android:label="GameFragment">
+        <action
+            android:id="@+id/action_gameFragment_to_communityGameFragment"
+            app:destination="@id/communityGameFragment" />
+        <action
+            android:id="@+id/action_gameFragment_to_selfGameFragment"
+            app:destination="@id/selfGameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/communityGameFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.CommunityGameFragment"
+        android:label="CommunityGameFragment" />
+
+    <fragment
+        android:id="@+id/selfGameFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.SelfGameFragment"
+        android:label="SelfGameFragment" />
 </navigation>

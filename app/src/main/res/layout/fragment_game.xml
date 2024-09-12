@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".presentation.ui.GameFragment">
+
+    <!-- Başlık -->
+    <TextView
+        android:id="@+id/tvSelectGameMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Oyun Modunu Seçin"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"
+        />
+
+    <!-- Topluluk Oyunu Butonu -->
+    <Button
+        android:id="@+id/btnCommunityGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Topluluk Oyunu"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvSelectGameMode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"
+        />
+
+    <!-- Tek Kişilik Oyun Butonu -->
+    <Button
+        android:id="@+id/btnSelfGame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tek Kişilik Oyun"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/btnCommunityGame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

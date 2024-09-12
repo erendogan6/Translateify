@@ -9,4 +9,17 @@
         android:id="@+id/learnedWordsFragment"
         android:icon="@drawable/ic_favorites"
         android:title="Learned Words" />
+
+    <item
+        android:id="@+id/addWordFragment"
+        android:title="Add Word" />
+
+    <item
+        android:id="@+id/gameFragment"
+        android:title="Game" />
+
+    <item
+        android:id="@+id/quizFragment"
+        android:title="Quiz" />
+    
 </menu>
