@@ -8,6 +8,7 @@ import com.erendogan6.translateify.domain.usecase.AddWordUseCase
 import com.erendogan6.translateify.domain.usecase.GetRandomWordsUseCase
 import com.erendogan6.translateify.domain.usecase.GetWordImageUseCase
 import com.erendogan6.translateify.domain.usecase.GetWordTranslationUseCase
+import com.erendogan6.translateify.domain.usecase.LoadWordsUseCase
 import com.erendogan6.translateify.domain.usecase.UpdateLearnedStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,7 @@ class RandomWordsViewModel
         private val addWordUseCase: AddWordUseCase,
         private val getWordTranslationUseCase: GetWordTranslationUseCase,
         private val getWordImageUseCase: GetWordImageUseCase,
+        private val loadWordsUseCase: LoadWordsUseCase,
     ) : ViewModel() {
         private val _words = MutableStateFlow<List<Word>>(emptyList())
         val words: StateFlow<List<Word>> = _words
@@ -35,7 +37,20 @@ class RandomWordsViewModel
         val imageUrl: StateFlow<String?> get() = _imageUrl
 
         init {
-            loadRandomWords()
+            fetchWordsFromFirebase()
+        }
+
+        private fun fetchWordsFromFirebase() {
+            viewModelScope.launch {
+                try {
+                    loadWordsUseCase().collect { wordList ->
+                        _words.value = wordList
+                        Log.d("RandomWordsViewModel", "Loaded words: $wordList") // Verileri logla
+                    }
+                } catch (e: Exception) {
+                    Log.e("RandomWordsViewModel", "Error loading words: ${e.message}")
+                }
+            }
         }
 
         fun addWord(word: Word) {
@@ -55,7 +70,6 @@ class RandomWordsViewModel
                 try {
                     val imageUrl = getWordImageUseCase(word)
                     _imageUrl.value = imageUrl
-                    Log.d("WordViewModel", "Fetched image URL: $imageUrl")
                 } catch (e: Exception) {
                     Log.e("WordViewModel", "Error fetching image: ${e.message}")
                 }

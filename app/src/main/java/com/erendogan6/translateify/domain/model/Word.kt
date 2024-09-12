@@ -7,8 +7,8 @@ import java.util.UUID
 @Parcelize
 data class Word(
     val id: String = UUID.randomUUID().toString(),
-    val english: String,
-    val translation: String,
-    val isLearned: Boolean,
-    val difficulty: String,
+    val english: String = "",
+    val translation: String = "",
+    val isLearned: Boolean = false,
+    val difficulty: String = "",
 ) : Parcelable

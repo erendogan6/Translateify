@@ -12,7 +12,6 @@ import com.erendogan6.translateify.databinding.FragmentAddWordBinding
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.presentation.viewmodel.RandomWordsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.UUID.randomUUID
 
 @AndroidEntryPoint
 class AddWordFragment : Fragment(R.layout.fragment_add_word) {
@@ -45,7 +44,6 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
                         english = englishWord,
                         translation = translation,
                         isLearned = false,
-                        id = randomUUID().toString(),
                         difficulty = "easy",
                     )
                 viewModel.addWord(newWord)
