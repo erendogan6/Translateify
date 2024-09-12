@@ -19,7 +19,6 @@
         android:title="Game" />
 
     <item
-        android:id="@+id/quizFragment"
-        android:title="Quiz" />
-    
+        android:id="@+id/scoreboardFragment"
+        android:title="Scoreboard" />
 </menu>

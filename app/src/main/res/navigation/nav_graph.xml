@@ -78,4 +78,11 @@
         android:id="@+id/selfGameFragment"
         android:name="com.erendogan6.translateify.presentation.ui.SelfGameFragment"
         android:label="SelfGameFragment" />
+
+    <fragment
+        android:id="@+id/scoreboardFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.ScoreboardFragment"
+        android:label="Scoreboard"
+        tools:layout="@layout/fragment_scoreboard" />
+
 </navigation>
