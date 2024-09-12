@@ -150,4 +150,6 @@ class WordRepositoryImpl(
             Log.e("WordRepositoryImpl", "Error adding word to Firestore: ${e.message}")
         }
     }
+
+    override suspend fun getRandomWord(): Word = wordDao.getRandomWord()
 }

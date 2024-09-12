@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.erendogan6.translateify.data.model.WordEntity
+import com.erendogan6.translateify.domain.model.Word
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -24,4 +25,7 @@ interface WordDao {
 
     @Update
     suspend fun updateWord(word: WordEntity)
+
+    @Query("SELECT * FROM words ORDER BY RANDOM() LIMIT 1")
+    suspend fun getRandomWord(): Word
 }

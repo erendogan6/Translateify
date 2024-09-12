@@ -17,4 +17,6 @@ interface WordRepository {
     suspend fun getWordImage(word: String): String?
 
     suspend fun fetchWordsFromFirebase(selectedCategories: List<String>): Flow<List<Word>>
+
+    suspend fun getRandomWord(): Word
 }
