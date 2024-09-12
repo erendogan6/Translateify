@@ -1,6 +1,5 @@
 package com.erendogan6.translateify.data.remote
 
-import com.erendogan6.translateify.BuildConfig
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.utils.ResourcesProvider
 import com.google.ai.client.generativeai.GenerativeModel
@@ -8,6 +7,8 @@ import com.google.ai.client.generativeai.type.SerializationException
 import com.google.ai.client.generativeai.type.asTextOrNull
 import com.google.ai.client.generativeai.type.content
 import com.google.ai.client.generativeai.type.generationConfig
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class GeminiService
         val model: GenerativeModel by lazy {
             GenerativeModel(
                 "gemini-1.5-flash",
-                apiKey = BuildConfig.GEMINI_API_KEY,
+                apiKey = Firebase.remoteConfig.getString("GEMINI_API_KEY"),
                 generationConfig =
                     generationConfig {
                         temperature =

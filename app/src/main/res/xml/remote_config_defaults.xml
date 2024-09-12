@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>PEXELS_API_KEY</key>
+        <value>default_value_if_any</value>
+    </entry>
+    <entry>
+        <key>GEMINI_API_KEY</key>
+        <value>default_value_if_any</value>
+    </entry>
+</defaultsMap>

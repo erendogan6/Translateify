@@ -1,38 +1,36 @@
 package com.erendogan6.translateify.di
 
 import android.app.Application
-import android.content.Context
-import com.erendogan6.translateify.data.local.AppDatabase
-import com.erendogan6.translateify.data.mapper.toEntity
-import com.erendogan6.translateify.utils.Utils
+import android.util.Log
+import com.erendogan6.translateify.R
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltAndroidApp
 class TranslateifyApp : Application() {
-    @Inject
-    lateinit var database: AppDatabase
-
     override fun onCreate() {
         super.onCreate()
+        val remoteConfig: FirebaseRemoteConfig = Firebase.remoteConfig
+        val configSettings =
+            remoteConfigSettings {
+                minimumFetchIntervalInSeconds = 3600
+            }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.setDefaultsAsync(R.xml.remote_config_defaults)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            loadInitialData(this@TranslateifyApp)
-        }
+        fetchRemoteConfig(remoteConfig)
     }
 
-    private suspend fun loadInitialData(context: Context) {
-        val wordDao = database.wordDao()
-
-        val count = wordDao.getWordsCount()
-        if (count == 0) {
-            val jsonString = Utils.loadJSONFromAsset(context, "words.json")
-            jsonString?.let {
-                val wordList = Utils.parseWordsFromJson(it)
-                wordDao.insertWords(wordList.map { it.toEntity() })
+    private fun fetchRemoteConfig(remoteConfig: FirebaseRemoteConfig) {
+        remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val updated = task.result
+                Log.d("TranslateifyApp", "Config params updated: $updated")
+            } else {
+                Log.e("TranslateifyApp", "Failed to fetch Remote Config")
             }
         }
     }
