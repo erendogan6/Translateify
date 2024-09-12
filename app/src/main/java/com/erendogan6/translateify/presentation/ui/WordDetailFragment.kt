@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentWordDetailBinding
 import com.erendogan6.translateify.domain.model.Word
@@ -105,6 +106,7 @@ class WordDetailFragment :
                         Glide
                             .with(requireContext())
                             .load(it)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(binding.imageView)
                     }
                 }

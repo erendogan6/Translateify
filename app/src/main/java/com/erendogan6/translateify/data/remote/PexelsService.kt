@@ -13,7 +13,7 @@ data class Photo(
 )
 
 data class PhotoSrc(
-    val medium: String,
+    val original: String,
 )
 
 interface PexelsService {

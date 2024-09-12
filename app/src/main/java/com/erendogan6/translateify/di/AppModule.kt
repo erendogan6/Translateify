@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.erendogan6.translateify.data.local.AppDatabase
 import com.erendogan6.translateify.data.local.WordDao
 import com.erendogan6.translateify.data.remote.GeminiService
-import com.erendogan6.translateify.data.remote.PexelsClient
 import com.erendogan6.translateify.data.remote.PexelsService
 import com.erendogan6.translateify.data.repository.WordRepositoryImpl
 import com.erendogan6.translateify.domain.repository.WordRepository
@@ -19,6 +18,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Cache
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -38,7 +43,37 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providePexelsService(): PexelsService = PexelsClient.create()
+    fun provideOkHttpClient(
+        @ApplicationContext context: Context,
+    ): OkHttpClient {
+        val cacheSize = 50L * 1024 * 1024
+        val cacheDirectory = File(context.cacheDir, "http-cache")
+        val cache = Cache(cacheDirectory, cacheSize)
+
+        /*val loggingInterceptor =
+            HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+         */
+        return OkHttpClient
+            .Builder()
+            .cache(cache)
+            // .addInterceptor(loggingInterceptor)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePexelsService(okHttpClient: OkHttpClient): PexelsService =
+        Retrofit
+            .Builder()
+            .baseUrl("https://api.pexels.com/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(PexelsService::class.java)
 
     @Provides
     fun provideWordRepository(
