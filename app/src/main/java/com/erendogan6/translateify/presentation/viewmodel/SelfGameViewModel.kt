@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.domain.repository.WordRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,12 +29,18 @@ class SelfGameViewModel
         private val _gameOver = MutableStateFlow(false)
         val gameOver: StateFlow<Boolean> = _gameOver
 
+        private val _timeLeft = MutableStateFlow(15)
+        val timeLeft: StateFlow<Int> = _timeLeft
+
+        private var timerJob: Job? = null
+
         fun startGame() {
             viewModelScope.launch {
                 _usedWords.value = emptyList()
                 _score.value = 0
                 _gameOver.value = false
                 fetchRandomWord()
+                startTimer()
             }
         }
 
@@ -41,6 +48,7 @@ class SelfGameViewModel
             viewModelScope.launch {
                 val word = wordRepository.getRandomWord()
                 _currentWord.value = word
+                resetTimer()
             }
         }
 
@@ -51,6 +59,7 @@ class SelfGameViewModel
                 fetchNextWord()
             } else {
                 _gameOver.value = true
+                stopTimer()
             }
         }
 
@@ -60,7 +69,6 @@ class SelfGameViewModel
             val firstChar = word.firstOrNull()?.lowercaseChar() ?: return false
 
             val isNotUsed = !_usedWords.value.contains(word)
-
             val isCorrectStartingLetter = firstChar == lastChar
 
             return isNotUsed && isCorrectStartingLetter
@@ -70,6 +78,33 @@ class SelfGameViewModel
             viewModelScope.launch {
                 val word = wordRepository.getRandomWord()
                 _currentWord.value = word
+                resetTimer()
             }
+        }
+
+        private fun startTimer() {
+            timerJob =
+                viewModelScope.launch {
+                    while (_timeLeft.value > 0) {
+                        delay(1000L)
+                        _timeLeft.value -= 1
+                    }
+                    _gameOver.value = true
+                }
+        }
+
+        private fun stopTimer() {
+            timerJob?.cancel()
+        }
+
+        private fun resetTimer() {
+            stopTimer()
+            _timeLeft.value = 15
+            startTimer()
+        }
+
+        override fun onCleared() {
+            super.onCleared()
+            stopTimer()
         }
     }

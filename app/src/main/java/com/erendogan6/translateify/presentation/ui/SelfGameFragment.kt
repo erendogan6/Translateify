@@ -81,6 +81,13 @@ class SelfGameFragment : Fragment() {
                 }
             }
         }
+
+        // Geri sayımı göster
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.timeLeft.collect { timeLeft ->
+                binding.tvTimer.text = "Kalan süre: $timeLeft saniye"
+            }
+        }
     }
 
     override fun onDestroyView() {
