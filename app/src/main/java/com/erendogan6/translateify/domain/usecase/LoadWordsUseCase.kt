@@ -10,5 +10,6 @@ class LoadWordsUseCase
     constructor(
         private val wordRepository: WordRepository,
     ) {
-        suspend operator fun invoke(): Flow<List<Word>> = wordRepository.fetchWordsFromFirebase()
+        suspend operator fun invoke(selectedCategories: List<String>): Flow<List<Word>> =
+            wordRepository.fetchWordsFromFirebase(selectedCategories)
     }

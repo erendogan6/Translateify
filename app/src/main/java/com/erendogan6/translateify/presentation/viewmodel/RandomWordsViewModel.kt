@@ -36,14 +36,10 @@ class RandomWordsViewModel
         private val _imageUrl = MutableStateFlow<String?>(null)
         val imageUrl: StateFlow<String?> get() = _imageUrl
 
-        init {
-            fetchWordsFromFirebase()
-        }
-
-        private fun fetchWordsFromFirebase() {
+        fun fetchWordsFromFirebase(selectedCategories: List<String>) {
             viewModelScope.launch {
                 try {
-                    loadWordsUseCase().collect { wordList ->
+                    loadWordsUseCase(selectedCategories).collect { wordList ->
                         _words.value = wordList
                         Log.d("RandomWordsViewModel", "Loaded words: $wordList") // Verileri logla
                     }

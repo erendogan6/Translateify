@@ -60,14 +60,23 @@ class WordRepositoryImpl(
             null
         }
 
-    override suspend fun fetchWordsFromFirebase(): Flow<List<Word>> {
+    override suspend fun fetchWordsFromFirebase(selectedCategories: List<String>): Flow<List<Word>> {
         try {
             val snapshot =
-                firestore
-                    .collection("words")
-                    .limit(120)
-                    .get()
-                    .await()
+                if (selectedCategories.isNotEmpty()) {
+                    firestore
+                        .collection("words")
+                        .whereArrayContainsAny("categories", selectedCategories)
+                        .limit(120)
+                        .get()
+                        .await()
+                } else {
+                    firestore
+                        .collection("words")
+                        .limit(120)
+                        .get()
+                        .await()
+                }
 
             val wordsList =
                 snapshot.documents.mapNotNull { doc ->
@@ -78,12 +87,55 @@ class WordRepositoryImpl(
                     val translation = data["translation"] as? String ?: ""
                     val isLearned = data["isLearned"] as? Boolean ?: false
                     val difficulty = data["difficulty"] as? String ?: ""
+                    val categories = data["categories"] as? List<String> ?: emptyList()
 
-                    Word(id = id, english = english, translation = translation, isLearned = isLearned, difficulty = difficulty)
+                    Word(
+                        id = id,
+                        english = english,
+                        translation = translation,
+                        isLearned = isLearned,
+                        difficulty = difficulty,
+                        categories = categories,
+                    )
                 }
 
-            wordsFlow.value = wordsList.shuffled() // Kelime listesini karıştır
-            Log.d("WordRepositoryImpl", "Fetched words: $wordsList")
+            val finalWordsList =
+                if (wordsList.size < 50) {
+                    val additionalWordsSnapshot =
+                        firestore
+                            .collection("words")
+                            .limit(120 - wordsList.size.toLong())
+                            .get()
+                            .await()
+
+                    val additionalWords =
+                        additionalWordsSnapshot.documents.mapNotNull { doc ->
+                            val data = doc.data ?: return@mapNotNull null
+
+                            val id = (data["id"] as? Long)?.toString() ?: data["id"] as? String ?: UUID.randomUUID().toString()
+                            val english = data["english"] as? String ?: ""
+                            val translation = data["translation"] as? String ?: ""
+                            val isLearned = data["isLearned"] as? Boolean ?: false
+                            val difficulty = data["difficulty"] as? String ?: ""
+                            val categories = data["categories"] as? List<String> ?: emptyList()
+
+                            Word(
+                                id = id,
+                                english = english,
+                                translation = translation,
+                                isLearned = isLearned,
+                                difficulty = difficulty,
+                                categories = categories,
+                            )
+                        }
+
+                    wordsList + additionalWords
+                } else {
+                    wordsList
+                }
+
+            wordsFlow.value = finalWordsList.shuffled()
+            Log.d("WordRepositoryImpl", "Fetched words: $finalWordsList")
 
             return wordsFlow
         } catch (e: Exception) {

@@ -1,6 +1,7 @@
 package com.erendogan6.translateify.presentation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,8 @@ import com.erendogan6.translateify.databinding.FragmentRandomWordsBinding
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.presentation.adapter.WordAdapter
 import com.erendogan6.translateify.presentation.viewmodel.RandomWordsViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,6 +32,7 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        fetchUserPreferencesAndLoadWords()
         _binding = FragmentRandomWordsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -72,6 +76,28 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
         binding.btnAddWord.setOnClickListener {
             findNavController().navigate(R.id.action_randomWordsFragment_to_addWordFragment)
         }
+    }
+
+    private fun fetchUserPreferencesAndLoadWords() {
+        val user = FirebaseAuth.getInstance().currentUser
+        val userId = user?.uid ?: return
+        val firestore = FirebaseFirestore.getInstance()
+
+        firestore
+            .collection("users")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    val interests = document.get("interests") as? List<String> ?: emptyList()
+                    viewModel.fetchWordsFromFirebase(interests)
+                } else {
+                    viewModel.fetchWordsFromFirebase(emptyList())
+                }
+            }.addOnFailureListener { exception ->
+                viewModel.fetchWordsFromFirebase(emptyList())
+                Log.e("RandomWordsFragment", "Error fetching user preferences: ${exception.message}")
+            }
     }
 
     private fun navigateToDetail(word: Word) {

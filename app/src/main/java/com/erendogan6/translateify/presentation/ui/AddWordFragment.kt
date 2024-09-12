@@ -45,6 +45,7 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
                         translation = translation,
                         isLearned = false,
                         difficulty = "easy",
+                        categories = emptyList(),
                     )
                 viewModel.addWord(newWord)
                 Toast.makeText(requireContext(), "Word added successfully!", Toast.LENGTH_SHORT).show()
