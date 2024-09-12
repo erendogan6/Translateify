@@ -12,4 +12,5 @@ data class WordEntity(
     val translation: String,
     val isLearned: Boolean = false,
     val difficulty: String = "easy",
+    val categories: List<String>,
 ) : Serializable

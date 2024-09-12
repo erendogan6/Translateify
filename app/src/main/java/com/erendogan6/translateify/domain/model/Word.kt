@@ -11,4 +11,5 @@ data class Word(
     val translation: String = "",
     val isLearned: Boolean = false,
     val difficulty: String = "",
+    val categories: List<String>,
 ) : Parcelable

@@ -10,6 +10,7 @@ fun WordEntity.toDomainModel(): Word =
         translation = translation,
         isLearned = isLearned,
         difficulty = difficulty,
+        categories = categories,
     )
 
 fun Word.toEntity(): WordEntity =
@@ -19,4 +20,5 @@ fun Word.toEntity(): WordEntity =
         translation = translation,
         isLearned = isLearned,
         difficulty = difficulty,
+        categories = categories,
     )
