@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".di.TranslateifyApp"
@@ -17,10 +18,14 @@
         android:theme="@style/Theme.Translateify"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.InterestSelectionActivity"
+            android:name=".presentation.ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.AuthActivity"
+            android:name=".presentation.RegisterDetailActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Translateify" />
+        <activity
+            android:name=".presentation.OnboardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,9 +34,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".presentation.InterestSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.AuthActivity"
+            android:exported="false"></activity>
+        <activity
             android:name=".presentation.MainActivity"
-            android:exported="false">
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

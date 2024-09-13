@@ -72,6 +72,9 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.loggingInterceptor)
 
+    // Lottie
+    implementation(libs.lottie)
+
     // Room Database
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.swiperefreshlayout)

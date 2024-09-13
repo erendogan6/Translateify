@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:padding="16dp">
+
+    <!-- App Logo with Shadow -->
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/logo"
+        android:background="@drawable/rounded_icon_background"
+        android:elevation="8dp"
+        android:padding="10dp" />
+
+    <!-- App Name -->
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/colorSecondary"
+        android:text="@string/translateify"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif-medium"
+        android:letterSpacing="0.05" />
+
+    <!-- App Tagline -->
+    <TextView
+        android:id="@+id/app_tagline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Dil öğrenmenin hem eğlenceli hem de sihirli yolu!"
+        android:textColor="@color/colorOnPrimary"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-light"
+        android:letterSpacing="0.03" />
+
+    <!-- Get Started Button -->
+    <Button
+        android:id="@+id/button_get_started"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_tagline"
+        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="32dp"
+        android:text="MACERANA BAŞLA !"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:elevation="4dp"
+        android:textSize="16sp"
+        android:paddingVertical="14dp"/>
+
+    <!-- Already Have Account Button -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button_get_started"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="32dp"
+        android:textSize="16sp"
+        android:text="ZATEN BİR HESABIM VAR !"
+        android:backgroundTint="@color/colorPrimaryVariant"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        android:elevation="4dp"
+        android:paddingVertical="14dp"/>
+
+</RelativeLayout>
