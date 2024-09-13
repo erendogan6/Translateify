@@ -31,7 +31,6 @@
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorOnPrimary"
-                android:gravity="center"
                 android:layout_marginTop="16dp" />
 
             <!-- Word Translation -->
@@ -42,7 +41,6 @@
                 android:text="magma odası"
                 android:textSize="20sp"
                 android:textColor="@color/colorOnPrimary"
-                android:gravity="center"
                 android:layout_marginTop="8dp" />
 
             <!-- Pronunciation Button -->
