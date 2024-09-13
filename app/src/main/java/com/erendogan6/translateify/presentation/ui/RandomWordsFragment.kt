@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,11 +22,12 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
-    private val viewModel: RandomWordsViewModel by viewModels()
+    private val viewModel: RandomWordsViewModel by activityViewModels()
     private var _binding: FragmentRandomWordsBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: WordAdapter
     private var isSwipeToRefresh: Boolean = false
+    private var isDataLoaded: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,11 +55,11 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
                 },
             )
 
-        binding.recyclerView.adapter = adapter
-
-        if (viewModel.words.value.isEmpty()) {
+        if (viewModel.words.value.isEmpty() && !isDataLoaded) {
             fetchUserPreferencesAndLoadWords()
         }
+
+        binding.recyclerView.adapter = adapter
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             isSwipeToRefresh = true
@@ -74,11 +75,13 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
                         isSwipeToRefresh = false
                     }
                 }
+                binding.swipeRefreshLayout.isRefreshing = false
             }
         }
     }
 
     private fun fetchUserPreferencesAndLoadWords() {
+        Log.d("RandomWordsFragment", "Fetching user preferences and loading words")
         val user = FirebaseAuth.getInstance().currentUser
         val userId = user?.uid ?: return
         val firestore = FirebaseFirestore.getInstance()
@@ -89,13 +92,18 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
+                    Log.d("RandomWordsFragment", "DocumentSnapshot data: ${document.data}")
                     val interests = document.get("interests") as? List<String> ?: emptyList()
-                    viewModel.fetchWordsFromFirebase(interests)
+                    val difficulty = document.getString("difficulty")
+                    viewModel.fetchWordsFromFirebase(interests, difficulty)
+                    isDataLoaded = true
                 } else {
-                    viewModel.fetchWordsFromFirebase(emptyList())
+                    viewModel.fetchWordsFromFirebase(emptyList(), null)
+                    isDataLoaded = true
                 }
             }.addOnFailureListener { exception ->
-                viewModel.fetchWordsFromFirebase(emptyList())
+                viewModel.fetchWordsFromFirebase(emptyList(), null)
+                isDataLoaded = true
                 Log.e("RandomWordsFragment", "Error fetching user preferences: ${exception.message}")
             }
     }

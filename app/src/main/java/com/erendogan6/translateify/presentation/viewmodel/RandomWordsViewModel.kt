@@ -36,12 +36,29 @@ class RandomWordsViewModel
         private val _imageUrl = MutableStateFlow<String?>(null)
         val imageUrl: StateFlow<String?> get() = _imageUrl
 
-        fun fetchWordsFromFirebase(selectedCategories: List<String>) {
+        private var isDataLoadedFromFirebase = false
+
+        fun setTranslationReset() {
+            _translation.value = null
+        }
+
+        fun setImageUrlReset() {
+            _imageUrl.value = null
+        }
+
+        fun fetchWordsFromFirebase(
+            selectedCategories: List<String>,
+            difficulty: String?,
+        ) {
+            // Eğer kelimeler zaten yüklendiyse tekrar yüklemeyi engelle
             viewModelScope.launch {
                 try {
-                    loadWordsUseCase(selectedCategories).collect { wordList ->
-                        _words.value = wordList
-                        Log.d("RandomWordsViewModel", "Loaded words: $wordList")
+                    loadWordsUseCase(selectedCategories, difficulty).collect { wordList ->
+                        if (_words.value.isEmpty() && !isDataLoadedFromFirebase) {
+                            _words.value = wordList
+                            isDataLoadedFromFirebase = true
+                            Log.d("RandomWordsViewModel", "Loaded words: $wordList")
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e("RandomWordsViewModel", "Error loading words: ${e.message}")
@@ -79,13 +96,20 @@ class RandomWordsViewModel
 
         fun toggleLearnedStatus(word: Word) {
             viewModelScope.launch {
+                // Kelimenin isLearned durumunu tersine çevir
                 val updatedWord = word.copy(isLearned = !word.isLearned)
                 updateLearnedStatusUseCase(updatedWord)
 
+                // Kelime learned olarak işaretlendiyse, doğrudan listeden çıkar
                 _words.value =
-                    _words.value.map {
-                        if (it.id == updatedWord.id) updatedWord else it
+                    if (updatedWord.isLearned) {
+                        _words.value.filter { it.id != updatedWord.id }
+                    } else {
+                        // Eğer kelime yeniden unlearned (öğrenilmemiş) olarak işaretlenirse, listeye geri ekle
+                        _words.value + updatedWord
                     }
+
+                Log.d("RandomWordsViewModel", "Updated learned status for word: ${updatedWord.id}")
             }
         }
     }
