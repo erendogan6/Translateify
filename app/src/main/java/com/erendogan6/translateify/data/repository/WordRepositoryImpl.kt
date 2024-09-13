@@ -8,10 +8,12 @@ import com.erendogan6.translateify.data.remote.GeminiService
 import com.erendogan6.translateify.data.remote.PexelsService
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.domain.repository.WordRepository
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
@@ -60,28 +62,32 @@ class WordRepositoryImpl(
             null
         }
 
-    override suspend fun fetchWordsFromFirebase(selectedCategories: List<String>): Flow<List<Word>> {
+    override suspend fun fetchWordsFromFirebase(
+        selectedCategories: List<String>,
+        difficulty: String?,
+    ): Flow<List<Word>> {
+        // Step 1: Check local Room data first
+        val localWords = wordDao.getRandomWords().firstOrNull()
+        if (!localWords.isNullOrEmpty()) {
+            return wordDao.getRandomWords().map { entities -> entities.map { it.toDomainModel() } }
+        }
+
+        // Step 2: Fetch from Firestore if Room data is not available
         try {
-            val snapshot =
-                if (selectedCategories.isNotEmpty()) {
-                    firestore
-                        .collection("words")
-                        .whereArrayContainsAny("categories", selectedCategories)
-                        .limit(120)
-                        .get()
-                        .await()
-                } else {
-                    firestore
-                        .collection("words")
-                        .limit(120)
-                        .get()
-                        .await()
-                }
+            val query = firestore.collection("words")
+
+            if (selectedCategories.isNotEmpty()) {
+                query.whereArrayContainsAny("categories", selectedCategories)
+            }
+            if (!difficulty.isNullOrEmpty()) {
+                query.whereEqualTo("difficulty", difficulty)
+            }
+
+            val snapshot = query.limit(120).get().await()
 
             val wordsList =
                 snapshot.documents.mapNotNull { doc ->
                     val data = doc.data ?: return@mapNotNull null
-
                     val id = (data["id"] as? Long)?.toString() ?: data["id"] as? String ?: UUID.randomUUID().toString()
                     val english = data["english"] as? String ?: ""
                     val translation = data["translation"] as? String ?: ""
@@ -99,6 +105,7 @@ class WordRepositoryImpl(
                     )
                 }
 
+            // Fetch additional words if needed
             val finalWordsList =
                 if (wordsList.size < 50) {
                     val additionalWordsSnapshot =
@@ -111,7 +118,6 @@ class WordRepositoryImpl(
                     val additionalWords =
                         additionalWordsSnapshot.documents.mapNotNull { doc ->
                             val data = doc.data ?: return@mapNotNull null
-
                             val id = (data["id"] as? Long)?.toString() ?: data["id"] as? String ?: UUID.randomUUID().toString()
                             val english = data["english"] as? String ?: ""
                             val translation = data["translation"] as? String ?: ""
@@ -128,18 +134,18 @@ class WordRepositoryImpl(
                                 categories = categories,
                             )
                         }
-
                     wordsList + additionalWords
                 } else {
                     wordsList
                 }
 
+            // Step 3: Save fetched data to Room
             wordDao.insertWords(finalWordsList.map { it.toEntity() })
 
-            return getRandomWords()
+            return getRandomWords() // Return the words from Room
         } catch (e: Exception) {
             Log.e("WordRepositoryImpl", "Error fetching words from Firestore: ${e.message}")
-            return getRandomWords()
+            return getRandomWords() // Fallback to whatever is available in Room
         }
     }
 
@@ -152,4 +158,38 @@ class WordRepositoryImpl(
     }
 
     override suspend fun getRandomWord(): Word = wordDao.getRandomWord()
+
+    override suspend fun saveUserToFirebase(
+        email: String,
+        name: String,
+        level: String,
+        interests: List<String>,
+    ) {
+        try {
+            // Ensure user is authenticated before trying to save data
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val userId = currentUser?.uid ?: throw Exception("User is not authenticated.")
+
+            val registrationDate = System.currentTimeMillis()
+
+            val userPreferences =
+                hashMapOf(
+                    "email" to email,
+                    "name" to name,
+                    "registrationDate" to registrationDate,
+                    "interests" to interests,
+                    "level" to level,
+                )
+
+            // Save user data in Firestore
+            firestore
+                .collection("users")
+                .document(userId)
+                .set(userPreferences)
+                .await()
+        } catch (e: Exception) {
+            Log.e("WordRepositoryImpl", "Error saving user to Firestore: ${e.message}")
+            throw e // Re-throw the exception to be handled by the caller
+        }
+    }
 }

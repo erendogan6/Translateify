@@ -16,7 +16,17 @@ interface WordRepository {
 
     suspend fun getWordImage(word: String): String?
 
-    suspend fun fetchWordsFromFirebase(selectedCategories: List<String>): Flow<List<Word>>
+    suspend fun fetchWordsFromFirebase(
+        selectedCategories: List<String>,
+        difficulty: String?,
+    ): Flow<List<Word>>
 
     suspend fun getRandomWord(): Word
+
+    suspend fun saveUserToFirebase(
+        email: String,
+        name: String,
+        level: String,
+        interests: List<String>,
+    )
 }
