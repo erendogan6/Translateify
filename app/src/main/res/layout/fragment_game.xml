@@ -1,54 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@drawable/gradient_background"
+    android:padding="24dp"
     tools:context=".presentation.ui.GameFragment">
 
-    <!-- Başlık -->
+    <!-- Title -->
     <TextView
         android:id="@+id/tvSelectGameMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Oyun Modunu Seçin"
-        android:textSize="24sp"
+        android:textSize="32sp"
+        android:textColor="@color/colorOnPrimary"
         android:textStyle="bold"
+        android:fontFamily="@font/roboto_medium"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"
-        />
+        android:layout_marginTop="40dp" />
 
-    <!-- Topluluk Oyunu Butonu -->
-    <Button
+    <!-- Community Game Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnCommunityGame"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Topluluk Oyunu"
-        android:backgroundTint="@color/design_default_color_primary"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorOnPrimary"
         android:textStyle="bold"
+        android:textSize="20sp"
+        android:paddingVertical="10dp"
+        android:fontFamily="@font/roboto_medium"
+        android:backgroundTint="@color/colorSecondaryVariant"
+        app:cornerRadius="24dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/colorOnPrimary"
         app:layout_constraintTop_toBottomOf="@id/tvSelectGameMode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp"
-        />
+        android:layout_marginTop="50dp"
+        android:layout_marginHorizontal="24dp"
+        android:elevation="8dp" />
 
-    <!-- Tek Kişilik Oyun Butonu -->
-    <Button
+    <!-- Single Player Game Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSelfGame"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Tek Kişilik Oyun"
-        android:backgroundTint="@color/design_default_color_primary"
-        android:textColor="@android:color/white"
+        android:textColor="@color/colorOnPrimary"
         android:textStyle="bold"
+        android:paddingVertical="10dp"
+        android:textSize="20sp"
+        android:fontFamily="@font/roboto_medium"
+        android:backgroundTint="@color/colorSecondaryVariant"
+        app:cornerRadius="24dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/colorOnPrimary"
         app:layout_constraintTop_toBottomOf="@id/btnCommunityGame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="24dp"
+        android:elevation="8dp" />
+
+    <!-- Icon at the Bottom for Decoration -->
+    <ImageView
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:src="@drawable/direct"
+        android:layout_marginTop="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSelfGame"
+        android:layout_marginBottom="40dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
