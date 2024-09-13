@@ -65,6 +65,7 @@
 
     <!-- Already Have Account Button -->
     <Button
+        android:id="@+id/button_already_have_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/button_get_started"
