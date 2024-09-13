@@ -18,7 +18,7 @@ interface WordDao {
     suspend fun insertWords(words: List<WordEntity>)
 
     @Query("SELECT * FROM words WHERE isLearned = 0 LIMIT :limit")
-    fun getRandomWords(limit: Int = 120): Flow<List<WordEntity>>
+    fun getRandomWords(limit: Int = 140): Flow<List<WordEntity>>
 
     @Query("SELECT * FROM words WHERE isLearned = 1")
     fun getLearnedWords(): Flow<List<WordEntity>>
