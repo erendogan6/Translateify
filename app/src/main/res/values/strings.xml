@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Translateify</string>
-    <string name="pronounce">Pronounce</string>
-    <string name="toggle_learned">Toggle Learned</string>
     <string name="speech_to_text">Speech to Text</string>
     <string name="speak_prompt">Please speak now</string>
     <string name="learn_word">Learned</string>
@@ -12,4 +10,7 @@
     <string name="general_error_message">An error occurred while fetching the translation.</string>
     <string name="serialization_error_message">An error occurred during serialization.</string>
     <string name="error_fetching_translation">Error fetching translation. Please try again.</string>
+    <string name="translateify">Translateify</string>
+    <string name="app_logo">App Logo</string>
+    <!-- TODO: Remove or change this placeholder text -->
 </resources>

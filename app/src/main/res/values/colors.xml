@@ -1,5 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Ana Renkler -->
+    <color name="white">#FFFFFF</color>
+    <color name="colorPrimary">#42A5F5</color> <!-- Açık Mavi -->
+    <color name="colorPrimaryVariant">#1976D2</color> <!-- Koyu Mavi -->
+    <color name="colorSecondary">#FFB74D</color> <!-- Turuncu / Şeftali -->
+    <color name="colorSecondaryVariant">#FFA726</color> <!-- Koyu Turuncu -->
+    <color name="colorGreen">#689F38</color> <!-- Kırmızı -->
+
+    <!-- Arka Plan ve Yüzey Renkleri -->
+    <!-- Açık Gri Arka Plan -->
+    <color name="colorSurface">#FFFFFF</color> <!-- Beyaz Yüzey Rengi -->
+
+    <!-- Metin ve İkon Renkleri -->
+    <color name="colorOnPrimary">#FFFFFF</color> <!-- Ana Renk Üzerindeki Metin Rengi (Beyaz) -->
+    <color name="colorOnSecondary">#FFFFFF</color> <!-- Vurgu Renk Üzerindeki Metin Rengi (Beyaz) -->
+    <color name="colorOnBackground">#333333</color> <!-- Arka Plan Üzerindeki Metin Rengi (Koyu Gri) -->
+    <color name="colorOnSurface">#333333</color> <!-- Yüzey Üzerindeki Metin Rengi (Koyu Gri) -->
+    <color name="selected_card_color">#D1E8FF</color>
+
+
+    <!-- Uyarı ve Başarı Renkleri -->
+    <color name="colorError">#D32F2F</color> <!-- Kırmızı Uyarı Rengi -->
+    <color name="colorOnError">#FFFFFF</color> <!-- Uyarı Rengi Üzerindeki Metin Rengi (Beyaz) -->
+    <!-- Başarı Rengi: Yeşil -->
 </resources>

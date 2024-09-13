@@ -1,9 +1,31 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Translateify" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <!-- Base Tema -->
+    <style name="Base.Theme.Translateify" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Ana Renkler -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+
+        <!-- Arka Plan ve Yüzey Renkleri -->
+        <item name="colorSurface">@color/colorSurface</item>
+
+        <!-- Metin ve İkon Renkleri -->
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorOnBackground">@color/colorOnBackground</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+
+        <!-- Uyarı ve Başarı Renkleri -->
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+
+        <!-- Status Bar ve Navigation Bar Renkleri -->
+        <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
-    <style name="Theme.Translateify" parent="Base.Theme.Translateify" />
+    <style name="Theme.Translateify" parent="Base.Theme.Translateify">
+        <!-- Ek temalar veya özelleştirmeler burada yapılabilir -->
+    </style>
 </resources>

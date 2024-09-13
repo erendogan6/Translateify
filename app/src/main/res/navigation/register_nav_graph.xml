@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/registerDetailFragment1">
+
+    <!-- Register Detail Fragment 1 -->
+    <fragment
+        android:id="@+id/registerDetailFragment1"
+        android:name="com.erendogan6.translateify.presentation.ui.register.RegisterDetailFragment1"
+        android:label="fragment_register_detail1"
+        tools:layout="@layout/fragment_register_detail1">
+        <action
+            android:id="@+id/action_registerDetailFragment1_to_registerDetailFragment2"
+            app:destination="@id/registerDetailFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Register Detail Fragment 2 -->
+    <fragment
+        android:id="@+id/registerDetailFragment2"
+        android:name="com.erendogan6.translateify.presentation.ui.register.RegisterDetailFragment2"
+        android:label="fragment_register_detail2"
+        tools:layout="@layout/fragment_register_detail2">
+        <action
+            android:id="@+id/action_registerDetailFragment2_to_registerDetailFragment3"
+            app:destination="@id/registerDetailFragment3"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Register Detail Fragment 3 -->
+    <fragment
+        android:id="@+id/registerDetailFragment3"
+        android:name="com.erendogan6.translateify.presentation.ui.register.RegisterDetailFragment3"
+        android:label="fragment_register_detail3"
+        tools:layout="@layout/fragment_register_detail3">
+        <action
+            android:id="@+id/action_registerDetailFragment3_to_registerDetailFragment4"
+            app:destination="@id/registerDetailFragment4"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Register Detail Fragment 4 -->
+    <fragment
+        android:id="@+id/registerDetailFragment4"
+        android:name="com.erendogan6.translateify.presentation.ui.register.RegisterDetailFragment4"
+        android:label="fragment_register_detail4"
+        tools:layout="@layout/fragment_register_detail4">
+        <action
+            android:id="@+id/action_registerDetailFragment4_to_registerDetailFragment5"
+            app:destination="@id/registerDetailFragment5"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Register Detail Fragment 5 -->
+    <fragment
+        android:id="@+id/registerDetailFragment5"
+        android:name="com.erendogan6.translateify.presentation.ui.register.RegisterDetailFragment5"
+        android:label="fragment_register_detail5"
+        tools:layout="@layout/fragment_register_detail5">
+        <action
+            android:id="@+id/action_registerDetailFragment5_to_registerDetailFragment6"
+            app:destination="@id/registerDetailFragment6"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Register Detail Fragment 6 -->
+    <fragment
+        android:id="@+id/registerDetailFragment6"
+        android:name="com.erendogan6.translateify.presentation.ui.register.RegisterDetailFragment6"
+        android:label="fragment_register_detail6"
+        tools:layout="@layout/fragment_register_detail6">
+        <action
+            android:id="@+id/action_registerDetailFragment6_to_registerDetailFragment7"
+            app:destination="@id/registerDetailFragment7"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+
+    <!-- Register Detail Fragment 7 -->
+    <fragment
+        android:id="@+id/registerDetailFragment7"
+        android:name="com.erendogan6.translateify.presentation.ui.register.RegisterDetailFragment7"
+        android:label="fragment_register_detail7"
+        tools:layout="@layout/fragment_register_detail7" />
+</navigation>
