@@ -45,7 +45,7 @@ class SelfGameFragment : Fragment() {
                     .trim()
             if (userWord.isNotBlank()) {
                 viewModel.onUserInput(userWord)
-                binding.etUserWord.text.clear()
+                binding.etUserWord.text?.clear()
             } else {
                 Toast.makeText(requireContext(), "Kelime boş olamaz!", Toast.LENGTH_SHORT).show()
             }
