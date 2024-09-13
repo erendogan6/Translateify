@@ -2,97 +2,154 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@drawable/gradient_background">
 
+    <!-- ScrollView to Make Content Scrollable -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
+        <!-- Main LinearLayout to Hold Content -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:gravity="center_horizontal"
+            android:padding="16dp">
 
-            <!-- Kelime Başlığı -->
+            <!-- Word Title -->
             <TextView
                 android:id="@+id/tvWordDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:textSize="24sp"
+                android:text="magma chamber"
+                android:textSize="32sp"
                 android:textStyle="bold"
-                android:text="Word"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/colorOnPrimary"
+                android:gravity="center"
+                android:layout_marginTop="16dp" />
 
-            <!-- Kelime Anlamı -->
+            <!-- Word Translation -->
             <TextView
                 android:id="@+id/tvTranslationDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvWordDetail" />
+                android:text="magma odası"
+                android:textSize="20sp"
+                android:textColor="@color/colorOnPrimary"
+                android:gravity="center"
+                android:layout_marginTop="8dp" />
 
-            <!-- Telaffuz Butonu -->
+            <!-- Pronunciation Button -->
             <ImageButton
                 android:id="@+id/btnPronounce"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/ic_volume"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvTranslationDetail" />
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                app:tint="@color/colorSecondaryVariant" />
 
-            <Button
-                android:id="@+id/btnSpeechToText"
+            <!-- First Row of Buttons -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/speech_to_text"
-                app:layout_constraintTop_toBottomOf="@id/btnToggleLearned"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp" />
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
 
-            <!-- "Learned" Durumunu Değiştirme Butonu -->
-            <Button
-                android:id="@+id/btnToggleLearned"
+                <!-- Speech to Text Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSpeechToText"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/speech_to_text"
+                    android:textColor="@color/colorOnPrimary"
+                    android:ellipsize="end"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:singleLine="true"
+                    android:fontFamily="@font/roboto_regular"
+                    app:strokeColor="@color/colorOnPrimary"
+                    android:layout_marginEnd="8dp"
+                    app:iconSize="30dp"
+                    app:icon="@drawable/ic_mic"
+                    app:iconPadding="4dp"
+                    app:iconTint="@color/colorSecondaryVariant" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:text="Learned"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnPronounce" />
+                android:orientation="horizontal"
+                android:gravity="center">
+                <!-- Toggle Learned Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnToggleLearned"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Learned"
+                    app:strokeColor="@color/colorOnPrimary"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="16sp"
+                    app:iconSize="30dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorOnPrimary"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    app:icon="@drawable/ic_checkbox"
+                    app:iconPadding="4dp"
+                    app:iconTint="@color/colorSecondaryVariant" />
+            </LinearLayout>
 
-            <Button
+
+            <!-- Second Row of Buttons -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/btnFetchTranslation"
-                android:text="Fetch Translation"
-                app:layout_constraintTop_toBottomOf="@id/btnSpeechToText"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp" />
+                android:orientation="horizontal"
+                android:gravity="center">
 
+                <!-- Fetch Translation Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnFetchTranslation"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorOnPrimary"
+                    android:fontFamily="@font/roboto_regular"
+                    app:strokeColor="@color/colorOnPrimary"
+                    android:text="Yapay Zeka İle Öğren"
+                    app:iconSize="30dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    app:icon="@drawable/ic_translate"
+                    app:iconPadding="4dp"
+                    app:iconTint="@color/colorSecondaryVariant" />
+            </LinearLayout>
+
+            <!-- Word Image -->
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:scaleType="centerCrop"/>
+                android:layout_height="350dp"
+                android:layout_marginTop="16dp"
+                android:scaleType="centerCrop"
+                android:layout_marginBottom="10dp"
+                tools:srcCompat="@drawable/logo" />
 
         </LinearLayout>
     </ScrollView>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

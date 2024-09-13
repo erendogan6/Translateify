@@ -1,6 +1,7 @@
 package com.erendogan6.translateify.presentation.ui
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -12,12 +13,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentWordDetailBinding
 import com.erendogan6.translateify.domain.model.Word
@@ -34,7 +39,7 @@ class WordDetailFragment :
     TextToSpeech.OnInitListener {
     private var _binding: FragmentWordDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: RandomWordsViewModel by viewModels()
+    private val viewModel: RandomWordsViewModel by activityViewModels()
     private var word: Word? = null
     private var tts: TextToSpeech? = null
     private val args: WordDetailFragmentArgs by navArgs()
@@ -80,6 +85,11 @@ class WordDetailFragment :
             binding.btnToggleLearned.text =
                 if (word.isLearned) getString(R.string.unlearn_word) else getString(R.string.learn_word)
 
+            binding.btnToggleLearned.setOnClickListener {
+                viewModel.toggleLearnedStatus(word)
+                findNavController().popBackStack()
+            }
+
             binding.btnFetchTranslation.setOnClickListener {
                 viewModel.fetchTranslation(word.english)
             }
@@ -94,6 +104,7 @@ class WordDetailFragment :
                         val html = renderer.render(document)
 
                         binding.tvTranslationDetail.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
+                        viewModel.setTranslationReset()
                     }
                 }
             }
@@ -102,19 +113,8 @@ class WordDetailFragment :
 
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.imageUrl.collect { imageUrl ->
-                    imageUrl?.let {
-                        Glide
-                            .with(requireContext())
-                            .load(it)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(binding.imageView)
-                    }
+                    loadImageWithGlide(imageUrl)
                 }
-            }
-
-            binding.btnToggleLearned.setOnClickListener {
-                viewModel.toggleLearnedStatus(word)
-                findNavController().popBackStack()
             }
 
             binding.btnPronounce.setOnClickListener {
@@ -124,6 +124,33 @@ class WordDetailFragment :
                 startSpeechToText()
             }
         }
+    }
+
+    private fun loadImageWithGlide(imageUrl: String?) {
+        Glide
+            .with(requireContext())
+            .load(imageUrl)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .placeholder(R.drawable.logo)
+            .error(R.drawable.logo)
+            .listener(
+                object : RequestListener<Drawable> {
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean,
+                    ): Boolean = false
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>,
+                        isFirstResource: Boolean,
+                    ): Boolean = false
+                },
+            ).into(binding.imageView)
     }
 
     private fun pronounceWord(word: Word) {
@@ -156,6 +183,7 @@ class WordDetailFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Glide.with(requireContext()).clear(binding.imageView)
         _binding = null
     }
 }
