@@ -42,6 +42,6 @@ class OnboardingActivity : AppCompatActivity() {
     private fun redirectToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish() // OnboardingActivity'yi bitir, geri gidilmesini engelle
+        finish()
     }
 }
