@@ -1,7 +1,9 @@
 package com.erendogan6.translateify.presentation.adapter
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,26 +38,34 @@ class WordAdapter(
         fun bind(word: Word) {
             binding.tvWord.text = word.english
             binding.tvTranslation.text = word.translation
-            binding.ivLearned.setImageResource(
-                if (word.isLearned) R.drawable.ic_favorites else R.drawable.ic_notfavorites,
-            )
 
-            binding.root.setOnClickListener { onItemClick(word) }
-            binding.ivLearned.setOnClickListener {
+            // Öğrenme durumuna göre ikonun renklerini ayarlayın
+            if (word.isLearned) {
+                binding.ivCheckMark.setImageTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.colorGreen)),
+                )
+            } else {
+                binding.ivCheckMark.setImageTintList(
+                    ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.colorError)),
+                )
+            }
+
+            binding.buttonLearn.setOnClickListener { onItemClick(word) }
+            binding.ivCheckMark.setOnClickListener {
                 onLearnedClick(word)
             }
         }
     }
-}
 
-class WordDiffCallback : DiffUtil.ItemCallback<Word>() {
-    override fun areItemsTheSame(
-        oldItem: Word,
-        newItem: Word,
-    ): Boolean = oldItem.id == newItem.id
+    class WordDiffCallback : DiffUtil.ItemCallback<Word>() {
+        override fun areItemsTheSame(
+            oldItem: Word,
+            newItem: Word,
+        ): Boolean = oldItem.id == newItem.id
 
-    override fun areContentsTheSame(
-        oldItem: Word,
-        newItem: Word,
-    ): Boolean = oldItem == newItem
+        override fun areContentsTheSame(
+            oldItem: Word,
+            newItem: Word,
+        ): Boolean = oldItem == newItem
+    }
 }
