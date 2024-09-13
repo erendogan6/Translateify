@@ -6,78 +6,103 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:background="@drawable/gradient_background"
     tools:context=".presentation.ui.CommunityGameFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/etUserWord"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvCurrentWord" />
-
+    <!-- Current Word TextView -->
     <TextView
         android:id="@+id/tvCurrentWord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:padding="4dp"
         android:text="En son kelime"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorOnPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="0dp" />
 
-    <EditText
-        android:id="@+id/etUserWord"
+    <!-- RecyclerView for Word List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentWord"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cardInputContainer"
+        android:clipToPadding="false"/>
+
+    <!-- CardView Container for User Word Input -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardInputContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="472dp"
-        android:background="@android:drawable/edit_text"
-        android:hint="Yeni kelime girin"
-        android:inputType="text"
-        android:padding="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/colorSurface"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toTopOf="@id/btnSubmit"
+    app:layout_constraintVertical_bias="1">
 
-    <Button
+    <!-- User Word Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@color/colorSurface">
+
+        <!-- Text Input EditText -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etUserWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Yeni kelime girin"
+            android:background="@color/colorSurface"
+            android:inputType="text"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="16sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+</com.google.android.material.card.MaterialCardView>
+
+
+    <!-- Submit Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:backgroundTint="@color/design_default_color_primary"
-        android:padding="12dp"
         android:text="Kelimeyi Gönder"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tvScore"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        app:cornerRadius="24dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@id/tvScore" />
 
+    <!-- Score TextView -->
     <TextView
         android:id="@+id/tvScore"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:background="?attr/selectableItemBackground"
-        android:gravity="center"
-        android:padding="6dp"
         android:text="Puan: 0"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorOnPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginBottom="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

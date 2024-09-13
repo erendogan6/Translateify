@@ -48,7 +48,7 @@ class CommunityGameFragment : Fragment() {
                     .trim()
             if (userWord.isNotBlank()) {
                 viewModel.onUserInput(userWord)
-                binding.etUserWord.text.clear()
+                binding.etUserWord.text?.clear()
             } else {
                 Toast.makeText(requireContext(), "Kelime boş olamaz!", Toast.LENGTH_SHORT).show()
             }
@@ -79,14 +79,6 @@ class CommunityGameFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.currentWord.collect { word ->
                 binding.tvCurrentWord.text = word ?: "En son kelime yok"
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.gameOver.collect { isOver ->
-                if (isOver) {
-                    Toast.makeText(requireContext(), "Oyun bitti!", Toast.LENGTH_SHORT).show()
-                }
             }
         }
     }
