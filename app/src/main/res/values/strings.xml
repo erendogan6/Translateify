@@ -1,16 +1,16 @@
 <resources>
     <string name="app_name">Translateify</string>
-    <string name="speech_to_text">Speech to Text</string>
-    <string name="speak_prompt">Please speak now</string>
-    <string name="learn_word">Learned</string>
-    <string name="unlearn_word">Unlearned</string>
-    <string name="speech_not_recognized">Speech Not Recognized</string>
-    <string name="detected_word">Detected Word: %S</string>
+    <string name="speech_to_text">Sesten Metine</string>
+    <string name="speak_prompt">Lütfen Şimdi Konuşun</string>
+    <string name="learn_word">Öğren</string>
+    <string name="unlearn_word">Öğrenildi</string>
+    <string name="speech_not_recognized">Ses Tanınmadı</string>
+    <string name="detected_word">Algılanan Telafuz: %S</string>
     <string name="translation_instruction">Please provide the Turkish translation for the following word:</string>
     <string name="general_error_message">An error occurred while fetching the translation.</string>
     <string name="serialization_error_message">An error occurred during serialization.</string>
     <string name="error_fetching_translation">Error fetching translation. Please try again.</string>
     <string name="translateify">Translateify</string>
     <string name="app_logo">App Logo</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="title_activity_onboarding_compose">OnboardingActivityCompose</string>
 </resources>

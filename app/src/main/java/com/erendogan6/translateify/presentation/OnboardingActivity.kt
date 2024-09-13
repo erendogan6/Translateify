@@ -23,13 +23,13 @@ class OnboardingActivity : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.buttonGetStarted.setOnClickListener {
-            val intent = Intent(this, RegisterDetailActivity::class.java)
+        binding.buttonAlreadyHaveAccount.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 
         binding.buttonGetStarted.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, RegisterDetailActivity::class.java)
             startActivity(intent)
         }
     }

@@ -34,12 +34,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.InterestSelectionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.AuthActivity"
-            android:exported="false"></activity>
-        <activity
             android:name=".presentation.MainActivity"
             android:exported="false" />
     </application>

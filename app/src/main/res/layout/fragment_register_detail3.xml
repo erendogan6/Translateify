@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorOnPrimary"
                 android:fontFamily="sans-serif-medium"
-                android:hint="Full Name"
+                android:hint="Tam Adınız"
                 android:inputType="textPersonName"
                 android:textColor="@color/colorOnSurface"
                 android:textColorHint="@color/colorOnSurface"

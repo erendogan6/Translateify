@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.domain.usecase.AddWordUseCase
-import com.erendogan6.translateify.domain.usecase.GetRandomWordsUseCase
 import com.erendogan6.translateify.domain.usecase.GetWordImageUseCase
 import com.erendogan6.translateify.domain.usecase.GetWordTranslationUseCase
 import com.erendogan6.translateify.domain.usecase.LoadWordsUseCase
@@ -20,7 +19,6 @@ import javax.inject.Inject
 class RandomWordsViewModel
     @Inject
     constructor(
-        private val getRandomWordsUseCase: GetRandomWordsUseCase,
         private val updateLearnedStatusUseCase: UpdateLearnedStatusUseCase,
         private val addWordUseCase: AddWordUseCase,
         private val getWordTranslationUseCase: GetWordTranslationUseCase,
@@ -42,15 +40,10 @@ class RandomWordsViewModel
             _translation.value = null
         }
 
-        fun setImageUrlReset() {
-            _imageUrl.value = null
-        }
-
         fun fetchWordsFromFirebase(
             selectedCategories: List<String>,
             difficulty: String?,
         ) {
-            // Eğer kelimeler zaten yüklendiyse tekrar yüklemeyi engelle
             viewModelScope.launch {
                 try {
                     loadWordsUseCase(selectedCategories, difficulty).collect { wordList ->
@@ -96,16 +89,13 @@ class RandomWordsViewModel
 
         fun toggleLearnedStatus(word: Word) {
             viewModelScope.launch {
-                // Kelimenin isLearned durumunu tersine çevir
                 val updatedWord = word.copy(isLearned = !word.isLearned)
                 updateLearnedStatusUseCase(updatedWord)
 
-                // Kelime learned olarak işaretlendiyse, doğrudan listeden çıkar
                 _words.value =
                     if (updatedWord.isLearned) {
                         _words.value.filter { it.id != updatedWord.id }
                     } else {
-                        // Eğer kelime yeniden unlearned (öğrenilmemiş) olarak işaretlenirse, listeye geri ekle
                         _words.value + updatedWord
                     }
 

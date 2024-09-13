@@ -109,7 +109,7 @@
                 android:id="@+id/buttonLearn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Learn"
+                android:text="Öğren"
                 android:textColor="@color/colorOnBackground"
                 android:gravity="center"
                 android:textSize="18sp"
