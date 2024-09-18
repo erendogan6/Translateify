@@ -5,6 +5,8 @@
 ## Proje Hakkında
 **Translateify**, İngilizce öğrenmek isteyen Türk kullanıcılar için tasarlanmış bir Android uygulamasıdır. Uygulama, eğlenceli ve etkileşimli bir öğrenme deneyimi sunar ve kullanıcıların kelime hazinelerini geliştirirken aynı zamanda dil becerilerini de pratik etmelerine yardımcı olur. Günlük kelime önerileri, çeviri egzersizleri, ve konuşma tanıma gibi özellikler sayesinde, kullanıcılar dil öğrenme yolculuklarını kişiselleştirebilir ve hedeflerine ulaşabilirler.
 
+Uygulama şu anda Google Play Store'da test aşamasında.
+
  <img src="https://i.hizliresim.com/akcilji.jpeg" width="280" height="630">
 
 ## Özellikler
@@ -19,17 +21,25 @@
   
 ## Teknoloji Yığını (Tech Stack)
 - **Kotlin (1.9.23)**
-- **Android Jetpack**: Navigation, Flow, ViewModel, Room
-- **Retrofit** & **OkHttp**
-- **GSON**
-- **Markdown Viewer**
-- **Firebase**: Analytics, Crashlytics
-- **LeakCanary** (Memory Leak Detection)
-- **Coroutines** (Asynchronous Programming)
-- **ProGuard** (Code Obsufcation)
-- **Hilt** (Dependency Injection)
-- **Ktlint** (Code Style)
-- **Material Design**
+- **Android Jetpack:** Navigation, Flow, ViewModel, Room (architecture components)
+- **Retrofit & OkHttp** (networking and HTTP requests)
+- **GSON** (JSON serialization/deserialization)
+- **Glide** (image loading)
+- **Generative AI (Gemini)** (AI-powered text generation)
+- **Flexmark** (Markdown rendering)
+- **Lottie** (animated vector graphics)
+- **Swipe to Refresh** (UI gesture for refreshing data)
+- **Chucker** (HTTP traffic inspection)
+- **Text to Speech** (TTS functionality)
+- **Speech to Text** (voice recognition)
+- **Firebase:** Auth, Firestore, Remote Config, Analytics, Crashlytics
+- **LeakCanary** (memory leak detection)
+- **Coroutines** (asynchronous programming)
+- **ProGuard** (code obfuscation and optimization)
+- **Hilt** (dependency injection)
+- **Ktlint** (code style checking)
+- **Material Design** (modern UI components and guidelines)
+
 
 ## Yaklaşımlar (Approaches)
 - **SOLID Principles**
