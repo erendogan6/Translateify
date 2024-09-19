@@ -3,7 +3,7 @@ package com.erendogan6.translateify.presentation.ui.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.erendogan6.translateify.domain.usecase.register.RegisterUserUseCase
 import com.erendogan6.translateify.domain.usecase.register.SaveUserToFirebaseUseCase
-import com.erendogan6.translateify.presentation.ui.state.RegistrationResultState
+import com.erendogan6.translateify.presentation.state.RegistrationResultState
 import com.erendogan6.translateify.presentation.viewmodel.RegisterViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify

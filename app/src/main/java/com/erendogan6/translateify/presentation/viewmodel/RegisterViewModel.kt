@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.erendogan6.translateify.domain.usecase.register.RegisterUserUseCase
 import com.erendogan6.translateify.domain.usecase.register.SaveUserToFirebaseUseCase
-import com.erendogan6.translateify.presentation.ui.state.RegistrationResultState
+import com.erendogan6.translateify.presentation.state.RegistrationResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

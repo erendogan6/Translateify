@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentRegisterDetail7Binding
 import com.erendogan6.translateify.presentation.MainActivity
-import com.erendogan6.translateify.presentation.ui.state.RegistrationResultState
+import com.erendogan6.translateify.presentation.state.RegistrationResultState
 import com.erendogan6.translateify.presentation.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,4 +1,4 @@
-package com.erendogan6.translateify.presentation.ui.state
+package com.erendogan6.translateify.presentation.state
 
 sealed class RegistrationResultState {
     data object Success : RegistrationResultState()
