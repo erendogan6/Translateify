@@ -104,7 +104,10 @@ dependencies {
     kapt(libs.compiler)
 
     // LeakCanary
-    // debugImplementation(libs.leakcanary.android)
+    debugImplementation(libs.leakcanary.android)
+
+    // Timber
+    implementation(libs.timber)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
