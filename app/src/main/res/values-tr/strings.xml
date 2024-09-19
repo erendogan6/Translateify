@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">Translateify</string>
+    <string name="speech_to_text">Sesten Metine</string>
+    <string name="speak_prompt">Lütfen Şimdi Konuşun</string>
+    <string name="learn_word">Öğren</string>
+    <string name="unlearn_word">Öğrenildi</string>
+    <string name="speech_not_recognized">Ses Tanınmadı</string>
+    <string name="detected_word">Algılanan Telaffuz: %S</string>
+    <string name="general_error_message">Çeviri alırken bir hata oluştu.</string>
+    <string name="serialization_error_message">Serileştirme sırasında bir hata oluştu.</string>
+    <string name="error_fetching_translation">Çeviri alınırken hata oluştu. Lütfen tekrar deneyin.</string>
+    <string name="translation_instruction" >Please provide the Turkish translation for the following word:</string>
+    <string name="app_logo">Uygulama Logosu</string>
+    <string name="title_activity_onboarding_compose" tools:ignore="ExtraTranslation">OnboardingActivityCompose</string>
+    <string name="daily_life_and_communication">Günlük Yaşam ve İletişim</string>
+    <string name="emotions_and_expressions">Duygular ve İfadeler</string>
+    <string name="food_and_drinks">Yiyecek ve İçecek</string>
+    <string name="health_and_body">Sağlık ve Vücut</string>
+    <string name="travelers_and_tourists">Gezginler ve Turistler</string>
+    <string name="technology">Teknoloji</string>
+    <string name="science">Bilim</string>
+    <string name="nature_and_environment">Doğa ve Çevre</string>
+    <string name="select_at_least_one_category">En az bir kategori seçmelisiniz</string>
+    <string name="ok">Tamam</string>
+    <string name="cancel">Vazgeç</string>
+    <string name="notification_permission_required">Bildirim İzni Gerekiyor</string>
+    <string name="notification_permission_rationale">Bu uygulama, bildirimler ve güncellemeler göndermek için bildirim iznine ihtiyaç duyar.</string>
+    <string name="notification_permission_denied">Bildirim izni reddedildi.</string>
+    <string name="registration_successful">Kayıt başarıyla tamamlandı!</string>
+    <string name="registration_failed">Kayıt başarısız oldu</string>
+    <string name="error_name">Lütfen adınızı girin</string>
+    <string name="please_input_mail">Geçerli bir e-posta adresi girin</string>
+    <string name="error_password">Şifre en az 6 karakter olmalıdır</string>
+</resources>
