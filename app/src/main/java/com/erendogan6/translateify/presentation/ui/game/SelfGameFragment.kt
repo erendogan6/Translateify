@@ -1,37 +1,28 @@
-package com.erendogan6.translateify.presentation.ui
+package com.erendogan6.translateify.presentation.ui.game
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentSelfGameBinding
 import com.erendogan6.translateify.presentation.viewmodel.SelfGameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SelfGameFragment : Fragment() {
+class SelfGameFragment : Fragment(R.layout.fragment_self_game) {
     private var _binding: FragmentSelfGameBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SelfGameViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentSelfGameBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        _binding = FragmentSelfGameBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         // Oyunu başlat

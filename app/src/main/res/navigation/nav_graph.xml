@@ -58,7 +58,7 @@
 
     <fragment
         android:id="@+id/gameFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.GameFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.game.GameFragment"
         android:label="GameFragment">
         <action
             android:id="@+id/action_gameFragment_to_communityGameFragment"
@@ -70,12 +70,12 @@
 
     <fragment
         android:id="@+id/communityGameFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.CommunityGameFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.game.CommunityGameFragment"
         android:label="CommunityGameFragment" />
 
     <fragment
         android:id="@+id/selfGameFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.SelfGameFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.game.SelfGameFragment"
         android:label="SelfGameFragment" />
 
     <fragment

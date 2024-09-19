@@ -2,27 +2,50 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@drawable/gradient_background"
-    tools:context=".presentation.ui.CommunityGameFragment">
+    android:padding="16dp">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="Geri"
+        android:src="@drawable/ic_back_arrow"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@android:color/white" />
 
     <!-- Current Word TextView -->
     <TextView
         android:id="@+id/tvCurrentWord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="En son kelime"
-        android:textColor="@color/colorOnPrimary"
-        android:textSize="24sp"
+        android:text="Oyun Başlıyor!"
+        android:textColor="@color/white"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="16dp" />
+
+    <!-- Turn Indicator TextView -->
+    <TextView
+        android:id="@+id/tvTurnIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sıra sizde"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentWord"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
 
     <!-- RecyclerView for Word List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -30,65 +53,63 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="8dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/tvCurrentWord"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/tvTurnIndicator"
         app:layout_constraintBottom_toTopOf="@+id/cardInputContainer"
-        android:clipToPadding="false"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- CardView Container for User Word Input -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardInputContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginHorizontal="16dp"
         app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/colorSurface"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/btnSubmit"
-    app:layout_constraintVertical_bias="1">
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/btnSubmit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- User Word Input -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:background="@color/colorSurface">
-
-        <!-- Text Input EditText -->
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etUserWord"
+        <!-- User Word Input -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Yeni kelime girin"
-            android:background="@color/colorSurface"
-            android:inputType="text"
-            android:textColor="@color/colorOnBackground"
-            android:textSize="16sp" />
-    </com.google.android.material.textfield.TextInputLayout>
-</com.google.android.material.card.MaterialCardView>
+            android:hint="Kelimenizi girin"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintTextColor="@color/colorPrimary"
+            app:boxBackgroundColor="@android:color/transparent">
 
+            <!-- Text Input EditText -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUserWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:background="@color/white"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Submit Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSubmit"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kelimeyi Gönder"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/colorPrimary"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        android:padding="12dp"
+        android:text="Gönder"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="16dp"
+        android:paddingHorizontal="64dp"
         app:cornerRadius="24dp"
+        app:backgroundTint="@color/colorPrimary"
+        app:icon="@drawable/ic_send"
+        app:iconGravity="textEnd"
+        app:iconPadding="8dp"
+        app:layout_constraintBottom_toTopOf="@id/tvScore"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvScore" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Score TextView -->
     <TextView
@@ -96,13 +117,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Puan: 0"
-        android:textColor="@color/colorOnPrimary"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="4dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

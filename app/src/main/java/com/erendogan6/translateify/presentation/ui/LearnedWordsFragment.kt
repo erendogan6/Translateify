@@ -1,9 +1,7 @@
 package com.erendogan6.translateify.presentation.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -26,19 +24,11 @@ class LearnedWordsFragment : Fragment(R.layout.fragment_learned_words) {
     private val randomViewModel: RandomWordsViewModel by viewModels()
     private lateinit var adapter: WordAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentLearnedWordsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        _binding = FragmentLearnedWordsBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(requireContext())

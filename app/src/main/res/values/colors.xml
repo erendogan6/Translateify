@@ -1,6 +1,7 @@
 <resources>
     <!-- Ana Renkler -->
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="colorPrimary">#42A5F5</color> <!-- Açık Mavi -->
     <color name="colorPrimaryVariant">#1976D2</color> <!-- Koyu Mavi -->
     <color name="colorSecondary">#FFB74D</color> <!-- Turuncu / Şeftali -->

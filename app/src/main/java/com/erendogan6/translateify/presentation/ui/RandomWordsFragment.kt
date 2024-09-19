@@ -2,9 +2,7 @@ package com.erendogan6.translateify.presentation.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,19 +27,11 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
     private var isSwipeToRefresh: Boolean = false
     private var isDataLoaded: Boolean = false
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentRandomWordsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        _binding = FragmentRandomWordsBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         val layoutManager = LinearLayoutManager(requireContext())

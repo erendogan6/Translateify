@@ -1,6 +1,7 @@
 package com.erendogan6.translateify.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.erendogan6.translateify.domain.model.CommunityWord
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -8,8 +9,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,72 +25,136 @@ class CommunityGameViewModel
         private val firestore: FirebaseFirestore,
     ) : ViewModel() {
         private val _currentWord = MutableStateFlow<String?>(null)
-        val currentWord: StateFlow<String?> = _currentWord
-
-        private val _usedWords = MutableStateFlow<List<String>>(emptyList())
-        val usedWords: StateFlow<List<String>> = _usedWords
-
-        private val _userScore = MutableStateFlow(0)
-        val userScore: StateFlow<Int> = _userScore
+        val currentWord: StateFlow<String?> = _currentWord.asStateFlow()
 
         private val _communityWords = MutableStateFlow<List<CommunityWord>>(emptyList())
-        val communityWords: StateFlow<List<CommunityWord>> = _communityWords
+        val communityWords: StateFlow<List<CommunityWord>> = _communityWords.asStateFlow()
 
-        private val _gameOver = MutableStateFlow(false)
-        val gameOver: StateFlow<Boolean> = _gameOver
+        private val _userScore = MutableStateFlow(0)
+        val userScore: StateFlow<Int> = _userScore.asStateFlow()
+
+        private val _errorMessage = MutableSharedFlow<String?>()
+        val errorMessage: SharedFlow<String?> = _errorMessage.asSharedFlow()
+
+        private val _isUserTurn = MutableStateFlow(true)
+        val isUserTurn: StateFlow<Boolean> = _isUserTurn.asStateFlow()
+
+        private var _notificationShown = false
+        val notificationShown: Boolean
+            get() = _notificationShown
+
+        fun setNotificationShown() {
+            _notificationShown = true
+        }
 
         private val userId = FirebaseAuth.getInstance().currentUser?.uid
 
         private var listenerRegistration: ListenerRegistration? = null
 
         init {
-            listenForLatestWordUpdates()
-            observeCommunityWords()
+            listenForCommunityWords()
             observeUserScore()
         }
 
-        private fun listenForLatestWordUpdates() {
+        private fun listenForCommunityWords() {
             listenerRegistration =
                 firestore
                     .collection("community_words")
                     .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .limit(1)
+                    .limit(20)
                     .addSnapshotListener { snapshot, e ->
                         if (e != null) {
+                            // Handle error
                             return@addSnapshotListener
                         }
 
-                        if (snapshot != null && !snapshot.isEmpty) {
-                            val latestWord = snapshot.documents.firstOrNull()?.getString("word")
-                            _currentWord.value = latestWord
+                        if (snapshot != null) {
+                            val words =
+                                snapshot.documents
+                                    .mapNotNull { doc ->
+                                        val word = doc.getString("word") ?: return@mapNotNull null
+                                        val userId = doc.getString("userId") ?: return@mapNotNull null
+                                        val timestamp = doc.getTimestamp("timestamp")?.toDate()?.time ?: return@mapNotNull null
+                                        CommunityWord(word, "", timestamp, userId)
+                                    }.reversed() // Reverse to have oldest first
+
+                            _communityWords.value = words
+                            _currentWord.value = words.lastOrNull()?.word
+
+                            updateIsUserTurn()
+                            fetchUserEmails(words)
                         }
                     }
         }
 
+        private fun fetchUserEmails(words: List<CommunityWord>) {
+            words.forEachIndexed { index, communityWord ->
+                fetchUserInfo(communityWord.userId) { username ->
+                    val updatedWord = communityWord.copy(username = username)
+                    _communityWords.value =
+                        _communityWords.value.toMutableList().apply {
+                            this[index] = updatedWord
+                        }
+                }
+            }
+        }
+
         fun onUserInput(userWord: String) {
+            if (userId == null) {
+                // Handle user not logged in
+                return
+            }
+
             if (isValidWord(userWord)) {
                 addWordToCommunity(userWord)
-            } else {
-                _gameOver.value = true
             }
         }
 
         private fun isValidWord(word: String): Boolean {
-            val currentWord = _communityWords.value.lastOrNull()?.word ?: return false
-            val lastChar = currentWord.lastOrNull()?.lowercaseChar() ?: return false
-            val firstChar = word.firstOrNull()?.lowercaseChar() ?: return false
+            val communityWords = _communityWords.value
 
-            return firstChar == lastChar && !_communityWords.value.any { it.word == word }
+            // Check if the word has been used in the last 20 words
+            if (communityWords.any { it.word.equals(word, ignoreCase = true) }) {
+                viewModelScope.launch {
+                    _errorMessage.emit("Bu kelime zaten kullanıldı.")
+                }
+                return false
+            }
+
+            // Check if the user is trying to play twice in a row
+            val lastWord = communityWords.lastOrNull()
+            if (lastWord != null && lastWord.userId == userId) {
+                viewModelScope.launch {
+                    _errorMessage.emit("Sıra sizde değil.")
+                }
+                return false
+            }
+
+            // If there is a current word, check if the first letter matches the last letter
+            val currentWord = lastWord?.word
+            if (currentWord != null) {
+                val lastChar = currentWord.lastOrNull()?.lowercaseChar()
+                val firstChar = word.firstOrNull()?.lowercaseChar()
+                if (lastChar != firstChar) {
+                    viewModelScope.launch {
+                        _errorMessage.emit("Kelime '$currentWord' kelimesinin son harfi ile başlamalı.")
+                    }
+                    return false
+                }
+            }
+
+            // All checks passed
+            return true
         }
 
         private fun addWordToCommunity(word: String) {
+            if (userId == null) return
+
             val newWord =
                 hashMapOf(
                     "word" to word,
                     "userId" to userId,
-                    "timestamp" to
-                        Timestamp
-                            .now(),
+                    "timestamp" to Timestamp.now(),
                 )
 
             firestore
@@ -93,8 +163,14 @@ class CommunityGameViewModel
                 .addOnSuccessListener {
                     _userScore.value += 1
                     updateUserScore()
+                    // Reset error message
+                    viewModelScope.launch {
+                        _errorMessage.emit(null)
+                    }
                 }.addOnFailureListener {
-                    _gameOver.value = true
+                    viewModelScope.launch {
+                        _errorMessage.emit("Kelime eklenirken bir hata oluştu.")
+                    }
                 }
         }
 
@@ -103,14 +179,7 @@ class CommunityGameViewModel
                 firestore
                     .collection("users")
                     .document(it)
-                    .get()
-                    .addOnSuccessListener { snapshot ->
-                        val score = snapshot.getLong("score") ?: 0
-                        firestore
-                            .collection("users")
-                            .document(it)
-                            .update("score", score + 1)
-                    }
+                    .update("score", _userScore.value)
             }
         }
 
@@ -132,35 +201,9 @@ class CommunityGameViewModel
             }
         }
 
-        private fun observeCommunityWords() {
-            firestore
-                .collection("community_words")
-                .orderBy("timestamp", Query.Direction.ASCENDING)
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) {
-                        return@addSnapshotListener
-                    }
-
-                    if (snapshot != null) {
-                        val words = mutableListOf<CommunityWord>()
-                        val documents = snapshot.documents
-
-                        documents.forEach { doc ->
-                            val word = doc.getString("word") ?: return@forEach
-                            val userId = doc.getString("userId") ?: return@forEach
-                            val timestamp = doc.getTimestamp("timestamp")?.toDate()?.time ?: return@forEach
-
-                            fetchUserInfo(userId) { userEmail ->
-                                val communityWord = CommunityWord(word, userEmail, timestamp)
-                                words.add(communityWord)
-
-                                if (words.size == documents.size) {
-                                    _communityWords.value = words
-                                }
-                            }
-                        }
-                    }
-                }
+        private fun updateIsUserTurn() {
+            val lastWordUserId = _communityWords.value.lastOrNull()?.userId
+            _isUserTurn.value = (lastWordUserId != userId)
         }
 
         private fun fetchUserInfo(

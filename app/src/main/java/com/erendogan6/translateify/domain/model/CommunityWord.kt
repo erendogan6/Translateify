@@ -4,4 +4,5 @@ data class CommunityWord(
     val word: String,
     val username: String,
     val timestamp: Long,
+    val userId: String,
 )
