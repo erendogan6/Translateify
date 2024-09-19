@@ -1,7 +1,6 @@
 package com.erendogan6.translateify.presentation.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
@@ -71,7 +71,7 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
     }
 
     private fun fetchUserPreferencesAndLoadWords() {
-        Log.d("RandomWordsFragment", "Fetching user preferences and loading words")
+        Timber.d("Fetching user preferences and loading words")
         val user = FirebaseAuth.getInstance().currentUser
         val userId = user?.uid ?: return
         val firestore = FirebaseFirestore.getInstance()
@@ -82,8 +82,8 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
             .get()
             .addOnSuccessListener { document ->
                 if (document != null && document.exists()) {
-                    Log.d("RandomWordsFragment", "DocumentSnapshot data: ${document.data}")
-                    val interests = document.get("interests") as? List<String> ?: emptyList()
+                    Timber.d("DocumentSnapshot data: " + document.data)
+                    val interests = (document["interests"] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
                     val difficulty = document.getString("difficulty")
                     viewModel.fetchWordsFromFirebase(interests, difficulty)
                     isDataLoaded = true
@@ -94,7 +94,7 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
             }.addOnFailureListener { exception ->
                 viewModel.fetchWordsFromFirebase(emptyList(), null)
                 isDataLoaded = true
-                Log.e("RandomWordsFragment", "Error fetching user preferences: ${exception.message}")
+                Timber.e("Error fetching user preferences: " + exception.message)
             }
     }
 

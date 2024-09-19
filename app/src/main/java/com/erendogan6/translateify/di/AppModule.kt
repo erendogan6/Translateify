@@ -18,7 +18,6 @@ import com.erendogan6.translateify.domain.usecase.LoadWordsUseCase
 import com.erendogan6.translateify.domain.usecase.UpdateLearnedStatusUseCase
 import com.erendogan6.translateify.utils.ResourcesProvider
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

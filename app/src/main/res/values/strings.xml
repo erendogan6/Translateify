@@ -30,4 +30,18 @@
         <string name="error_name">Please enter your name</string>
     <string name="please_input_mail">Please enter a valid email address</string>
     <string name="error_password">Password must be at least 6 characters long</string>
+    <string name="geri">Back</string>
+    <string name="oyun_basliyor">The game is starting!</string>
+    <string name="sira_sizde">It\'s your turn</string>
+    <string name="kelimenizi_girin">Enter your word</string>
+    <string name="gonder">Submit</string>
+    <string name="oyun_modunu_secin">Select Game Mode</string>
+    <string name="topluluk_oyunu">Community Game</string>
+    <string name="tek_kisilik_oyun">Single Player Game</string>
+    <string name="oyun_ekran_logosu">Game Screen Logo</string>
+    <string name="puan">Score: %1$s</string>
+    <string name="kullanilan_kelimeler">Used words: %1$s</string>
+    <string name="kalan_sure_saniye">Remaining time: %1$s seconds</string>
+    <string name="puan_0">Score: 0</string>
+
 </resources>

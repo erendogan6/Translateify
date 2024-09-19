@@ -10,9 +10,6 @@
         android:label="Random Words"
         tools:layout="@layout/fragment_random_words">
         <action
-            android:id="@+id/action_randomWordsFragment_to_quizFragment"
-            app:destination="@id/quizFragment" />
-        <action
             android:id="@+id/action_randomWordsFragment_to_wordDetailFragment"
             app:destination="@id/wordDetailFragment" />
         <action
@@ -20,11 +17,6 @@
             app:destination="@id/addWordFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/quizFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.QuizFragment"
-        android:label="Quiz"
-        tools:layout="@layout/fragment_quiz" />
 
     <fragment
         android:id="@+id/wordDetailFragment"

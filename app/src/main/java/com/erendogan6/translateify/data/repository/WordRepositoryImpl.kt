@@ -1,6 +1,5 @@
 package com.erendogan6.translateify.data.repository
 
-import android.util.Log
 import com.erendogan6.translateify.data.local.WordDao
 import com.erendogan6.translateify.data.mapper.toDomainModel
 import com.erendogan6.translateify.data.mapper.toEntity
@@ -15,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import java.util.UUID
 
 class WordRepositoryImpl(
@@ -91,15 +91,15 @@ class WordRepositoryImpl(
                     val english = data["english"] as? String ?: ""
                     val translation = data["translation"] as? String ?: ""
                     val isLearned = data["isLearned"] as? Boolean ?: false
-                    val difficulty = data["difficulty"] as? String ?: ""
-                    val categories = data["categories"] as? List<String> ?: emptyList()
+                    val difficult = data["difficulty"] as? String ?: ""
+                    val categories = (data["categories"] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
 
                     Word(
                         id = id,
                         english = english,
                         translation = translation,
                         isLearned = isLearned,
-                        difficulty = difficulty,
+                        difficulty = difficult,
                         categories = categories,
                     )
                 }
@@ -121,15 +121,15 @@ class WordRepositoryImpl(
                             val english = data["english"] as? String ?: ""
                             val translation = data["translation"] as? String ?: ""
                             val isLearned = data["isLearned"] as? Boolean ?: false
-                            val difficulty = data["difficulty"] as? String ?: ""
-                            val categories = data["categories"] as? List<String> ?: emptyList()
+                            val difficult = data["difficulty"] as? String ?: ""
+                            val categories = (data["categories"] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
 
                             Word(
                                 id = id,
                                 english = english,
                                 translation = translation,
                                 isLearned = isLearned,
-                                difficulty = difficulty,
+                                difficulty = difficult,
                                 categories = categories,
                             )
                         }
@@ -143,16 +143,8 @@ class WordRepositoryImpl(
 
             return getRandomWords() // Return the words from Room
         } catch (e: Exception) {
-            Log.e("WordRepositoryImpl", "Error fetching words from Firestore: ${e.message}")
+            Timber.e("Error fetching words from Firestore: " + e.message)
             return getRandomWords() // Fallback to whatever is available in Room
-        }
-    }
-
-    suspend fun addWordToFirebase(word: Word) {
-        try {
-            firestore.collection("words").add(word).await()
-        } catch (e: Exception) {
-            Log.e("WordRepositoryImpl", "Error adding word to Firestore: ${e.message}")
         }
     }
 

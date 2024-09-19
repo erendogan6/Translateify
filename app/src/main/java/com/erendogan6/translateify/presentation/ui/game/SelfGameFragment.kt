@@ -52,14 +52,22 @@ class SelfGameFragment : Fragment(R.layout.fragment_self_game) {
         // Puanı göster
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.score.collect { score ->
-                binding.tvScore.text = "Puan: $score"
+                binding.tvScore.text =
+                    getString(
+                        R.string.puan,
+                        score.toString(),
+                    )
             }
         }
 
         // Kullanılmış kelimeleri göster
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.usedWords.collect { usedWords ->
-                binding.tvUsedWords.text = "Kullanılan kelimeler: ${usedWords.joinToString(", ")}"
+                binding.tvUsedWords.text =
+                    getString(
+                        R.string.kullanilan_kelimeler,
+                        usedWords.joinToString(", "),
+                    )
             }
         }
 
@@ -76,7 +84,11 @@ class SelfGameFragment : Fragment(R.layout.fragment_self_game) {
         // Geri sayımı göster
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.timeLeft.collect { timeLeft ->
-                binding.tvTimer.text = "Kalan süre: $timeLeft saniye"
+                binding.tvTimer.text =
+                    getString(
+                        R.string.kalan_sure_saniye,
+                        timeLeft.toString(),
+                    )
             }
         }
     }

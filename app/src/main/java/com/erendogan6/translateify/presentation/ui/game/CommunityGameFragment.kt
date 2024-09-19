@@ -62,7 +62,11 @@ class CommunityGameFragment : Fragment(R.layout.fragment_community_game) {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.userScore.collect { score ->
-                binding.tvScore.text = "Puan: $score"
+                binding.tvScore.text =
+                    getString(
+                        R.string.puan,
+                        score.toString(),
+                    )
             }
         }
 
