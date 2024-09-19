@@ -21,7 +21,7 @@
             android:name=".presentation.ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.RegisterDetailActivity"
+            android:name=".presentation.ui.register.RegisterDetailActivity"
             android:exported="false"
             android:theme="@style/Theme.Translateify" />
         <activity

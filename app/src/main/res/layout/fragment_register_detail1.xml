@@ -83,7 +83,7 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/img_1" />
+                android:src="@drawable/ic_level_easy" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/img" />
+                android:src="@drawable/ic_level_medium" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -165,7 +165,7 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_marginEnd="16dp"
-                android:src="@drawable/img_2" />
+                android:src="@drawable/ic_level_hard" />
 
             <TextView
                 android:layout_width="wrap_content"
