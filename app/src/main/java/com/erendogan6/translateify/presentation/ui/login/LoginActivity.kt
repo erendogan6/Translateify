@@ -1,18 +1,19 @@
 package com.erendogan6.translateify.presentation.ui.login
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Patterns
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.erendogan6.translateify.databinding.ActivityLoginBinding
 import com.erendogan6.translateify.presentation.MainActivity
-import com.google.firebase.auth.FirebaseAuth
+import com.erendogan6.translateify.presentation.viewmodel.LoginViewModel
+import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var auth: FirebaseAuth
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,14 +21,17 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
+        setupListeners()
+        observeViewModel()
+    }
 
-        // Geri butonuna tıklanma olayını işleme
+    private fun setupListeners() {
+        // Back button navigation
         binding.backArrow.setOnClickListener {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
 
-        // Giriş yap butonuna tıklanma olayını işleme
+        // Sign in button
         binding.signInButton.setOnClickListener {
             val email =
                 binding.emailInput.text
@@ -38,64 +42,30 @@ class LoginActivity : AppCompatActivity() {
                     .toString()
                     .trim()
 
-            // Giriş yapma fonksiyonunu çağır
-            if (validateInputs(email, password)) {
-                signInUser(email, password)
-            }
+            viewModel.signInUser(email, password)
         }
     }
 
-    // Kullanıcı giriş yapma fonksiyonu
-    private fun signInUser(
-        email: String,
-        password: String,
-    ) {
-        auth
-            .signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Başarılı giriş, MainActivity'ye yönlendir
-                    redirectToMainActivity()
-                } else {
-                    // Hata mesajını göster
-                    Toast.makeText(this, task.exception?.message ?: "Giriş yapılamadı", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
+    private fun observeViewModel() {
+        viewModel.isLoading.observe(this) { isLoading ->
+            binding.signInButton.isEnabled = !isLoading
+        }
 
-    // Girdi doğrulama
-    private fun validateInputs(
-        email: String,
-        password: String,
-    ): Boolean =
-        when {
-            email.isEmpty() -> {
-                binding.emailInputLayout.error = "Email boş olamaz"
-                false
-            }
-            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                binding.emailInputLayout.error = "Geçerli bir email girin"
-                false
-            }
-            password.isEmpty() -> {
-                binding.passwordInputLayout.error = "Parola boş olamaz"
-                false
-            }
-            password.length < 6 -> {
-                binding.passwordInputLayout.error = "Parola en az 6 karakter olmalı"
-                false
-            }
-            else -> {
-                // Hataları temizle
-                binding.emailInputLayout.error = null
-                binding.passwordInputLayout.error = null
-                true
+        viewModel.errorMessage.observe(this) { message ->
+            message?.let {
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
             }
         }
+
+        viewModel.loginSuccess.observe(this) { success ->
+            if (success) {
+                redirectToMainActivity()
+            }
+        }
+    }
 
     private fun redirectToMainActivity() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish() // LoginActivity'yi bitir, geri gidilmesini engelle
+        startActivity(MainActivity.getIntent(this))
+        finish()
     }
 }
