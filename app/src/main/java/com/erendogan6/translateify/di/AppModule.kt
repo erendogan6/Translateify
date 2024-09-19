@@ -15,12 +15,10 @@ import com.erendogan6.translateify.domain.usecase.AddWordUseCase
 import com.erendogan6.translateify.domain.usecase.GetLearnedWordsUseCase
 import com.erendogan6.translateify.domain.usecase.GetRandomWordsUseCase
 import com.erendogan6.translateify.domain.usecase.LoadWordsUseCase
-import com.erendogan6.translateify.domain.usecase.SaveUserToFirebaseUseCase
 import com.erendogan6.translateify.domain.usecase.UpdateLearnedStatusUseCase
 import com.erendogan6.translateify.utils.ResourcesProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -101,10 +99,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideFirestore(): FirebaseFirestore = Firebase.firestore
-
-    @Provides
-    @Singleton
     fun provideGetRandomWordsUseCase(wordRepository: WordRepository): GetRandomWordsUseCase = GetRandomWordsUseCase(wordRepository)
 
     @Provides
@@ -127,9 +121,4 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGeminiService(resourcesProvider: ResourcesProvider): GeminiService = GeminiService(resourcesProvider)
-
-    @Provides
-    @Singleton
-    fun provideSaveUserToFirebaseUseCase(wordRepository: WordRepository): SaveUserToFirebaseUseCase =
-        SaveUserToFirebaseUseCase(wordRepository)
 }
