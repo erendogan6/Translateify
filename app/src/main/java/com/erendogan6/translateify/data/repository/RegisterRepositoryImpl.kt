@@ -1,11 +1,11 @@
 package com.erendogan6.translateify.data.repository
 
-import android.util.Log
 import com.erendogan6.translateify.domain.repository.RegisterRepository
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -57,7 +57,7 @@ class RegisterRepositoryImpl(
                 .set(userPreferences)
                 .await()
         } catch (e: Exception) {
-            Log.e("RegisterRepositoryImpl", "Error saving register to Firestore: ${e.message}")
+            Timber.e("Error saving register to Firestore: " + e.message)
             throw e
         }
     }

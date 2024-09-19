@@ -1,6 +1,5 @@
 package com.erendogan6.translateify.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.erendogan6.translateify.domain.model.Word
@@ -13,6 +12,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,11 +50,11 @@ class RandomWordsViewModel
                         if (_words.value.isEmpty() && !isDataLoadedFromFirebase) {
                             _words.value = wordList
                             isDataLoadedFromFirebase = true
-                            Log.d("RandomWordsViewModel", "Loaded words: $wordList")
+                            Timber.d("Loaded words: $wordList")
                         }
                     }
                 } catch (e: Exception) {
-                    Log.e("RandomWordsViewModel", "Error loading words: ${e.message}")
+                    Timber.e("Error loading words: " + e.message)
                 }
             }
         }
@@ -77,14 +77,14 @@ class RandomWordsViewModel
                     val imageUrl = getWordImageUseCase(word)
                     _imageUrl.value = imageUrl
                 } catch (e: Exception) {
-                    Log.e("WordViewModel", "Error fetching image: ${e.message}")
+                    Timber.e("Error fetching image: " + e.message)
                 }
             }
         }
 
         fun shuffleWords() {
             _words.value = _words.value.shuffled()
-            Log.d("RandomWordsViewModel", "Shuffled words: ${_words.value}")
+            Timber.d("Shuffled words: " + _words.value)
         }
 
         fun toggleLearnedStatus(word: Word) {
@@ -99,7 +99,7 @@ class RandomWordsViewModel
                         _words.value + updatedWord
                     }
 
-                Log.d("RandomWordsViewModel", "Updated learned status for word: ${updatedWord.id}")
+                Timber.d("Updated learned status for word: " + updatedWord.id)
             }
         }
     }

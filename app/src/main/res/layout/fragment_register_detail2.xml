@@ -15,6 +15,7 @@
         android:src="@drawable/ic_back_arrow"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@string/back_arrow_content_description"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -24,6 +25,7 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
+        android:contentDescription="@string/app_logo_desc"
         android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back_arrow" />
@@ -47,7 +49,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:padding="20dp"
-            android:text="Hadi! En Sevdiğin 3 Konuyu Seç!"
+            android:text="@string/select_favorite_three"
             android:textColor="#1B1B1B"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -63,23 +65,23 @@
         app:layout_constraintBottom_toTopOf="@+id/continue_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="15dp"/>
+        android:layout_marginBottom="15dp" />
 
-
+    <!-- Continue Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continue_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/colorSecondaryVariant"
+        android:backgroundTint="#AEED981C"
         android:clickable="true"
         android:elevation="8dp"
         android:focusable="true"
         android:fontFamily="sans-serif-medium"
         android:paddingVertical="14dp"
         android:stateListAnimator="@android:anim/accelerate_interpolator"
-        android:text="Devam Et"
+        android:text="@string/continu"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"

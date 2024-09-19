@@ -124,7 +124,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.mockk.android)
-    androidTestImplementation(libs.dagger.hilt.android.testing)
+    androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
 
     // ViewModel and Livedata

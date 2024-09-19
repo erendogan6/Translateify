@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="8dp"
@@ -24,7 +25,8 @@
             android:textColor="@color/colorOnSurface"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="4dp"
+            tools:ignore="HardcodedText" />
 
         <!-- Word -->
         <TextView
@@ -34,7 +36,8 @@
             android:text="Kelime"
             android:textColor="@color/colorOnSurface"
             android:textSize="18sp"
-            android:paddingStart="8dp" />
+            android:paddingHorizontal="8dp"
+            tools:ignore="HardcodedText" />
 
     </LinearLayout>
 

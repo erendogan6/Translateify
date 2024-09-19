@@ -4,7 +4,6 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.util.Log
 import com.erendogan6.translateify.BuildConfig
 import com.erendogan6.translateify.R
 import com.google.firebase.ktx.Firebase
@@ -41,9 +40,9 @@ class TranslateifyApp : Application() {
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val updated = task.result
-                Log.d("TranslateifyApp", "Config params updated: $updated")
+                Timber.d("Config params updated: $updated")
             } else {
-                Log.e("TranslateifyApp", "Failed to fetch Remote Config")
+                Timber.e("Failed to fetch Remote Config")
             }
         }
     }

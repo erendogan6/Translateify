@@ -31,7 +31,8 @@
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:textColor="@color/colorOnPrimary"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="16dp"
+                tools:ignore="HardcodedText" />
 
             <!-- Word Translation -->
             <TextView
@@ -41,13 +42,15 @@
                 android:text="magma odası"
                 android:textSize="20sp"
                 android:textColor="@color/colorOnPrimary"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                tools:ignore="HardcodedText" />
 
             <!-- Pronunciation Button -->
             <ImageButton
                 android:id="@+id/btnPronounce"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
+                android:contentDescription="@string/sesli_telaffuz"
                 android:src="@drawable/ic_volume"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginTop="16dp"
@@ -68,7 +71,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sesten Metine"
+                    android:text="@string/sesten_metine"
                     android:textColor="@color/colorOnPrimary"
                     android:ellipsize="end"
                     android:textSize="16sp"
@@ -95,7 +98,7 @@
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Öğren"
+                    android:text="@string/ogren"
                     app:strokeColor="@color/colorOnPrimary"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="16sp"
@@ -126,7 +129,7 @@
                     android:textColor="@color/colorOnPrimary"
                     android:fontFamily="@font/roboto_regular"
                     app:strokeColor="@color/colorOnPrimary"
-                    android:text="Yapay Zeka İle Öğren"
+                    android:text="@string/yapay_zeka_ile_ogren"
                     app:iconSize="30dp"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -143,6 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="350dp"
                 android:layout_marginTop="16dp"
+                android:contentDescription="@string/kelime_ile_ilgili_resim"
                 android:scaleType="centerCrop"
                 android:layout_marginBottom="10dp"
                 tools:srcCompat="@drawable/logo" />

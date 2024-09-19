@@ -25,10 +25,10 @@ class RegisterViewModel
         private val _registrationState = MutableLiveData<RegistrationResultState>(RegistrationResultState.Idle)
         val registrationState: LiveData<RegistrationResultState> get() = _registrationState
 
-        val userEmail = MutableLiveData<String>()
-        val userPassword = MutableLiveData<String>()
-        val userName = MutableLiveData<String>()
-        val userLevel = MutableLiveData<String>()
+        private val userEmail = MutableLiveData<String>()
+        private val userPassword = MutableLiveData<String>()
+        private val userName = MutableLiveData<String>()
+        private val userLevel = MutableLiveData<String>()
         val selectedCategories = MutableLiveData<List<String>>()
 
         fun setUserEmail(email: String) {

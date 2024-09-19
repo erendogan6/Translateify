@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Translateify</string>
     <string name="speech_to_text">Sesten Metine</string>
     <string name="speak_prompt">Lütfen Şimdi Konuşun</string>
@@ -12,7 +12,6 @@
     <string name="error_fetching_translation">Çeviri alınırken hata oluştu. Lütfen tekrar deneyin.</string>
     <string name="translation_instruction" >Please provide the Turkish translation for the following word:</string>
     <string name="app_logo">Uygulama Logosu</string>
-    <string name="title_activity_onboarding_compose" tools:ignore="ExtraTranslation">OnboardingActivityCompose</string>
     <string name="daily_life_and_communication">Günlük Yaşam ve İletişim</string>
     <string name="emotions_and_expressions">Duygular ve İfadeler</string>
     <string name="food_and_drinks">Yiyecek ve İçecek</string>
@@ -45,4 +44,59 @@
     <string name="kullanilan_kelimeler">Kullanılan kelimeler: %1$s</string>
     <string name="kalan_sure_saniye">Kalan süre: %1$s saniye</string>
     <string name="puan_0">Puan: 0</string>
+    <string name="welcome_back">Tekrardan Hoşgeldin 👋</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Parola</string>
+    <string name="sign_in_button">Giriş Yap</string>
+    <string name="geri_git">Geri Git</string>
+    <string name="app_logo_desc">Uygulama Logosu Açıklaması</string>
+    <string name="app_name_desc">Uygulama İsmi Açıklaması</string>
+    <string name="app_tagline">Dil öğrenmenin hem eğlenceli hem de sihirli yolu!</string>
+    <string name="button_get_started">MACERANA BAŞLA !</string>
+    <string name="button_already_have_account">ZATEN BİR HESABIM VAR !</string>
+    <string name="menu_random">Rastgele</string>
+    <string name="menu_learned">Öğrenilenler</string>
+    <string name="menu_add_word">Kelime Ekle</string>
+    <string name="menu_game">Oyun</string>
+    <string name="menu_scoreboard">Skor Tablosu</string>
+    <string name="add_new_word">Yeni Bir Kelime Ekle</string>
+    <string name="enter_english_word">İngilizce kelime girin</string>
+    <string name="enter_translation">Çeviri girin</string>
+    <string name="add_word_button">Kelime Ekle</string>
+    <string name="back_arrow_content_description">Geri Dön Butonu İkonu</string>
+    <string name="question_text">İngilizce macerana nereden başlıyoruz?</string>
+    <string name="option_1_text">İngilizceye sıfırdan başlıyorum!</string>
+    <string name="option_2_text">Biraz temelim var, daha fazlasını öğrenmeye hazırım!</string>
+    <string name="option_3_text">İngilizceyi çok seviyorum, hedefim profesyonel olmak!</string>
+    <string name="zor_seviye_ikonu">Zor Seviye İkonu</string>
+    <string name="orta_seviye_ikonu">Orta Seviye İkonu</string>
+    <string name="kolay_seviye_ikonu">Kolay Seviye İkonu</string>
+    <string name="select_favorite_three">Hadi! En Sevdiğin 3 Konuyu Seç!</string>
+    <string name="continu">Devam Et</string>
+    <string name="question_name_prompt">Adını bizimle paylaşır mısın? 👦👧</string>
+    <string name="name_input_hint">Tam Adınız</string>
+    <string name="question_email_prompt">E-Posta adresini öğrenebilir miyiz? 📧</string>
+    <string name="continue_button">Devam Et</string>
+    <string name="password_instruction">Şimdi ise güçlü bir parola belirlememiz gerekiyor 🛡️</string>
+    <string name="notification_prompt">Bildirim almak ister misin? 📬</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
+    <string name="loading_message">Öğrenme yolculuğunu hazırlıyoruz.</string>
+    <string name="scoreboard_title">Skor Tablosu</string>
+    <string name="current_word">inovasyon</string>
+    <string name="enter_word_hint">Bir kelime girin</string>
+    <string name="submit">Gönder</string>
+    <string name="score_display">Puan: %1$d</string>
+    <string name="used_words_display">Kullanılan kelimeler: %1$s</string>
+    <string name="timer_display">Kalan süre: %1$d saniye</string>
+    <string name="sesli_telaffuz">Sesli Telaffuz</string>
+    <string name="sesten_metine">Sesten Metine</string>
+    <string name="ogren">Öğren</string>
+    <string name="yapay_zeka_ile_ogren">Yapay Zeka İle Öğren</string>
+    <string name="kelime_ile_ilgili_resim">Kelime İle İlgili Resim</string>
+    <string name="user_score_display">Puan: %1$d</string>
+    <string name="english_flag">İngiltere Bayrağı</string>
+    <string name="turkish_flag">Türkiye Bayrağı</string>
+    <string name="mark_as_learned">Öğrenildi olarak işaretle</string>
+    <string name="kategori_konu">Kategori İkonu</string>
 </resources>

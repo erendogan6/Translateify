@@ -12,7 +12,7 @@
         android:id="@+id/tvAddWordTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add a New Word"
+        android:text="@string/add_new_word"
         android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="@color/colorOnPrimary"
@@ -47,7 +47,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter English word"
+                android:hint="@string/enter_english_word"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/colorPrimary">
 
@@ -64,7 +64,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter translation"
+                android:hint="@string/enter_translation"
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/colorPrimary"
                 android:layout_marginTop="16dp">
@@ -87,7 +87,7 @@
         android:id="@+id/btnAddWord"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Word"
+        android:text="@string/add_word_button"
         android:textColor="@color/colorOnPrimary"
         android:textStyle="bold"
         android:backgroundTint="@color/colorSecondaryVariant"

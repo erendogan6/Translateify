@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
@@ -15,23 +15,22 @@
         android:src="@drawable/ic_back_arrow"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="@string/back_arrow_content_description"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Character Image -->
-
-    <!-- Speech Bubble with Question -->
-
     <ImageView
         android:id="@+id/character_image"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
+        android:contentDescription="@string/app_logo_desc"
         android:src="@drawable/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/back_arrow" />
 
-    <!-- Options - Beginner Level -->
+    <!-- Speech Bubble with Question -->
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -49,21 +48,22 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:padding="20dp"
-            android:text="İngilizce macerana nereden başlıyoruz?"
+            android:text="@string/question_text"
             android:textColor="#1B1B1B"
             android:textSize="18sp"
             android:textStyle="bold" />
 
     </com.google.android.material.card.MaterialCardView>
 
+    <!-- Options - Beginner Level -->
     <androidx.cardview.widget.CardView
         android:id="@+id/card_option_1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="40dp"
         android:background="@color/white"
         android:clickable="true"
-        android:layout_marginTop="40dp"
         android:focusable="true"
         android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="12dp"
@@ -83,16 +83,17 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_marginEnd="16dp"
+                android:contentDescription="@string/kolay_seviye_ikonu"
                 android:src="@drawable/ic_level_easy" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:text="İngilizceye sıfırdan başlıyorum!"
+                android:text="@string/option_1_text"
                 android:textColor="#1B1B1B"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:fontFamily="sans-serif" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -124,12 +125,13 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_marginEnd="16dp"
+                android:contentDescription="@string/orta_seviye_ikonu"
                 android:src="@drawable/ic_level_medium" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Biraz temelim var, daha fazlasını öğrenmeye hazırım!"
+                android:text="@string/option_2_text"
                 android:textColor="#1B1B1B"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -165,12 +167,13 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:layout_marginEnd="16dp"
+                android:contentDescription="@string/zor_seviye_ikonu"
                 android:src="@drawable/ic_level_hard" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="İngilizceyi çok seviyorum, hedefim profesyonel olmak!"
+                android:text="@string/option_3_text"
                 android:textColor="#1B1B1B"
                 android:textSize="18sp"
                 android:textStyle="bold"

@@ -8,12 +8,12 @@ glide = "4.16.0"
 material = "1.12.0"
 activity = "1.9.2"
 constraintlayout = "2.1.4"
-agp = "8.5.2"
+agp = "8.6.1"
 assertjAndroid = "1.2.0"
 converterGson = "2.11.0"
 coreTesting = "2.2.0"
 gsonVersion = "2.11.0"
-kotlin = "1.9.23"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -49,7 +49,6 @@ androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fr
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
-dagger-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version = "2.52" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics", version = "22.1.0" }
 firebase-auth = { module = "com.google.firebase:firebase-auth", version = "23.0.0" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }

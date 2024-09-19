@@ -41,7 +41,7 @@ class RegisterDetailFragment6 : Fragment() {
         _binding = FragmentRegisterDetail6Binding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        binding.continueButton.setOnClickListener {
+        binding.yesButton.setOnClickListener {
             handleNotificationPermission()
         }
 
@@ -49,7 +49,7 @@ class RegisterDetailFragment6 : Fragment() {
             findNavController().navigateUp()
         }
 
-        binding.skipButton.setOnClickListener {
+        binding.noButton.setOnClickListener {
             navigateToNextFragment()
         }
     }
@@ -81,7 +81,9 @@ class RegisterDetailFragment6 : Fragment() {
             .setTitle(getString(R.string.notification_permission_required))
             .setMessage(getString(R.string.notification_permission_rationale))
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
             }.setNegativeButton(getString(R.string.cancel), null)
             .create()
             .show()

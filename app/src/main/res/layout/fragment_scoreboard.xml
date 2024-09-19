@@ -14,7 +14,7 @@
         android:id="@+id/tvScoreboardTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Scoreboard"
+        android:text="@string/scoreboard_title"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/colorOnPrimary"

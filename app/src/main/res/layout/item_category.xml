@@ -28,6 +28,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginEnd="16dp"
+            android:contentDescription="@string/kategori_konu"
             android:src="@drawable/ic_category_daily" />
 
         <TextView

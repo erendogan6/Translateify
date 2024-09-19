@@ -54,7 +54,7 @@ class SelfGameViewModel
 
         fun onUserInput(userWord: String) {
             if (isValidWord(userWord)) {
-                _usedWords.value = _usedWords.value + userWord
+                _usedWords.value += userWord
                 _score.value += 1
                 fetchNextWord()
             } else {

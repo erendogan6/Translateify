@@ -6,7 +6,7 @@
     <color name="colorPrimaryVariant">#1976D2</color> <!-- Koyu Mavi -->
     <color name="colorSecondary">#FFB74D</color> <!-- Turuncu / Şeftali -->
     <color name="colorSecondaryVariant">#FFA726</color> <!-- Koyu Turuncu -->
-    <color name="colorGreen">#689F38</color> <!-- Kırmızı -->
+    <color name="colorGreen">#64DD17</color> <!-- Kırmızı -->
 
     <!-- Arka Plan ve Yüzey Renkleri -->
     <!-- Açık Gri Arka Plan -->
@@ -21,7 +21,7 @@
 
 
     <!-- Uyarı ve Başarı Renkleri -->
-    <color name="colorError">#D32F2F</color> <!-- Kırmızı Uyarı Rengi -->
+    <color name="colorError">#D50000</color> <!-- Kırmızı Uyarı Rengi -->
     <color name="colorOnError">#FFFFFF</color> <!-- Uyarı Rengi Üzerindeki Metin Rengi (Beyaz) -->
     <!-- Başarı Rengi: Yeşil -->
 </resources>

@@ -3,25 +3,25 @@
     <item
         android:id="@+id/randomWordsFragment"
         android:icon="@drawable/ic_words"
-        android:title="Random" />
+        android:title="@string/menu_random" />
 
     <item
         android:id="@+id/learnedWordsFragment"
         android:icon="@drawable/ic_favorites"
-        android:title="Learned" />
+        android:title="@string/menu_learned" />
 
     <item
         android:id="@+id/addWordFragment"
         android:icon="@drawable/ic_add"
-        android:title="Add Word" />
+        android:title="@string/menu_add_word" />
 
     <item
         android:id="@+id/gameFragment"
         android:icon="@drawable/ic_game"
-        android:title="Game" />
+        android:title="@string/menu_game" />
 
     <item
         android:id="@+id/scoreboardFragment"
         android:icon="@drawable/ic_scoreboard"
-        android:title="Scoreboard" />
+        android:title="@string/menu_scoreboard" />
 </menu>

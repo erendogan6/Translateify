@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.ItemUserScoreBinding
 import com.erendogan6.translateify.domain.model.UserScore
 
@@ -28,8 +29,9 @@ class ScoreboardAdapter : ListAdapter<UserScore, ScoreboardAdapter.ScoreViewHold
         private val binding: ItemUserScoreBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(userScore: UserScore) {
+            val scoreText = binding.root.context.getString(R.string.user_score_display, userScore.score)
             binding.tvUserEmail.text = userScore.email
-            binding.tvUserScore.text = "Puan: ${userScore.score}"
+            binding.tvUserScore.text = scoreText
         }
     }
 }
