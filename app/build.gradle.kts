@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlinx.kover")
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+    id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
@@ -40,7 +40,7 @@ android {
         viewBinding = true
         buildConfig = true
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += "META-INF/*"
             excludes += "META-INF"
@@ -92,9 +92,6 @@ dependencies {
     // JSON Parsing
     implementation(libs.google.gson)
 
-    // Lottie
-    implementation(libs.lottie.compose)
-
     // Chucker
     debugImplementation(libs.library)
     releaseImplementation(libs.library.no.op)
@@ -110,17 +107,8 @@ dependencies {
     implementation(libs.timber)
 
     // Navigation
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-
-    // Compose
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.activity.compose)
-    // implementation (platform(libs.androidx.compose.bom)
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
 
     // Unit Test Dependencies
     testImplementation(libs.junit)
@@ -129,21 +117,17 @@ dependencies {
     testImplementation(libs.mockk.mockk)
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.jetbrains.kotlinx.coroutines.test)
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.android.compiler)
 
     // Android Instrumentation Test Dependencies
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    // androidTestImplementation (platform(libs.androidx.compose.bom)
     androidTestImplementation(libs.mockk.android)
-
-    // Compose Test Rules
-    debugImplementation(libs.androidx.ui.test.manifest)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.tooling.preview)
+    androidTestImplementation(libs.dagger.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
 
     // ViewModel and Livedata
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
