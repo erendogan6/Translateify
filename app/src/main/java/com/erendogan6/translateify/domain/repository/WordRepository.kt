@@ -22,11 +22,4 @@ interface WordRepository {
     ): Flow<List<Word>>
 
     suspend fun getRandomWord(): Word
-
-    suspend fun saveUserToFirebase(
-        email: String,
-        name: String,
-        level: String,
-        interests: List<String>,
-    )
 }

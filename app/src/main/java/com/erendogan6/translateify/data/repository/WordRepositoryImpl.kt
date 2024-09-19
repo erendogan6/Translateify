@@ -8,7 +8,6 @@ import com.erendogan6.translateify.data.remote.GeminiService
 import com.erendogan6.translateify.data.remote.PexelsService
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.domain.repository.WordRepository
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
@@ -158,38 +157,4 @@ class WordRepositoryImpl(
     }
 
     override suspend fun getRandomWord(): Word = wordDao.getRandomWord()
-
-    override suspend fun saveUserToFirebase(
-        email: String,
-        name: String,
-        level: String,
-        interests: List<String>,
-    ) {
-        try {
-            // Ensure user is authenticated before trying to save data
-            val currentUser = FirebaseAuth.getInstance().currentUser
-            val userId = currentUser?.uid ?: throw Exception("User is not authenticated.")
-
-            val registrationDate = System.currentTimeMillis()
-
-            val userPreferences =
-                hashMapOf(
-                    "email" to email,
-                    "name" to name,
-                    "registrationDate" to registrationDate,
-                    "interests" to interests,
-                    "level" to level,
-                )
-
-            // Save user data in Firestore
-            firestore
-                .collection("users")
-                .document(userId)
-                .set(userPreferences)
-                .await()
-        } catch (e: Exception) {
-            Log.e("WordRepositoryImpl", "Error saving user to Firestore: ${e.message}")
-            throw e // Re-throw the exception to be handled by the caller
-        }
-    }
 }
