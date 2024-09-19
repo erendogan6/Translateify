@@ -1,37 +1,28 @@
 package com.erendogan6.translateify.presentation.ui.register
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentRegisterDetail3Binding
 import com.erendogan6.translateify.presentation.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterDetailFragment3 : Fragment() {
+class RegisterDetailFragment3 : Fragment(R.layout.fragment_register_detail3) {
     private var _binding: FragmentRegisterDetail3Binding? = null
     private val binding get() = _binding!!
 
     // ViewModel
     private val viewModel: RegisterViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        _binding = FragmentRegisterDetail3Binding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        _binding = FragmentRegisterDetail3Binding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         binding.continueButton.setOnClickListener {
@@ -40,7 +31,7 @@ class RegisterDetailFragment3 : Fragment() {
                 viewModel.setUserName(name)
                 navigateToNextFragment()
             } else {
-                binding.nameInputLayout.error = "Lütfen adınızı girin."
+                binding.nameInputLayout.error = getString(R.string.error_name)
             }
         }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.erendogan6.translateify.databinding.ActivityOnboardingBinding
 import com.erendogan6.translateify.presentation.ui.login.LoginActivity
+import com.erendogan6.translateify.presentation.ui.register.RegisterDetailActivity
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -1,44 +1,53 @@
 package com.erendogan6.translateify.presentation.ui.register
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentRegisterDetail2Binding
+import com.erendogan6.translateify.domain.model.Category
+import com.erendogan6.translateify.presentation.adapter.CategoryAdapter
 import com.erendogan6.translateify.presentation.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterDetailFragment2 : Fragment() {
+class RegisterDetailFragment2 : Fragment(R.layout.fragment_register_detail2) {
     private var _binding: FragmentRegisterDetail2Binding? = null
     private val binding get() = _binding!!
 
     private val viewModel: RegisterViewModel by activityViewModels()
-
-    private val selectedCategories = mutableListOf<String>()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        _binding = FragmentRegisterDetail2Binding.inflate(inflater, container, false)
-        return binding.root
-    }
+    private val maxSelection = 3
 
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        _binding = FragmentRegisterDetail2Binding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
-        setupCategoryCardListeners()
+        val categories =
+            listOf(
+                Category(getString(R.string.daily_life_and_communication), R.drawable.ic_category_daily),
+                Category(getString(R.string.emotions_and_expressions), R.drawable.ic_category_emotions),
+                Category(getString(R.string.food_and_drinks), R.drawable.ic_category_food),
+                Category(getString(R.string.health_and_body), R.drawable.ic_category_health),
+                Category(getString(R.string.travelers_and_tourists), R.drawable.ic_category_travel),
+                Category(getString(R.string.technology), R.drawable.ic_category_tech),
+                Category(getString(R.string.science), R.drawable.ic_category_science),
+                Category(getString(R.string.nature_and_environment), R.drawable.ic_category_nature),
+            )
+
+        val adapter =
+            CategoryAdapter(categories, maxSelection) { selected ->
+                viewModel.setSelectedCategories(selected)
+            }
+
+        binding.recyclerViewCategories.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewCategories.adapter = adapter
 
         binding.backArrow.setOnClickListener {
             findNavController().navigateUp()
@@ -49,45 +58,12 @@ class RegisterDetailFragment2 : Fragment() {
         }
     }
 
-    private fun setupCategoryCardListeners() {
-        // Set click listeners for category cards
-        binding.cardOption1.setOnClickListener { toggleCategory("Günlük Yaşam ve İletişim", binding.cardOption1) }
-        binding.cardOption2.setOnClickListener { toggleCategory("Duygular ve İfadeler", binding.cardOption2) }
-        binding.cardOption3.setOnClickListener { toggleCategory("Gezginler ve Turistler", binding.cardOption3) }
-        binding.cardOption4.setOnClickListener { toggleCategory("Yiyecek ve İçecek", binding.cardOption4) }
-        binding.cardOption5.setOnClickListener { toggleCategory("Teknoloji", binding.cardOption5) }
-        binding.cardOption6.setOnClickListener { toggleCategory("Doğa ve Çevre", binding.cardOption6) }
-        binding.cardOption7.setOnClickListener { toggleCategory("Bilim", binding.cardOption7) }
-    }
-
-    private fun toggleCategory(
-        category: String,
-        cardView: View,
-    ) {
-        if (selectedCategories.contains(category)) {
-            // Remove category if already selected
-            selectedCategories.remove(category)
-            cardView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white)) // Reset background color
-        } else {
-            if (selectedCategories.size < 3) {
-                // Add category if not selected and limit not reached
-                selectedCategories.add(category)
-                cardView.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.selected_card_color))
-            } else {
-                // Show error message if limit reached
-                Toast.makeText(requireContext(), "En fazla 3 kategori seçebilirsiniz.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // Update the ViewModel with the selected categories
-        viewModel.setSelectedCategories(selectedCategories)
-    }
-
     private fun validateAndNavigate() {
-        if (selectedCategories.size in 1..3) {
+        val selectedCount = viewModel.selectedCategories.value?.size ?: 0
+        if (selectedCount in 1..maxSelection) {
             navigateToNextFragment()
         } else {
-            Toast.makeText(requireContext(), "En az 1 ve en fazla 3 kategori seçmelisiniz.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.select_at_least_one_category), Toast.LENGTH_SHORT).show()
         }
     }
 

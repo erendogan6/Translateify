@@ -1,36 +1,27 @@
 package com.erendogan6.translateify.presentation.ui.register
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentRegisterDetail5Binding
 import com.erendogan6.translateify.presentation.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RegisterDetailFragment5 : Fragment() {
+class RegisterDetailFragment5 : Fragment(R.layout.fragment_register_detail5) {
     private var _binding: FragmentRegisterDetail5Binding? = null
     private val binding get() = _binding!!
 
     private val viewModel: RegisterViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        _binding = FragmentRegisterDetail5Binding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(
         view: View,
         savedInstanceState: Bundle?,
     ) {
+        _binding = FragmentRegisterDetail5Binding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
         binding.continueButton.setOnClickListener {
@@ -39,7 +30,7 @@ class RegisterDetailFragment5 : Fragment() {
                 viewModel.setUserPassword(password)
                 navigateToNextFragment()
             } else {
-                binding.passwordInputLayout.error = "Şifre en az 6 karakter olmalıdır."
+                binding.passwordInputLayout.error = getString(R.string.error_password)
             }
         }
 
