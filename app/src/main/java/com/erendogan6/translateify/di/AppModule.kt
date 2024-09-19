@@ -2,6 +2,9 @@ package com.erendogan6.translateify.di
 
 import android.content.Context
 import androidx.room.Room
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.erendogan6.translateify.BuildConfig
 import com.erendogan6.translateify.data.local.AppDatabase
 import com.erendogan6.translateify.data.local.WordDao
 import com.erendogan6.translateify.data.remote.GeminiService
@@ -55,18 +58,26 @@ object AppModule {
         val cacheDirectory = File(context.cacheDir, "http-cache")
         val cache = Cache(cacheDirectory, cacheSize)
 
-        /*val loggingInterceptor =
-            HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            }
-         */
-        return OkHttpClient
-            .Builder()
-            .cache(cache)
-            // .addInterceptor(loggingInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .build()
+        val okHttpBuilder =
+            OkHttpClient
+                .Builder()
+                .cache(cache)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+
+        if (BuildConfig.DEBUG) {
+            val chuckerInterceptor =
+                ChuckerInterceptor
+                    .Builder(context)
+                    .collector(ChuckerCollector(context))
+                    .maxContentLength(250000L)
+                    .alwaysReadResponseBody(true)
+                    .build()
+
+            okHttpBuilder.addInterceptor(chuckerInterceptor)
+        }
+
+        return okHttpBuilder.build()
     }
 
     @Provides
