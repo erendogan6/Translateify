@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
-import java.util.UUID
 
 class WordRepositoryImpl(
     private val wordDao: WordDao,
@@ -87,7 +86,7 @@ class WordRepositoryImpl(
             val wordsList =
                 snapshot.documents.mapNotNull { doc ->
                     val data = doc.data ?: return@mapNotNull null
-                    val id = (data["id"] as? Long)?.toString() ?: data["id"] as? String ?: UUID.randomUUID().toString()
+                    val id = doc.id
                     val english = data["english"] as? String ?: ""
                     val translation = data["translation"] as? String ?: ""
                     val isLearned = data["isLearned"] as? Boolean ?: false
@@ -104,47 +103,13 @@ class WordRepositoryImpl(
                     )
                 }
 
-            // Fetch additional words if needed
-            val finalWordsList =
-                if (wordsList.size < 50) {
-                    val additionalWordsSnapshot =
-                        firestore
-                            .collection("words")
-                            .limit(120 - wordsList.size.toLong())
-                            .get()
-                            .await()
-
-                    val additionalWords =
-                        additionalWordsSnapshot.documents.mapNotNull { doc ->
-                            val data = doc.data ?: return@mapNotNull null
-                            val id = (data["id"] as? Long)?.toString() ?: data["id"] as? String ?: UUID.randomUUID().toString()
-                            val english = data["english"] as? String ?: ""
-                            val translation = data["translation"] as? String ?: ""
-                            val isLearned = data["isLearned"] as? Boolean ?: false
-                            val difficult = data["difficulty"] as? String ?: ""
-                            val categories = (data["categories"] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
-
-                            Word(
-                                id = id,
-                                english = english,
-                                translation = translation,
-                                isLearned = isLearned,
-                                difficulty = difficult,
-                                categories = categories,
-                            )
-                        }
-                    wordsList + additionalWords
-                } else {
-                    wordsList
-                }
-
-            // Step 3: Save fetched data to Room
-            wordDao.insertWords(finalWordsList.map { it.toEntity() })
+            // Save to local database
+            wordDao.insertWords(wordsList.map { it.toEntity() })
 
             return getRandomWords() // Return the words from Room
         } catch (e: Exception) {
-            Timber.e("Error fetching words from Firestore: " + e.message)
-            return getRandomWords() // Fallback to whatever is available in Room
+            Timber.e("Error fetching words from Firestore: ${e.message}")
+            throw e
         }
     }
 

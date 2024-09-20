@@ -8,6 +8,7 @@ import com.erendogan6.translateify.domain.usecase.GetWordImageUseCase
 import com.erendogan6.translateify.domain.usecase.GetWordTranslationUseCase
 import com.erendogan6.translateify.domain.usecase.LoadWordsUseCase
 import com.erendogan6.translateify.domain.usecase.UpdateLearnedStatusUseCase
+import com.erendogan6.translateify.presentation.state.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -34,6 +35,9 @@ class RandomWordsViewModel
         private val _imageUrl = MutableStateFlow<String?>(null)
         val imageUrl: StateFlow<String?> get() = _imageUrl
 
+        private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
+        val uiState: StateFlow<UiState> get() = _uiState
+
         private var isDataLoadedFromFirebase = false
 
         fun setTranslationReset() {
@@ -45,16 +49,19 @@ class RandomWordsViewModel
             difficulty: String?,
         ) {
             viewModelScope.launch {
+                _uiState.value = UiState.Loading
                 try {
                     loadWordsUseCase(selectedCategories, difficulty).collect { wordList ->
                         if (_words.value.isEmpty() && !isDataLoadedFromFirebase) {
                             _words.value = wordList
                             isDataLoadedFromFirebase = true
+                            _uiState.value = UiState.Success(wordList)
                             Timber.d("Loaded words: $wordList")
                         }
                     }
                 } catch (e: Exception) {
-                    Timber.e("Error loading words: " + e.message)
+                    _uiState.value = UiState.Error("Error loading words: ${e.message}")
+                    Timber.e("Error loading words: ${e.message}")
                 }
             }
         }
