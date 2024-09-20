@@ -20,7 +20,7 @@ Uygulama şu anda Google Play Store'da test aşamasında.
 
   
 ## Teknoloji Yığını (Tech Stack)
-- **Kotlin (1.9.23)**
+- **Kotlin (2.0)**
 - **Android Jetpack:** Navigation, Flow, ViewModel, Room (architecture components)
 - **Retrofit & OkHttp** (networking and HTTP requests)
 - **GSON** (JSON serialization/deserialization)
@@ -41,9 +41,20 @@ Uygulama şu anda Google Play Store'da test aşamasında.
 - **Material Design** (modern UI components and guidelines)
 
 
+## Test Yığını (Test Stack)
+- **JUnit** (Unit Testing)
+- **MockK** (Mocking Framework)
+- **Kotlin Coroutines Test** (Testing Coroutines)
+- **Kover** (Code Coverage)
+- **AssertJ** (Fluent Assertions)
+
 ## Yaklaşımlar (Approaches)
+- **%100 Localization** (Türkçe, İngilizce)
+- **Content Descriptions for Accessibility** (Tüm resimler için Türkçe ve İngilizce içerik açıklamaları)
 - **SOLID Principles**
 - **Clean Code**
+- **DRY (Don't Repeat Yourself)**
+- **KISS (Keep It Simple, Stupid)**
 
 ## Mimari (Architect)
 - **MVVM** (Model-View-ViewModel)
