@@ -25,7 +25,7 @@
             android:exported="false"
             android:theme="@style/Theme.Translateify" />
         <activity
-            android:name=".presentation.OnboardingActivity"
+            android:name=".presentation.ui.onboarding.OnboardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

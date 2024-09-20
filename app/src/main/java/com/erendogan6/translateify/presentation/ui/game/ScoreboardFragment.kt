@@ -1,4 +1,4 @@
-package com.erendogan6.translateify.presentation.ui
+package com.erendogan6.translateify.presentation.ui.game
 
 import android.os.Bundle
 import android.view.View

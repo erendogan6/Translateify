@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/randomWordsFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.RandomWordsFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.word.RandomWordsFragment"
         android:label="Random Words"
         tools:layout="@layout/fragment_random_words">
         <action
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/wordDetailFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.WordDetailFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.word.WordDetailFragment"
         android:label="Word Detail"
         tools:layout="@layout/fragment_word_detail">
         <argument
@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/learnedWordsFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.LearnedWordsFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.word.LearnedWordsFragment"
         android:label="Learned Words"
         tools:layout="@layout/fragment_learned_words">
         <action
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/addWordFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.AddWordFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.word.AddWordFragment"
         android:label="AddWordFragment" />
 
     <fragment
@@ -72,7 +72,7 @@
 
     <fragment
         android:id="@+id/scoreboardFragment"
-        android:name="com.erendogan6.translateify.presentation.ui.ScoreboardFragment"
+        android:name="com.erendogan6.translateify.presentation.ui.game.ScoreboardFragment"
         android:label="Scoreboard"
         tools:layout="@layout/fragment_scoreboard" />
 

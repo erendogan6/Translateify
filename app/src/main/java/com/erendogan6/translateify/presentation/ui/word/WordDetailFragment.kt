@@ -1,4 +1,4 @@
-package com.erendogan6.translateify.presentation.ui
+package com.erendogan6.translateify.presentation.ui.word
 
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -118,7 +118,7 @@ class WordDetailFragment :
 
     private fun loadImageWithGlide(imageUrl: String?) {
         Glide
-            .with(requireContext())
+            .with(this)
             .load(imageUrl)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.drawable.logo)
@@ -169,11 +169,19 @@ class WordDetailFragment :
         super.onDestroy()
         tts?.shutdown()
         speechRecognizer.destroy()
+        context?.let { Glide.with(it).clear(binding.imageView) }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        Glide.with(requireContext()).clear(binding.imageView)
+        context?.let { Glide.with(it).clear(binding.imageView) }
         _binding = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        context?.let {
+            Glide.with(it).clear(binding.imageView)
+        }
     }
 }

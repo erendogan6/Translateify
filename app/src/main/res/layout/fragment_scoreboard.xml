@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     android:padding="16dp"
-    tools:context=".presentation.ui.ScoreboardFragment">
+    tools:context=".presentation.ui.game.ScoreboardFragment">
 
     <!-- Title for Scoreboard -->
     <TextView
