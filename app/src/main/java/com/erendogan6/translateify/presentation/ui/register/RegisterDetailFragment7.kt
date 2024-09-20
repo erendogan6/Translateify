@@ -34,14 +34,25 @@ class RegisterDetailFragment7 : Fragment(R.layout.fragment_register_detail7) {
     private fun observeViewModel() {
         viewModel.registrationState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is RegistrationResultState.Loading -> binding.progressBar.visibility = View.VISIBLE
+                is RegistrationResultState.Loading -> {
+                    // Lottie animasyonu görünür yap ve başlat
+                    binding.lottieAnimationView.setAnimation(R.raw.register)
+                    binding.lottieAnimationView.visibility = View.VISIBLE
+                    binding.lottieAnimationView.playAnimation()
+                }
                 is RegistrationResultState.Success -> {
-                    binding.progressBar.visibility = View.GONE
+                    // Lottie animasyonunu durdur ve gizle
+                    binding.lottieAnimationView.visibility = View.GONE
+                    binding.lottieAnimationView.cancelAnimation()
+
                     Toast.makeText(requireContext(), getString(R.string.registration_successful), Toast.LENGTH_SHORT).show()
                     navigateToMainActivity()
                 }
                 is RegistrationResultState.Error -> {
-                    binding.progressBar.visibility = View.GONE
+                    // Lottie animasyonunu durdur ve gizle
+                    binding.lottieAnimationView.visibility = View.GONE
+                    binding.lottieAnimationView.cancelAnimation()
+
                     Toast
                         .makeText(
                             requireContext(),
