@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentRegisterDetail6Binding
 
-class RegisterDetailFragment6 : Fragment() {
+class RegisterDetailFragment6 : Fragment(R.layout.fragment_register_detail6) {
     private var _binding: FragmentRegisterDetail6Binding? = null
     private val binding get() = _binding!!
 
