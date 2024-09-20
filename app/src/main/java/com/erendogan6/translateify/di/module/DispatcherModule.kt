@@ -1,4 +1,4 @@
-package com.erendogan6.translateify.di
+package com.erendogan6.translateify.di.module
 
 import dagger.Module
 import dagger.Provides
