@@ -31,6 +31,7 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
     private val binding get() = _binding!!
     private lateinit var adapter: WordAdapter
     private var isSwipeToRefresh: Boolean = false
+    private var isDataLoaded: Boolean = false
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
@@ -50,7 +51,7 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
         observeWords()
         handleSwipeToRefresh()
 
-        if (viewModel.words.value.isEmpty()) {
+        if (viewModel.words.value.isEmpty() && !isDataLoaded) {
             fetchUserPreferencesAndLoadWords()
         }
     }
@@ -77,14 +78,17 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
                         is UiState.Loading -> showLoading(true)
                         is UiState.Success -> {
                             showLoading(false)
-                            updateWordList(uiState.words)
+                            if (!isDataLoaded) {
+                                updateWordList(uiState.words)
+                                isDataLoaded = true
+                            }
                         }
                         is UiState.Error -> {
                             showLoading(false)
                             showError(uiState.message)
                         }
                         else -> {
-                            Timber.d("Idle state")
+                            Timber.d("No state")
                         }
                     }
                 }
@@ -149,9 +153,13 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
                         .get()
                         .await()
 
-                val interests = document["interests"] as? List<*> ?: emptyList<String>()
-                val difficulty = document.getString("difficulty")
-                viewModel.fetchWordsFromFirebase(interests.filterIsInstance<String>(), difficulty)
+                if (document.exists()) {
+                    val interests = (document["interests"] as? List<*>)?.filterIsInstance<String>() ?: emptyList()
+                    val difficulty = document.getString("difficulty")
+                    viewModel.fetchWordsFromFirebase(interests, difficulty)
+                } else {
+                    viewModel.fetchWordsFromFirebase(emptyList(), null)
+                }
             } catch (e: Exception) {
                 Timber.e("Error fetching user preferences: ${e.message}")
                 viewModel.fetchWordsFromFirebase(emptyList(), null)
