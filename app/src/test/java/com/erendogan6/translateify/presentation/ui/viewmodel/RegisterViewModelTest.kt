@@ -8,13 +8,13 @@ import com.erendogan6.translateify.presentation.viewmodel.RegisterViewModel
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -96,13 +96,10 @@ class RegisterViewModelTest {
             }
 
             // Assert that the registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Success,
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Success,
             )
         }
 
@@ -139,13 +136,10 @@ class RegisterViewModelTest {
             }
 
             // Assert that the registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Error("Registration failed"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Error("Registration failed"),
             )
         }
 
@@ -190,13 +184,10 @@ class RegisterViewModelTest {
             }
 
             // Assert that the registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Error("Saving to Firestore failed"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Error("Saving to Firestore failed"),
             )
         }
 
@@ -223,12 +214,9 @@ class RegisterViewModelTest {
             }
 
             // Assert that the registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Error("Email is required"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Error("Email is required"),
             )
         }
 
@@ -255,12 +243,9 @@ class RegisterViewModelTest {
             }
 
             // Assert that the registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Error("Password is required"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Error("Password is required"),
             )
         }
 
@@ -295,12 +280,9 @@ class RegisterViewModelTest {
             }
 
             // Assert that the registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Error("At least one interest must be selected"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Error("At least one interest must be selected"),
             )
         }
 
@@ -329,13 +311,10 @@ class RegisterViewModelTest {
             testDispatcher.scheduler.advanceUntilIdle()
 
             // Assert that registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Success,
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Success,
             )
         }
 
@@ -361,13 +340,10 @@ class RegisterViewModelTest {
             testDispatcher.scheduler.advanceUntilIdle()
 
             // Assert: registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Error("Test failure"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Error("Test failure"),
             )
         }
 
@@ -434,13 +410,10 @@ class RegisterViewModelTest {
             }
 
             // Assert that the registrationState was updated to Error("Failed to save to Firestore")
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Error("Failed to save to Firestore"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Error("Failed to save to Firestore"),
             )
         }
 
@@ -468,12 +441,9 @@ class RegisterViewModelTest {
             }
 
             // Verify that appropriate error message was set
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Error("Email is required"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Error("Email is required"),
             )
         }
 
@@ -511,13 +481,10 @@ class RegisterViewModelTest {
             }
 
             // Assert: registrationState was set correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Error("Registration failed"),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Error("Registration failed"),
             )
         }
 
@@ -584,13 +551,10 @@ class RegisterViewModelTest {
             coVerify(exactly = 1) { registerUserUseCase(any(), any()) }
 
             // Assert: Ensure the registrationState was updated correctly
-            assertEquals(
-                listOf(
-                    RegistrationResultState.Idle,
-                    RegistrationResultState.Loading,
-                    RegistrationResultState.Error(exceptionMessage),
-                ),
-                stateObserver,
+            assertThat(stateObserver).containsExactly(
+                RegistrationResultState.Idle,
+                RegistrationResultState.Loading,
+                RegistrationResultState.Error(exceptionMessage),
             )
         }
 }
