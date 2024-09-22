@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlinx.kover")
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
@@ -18,8 +18,8 @@ android {
         applicationId = "com.erendogan6.translateify"
         minSdk = 26
         targetSdk = 35
-        versionCode = 13
-        versionName = "1.13"
+        versionCode = 14
+        versionName = "1.14"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -80,7 +80,7 @@ dependencies {
     // Room Database
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
     // SwipeRefreshLayout
@@ -88,7 +88,7 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
 
     // Coroutine
     implementation(libs.kotlinx.coroutines.android)
@@ -102,7 +102,7 @@ dependencies {
 
     // Glide
     implementation(libs.glide)
-    kapt(libs.compiler)
+    ksp(libs.compiler)
 
     // LeakCanary
     debugImplementation(libs.leakcanary.android)
@@ -122,14 +122,14 @@ dependencies {
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.android.compiler)
+    kspTest(libs.hilt.android.compiler)
 
     // Android Instrumentation Test Dependencies
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.android.compiler)
+    kspAndroidTest(libs.hilt.android.compiler)
 
     // ViewModel and Livedata
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -147,7 +147,4 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-}
-kapt {
-    correctErrorTypes = true
 }
