@@ -38,10 +38,14 @@ class AddWordFragment : Fragment(R.layout.fragment_add_word) {
                         categories = emptyList(),
                     )
                 viewModel.addWord(newWord)
-                Toast.makeText(requireContext(), "Word added successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.word_added_successfully),
+                    Toast.LENGTH_SHORT).show()
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             } else {
-                Toast.makeText(requireContext(), "Please fill in both fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.please_fill_in_both_fields),
+                    Toast.LENGTH_SHORT).show()
             }
         }
     }

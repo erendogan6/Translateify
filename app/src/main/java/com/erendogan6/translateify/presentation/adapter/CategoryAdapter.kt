@@ -43,7 +43,15 @@ class CategoryAdapter(
                 if (selectedCategories.size < maxSelection) {
                     selectedCategories.add(category.name)
                 } else {
-                    Toast.makeText(binding.root.context, "Maximum $maxSelection categories can be selected.", Toast.LENGTH_SHORT).show()
+                    Toast
+                        .makeText(
+                            binding.root.context,
+                            binding.root.context.getString(
+                                R.string.maximum_categories_can_be_selected,
+                                maxSelection,
+                            ),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             }
             onSelectionChanged(selectedCategories)

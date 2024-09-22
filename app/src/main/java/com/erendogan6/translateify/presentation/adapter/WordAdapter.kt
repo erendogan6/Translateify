@@ -49,8 +49,16 @@ class WordAdapter(
                 )
             }
 
-            binding.buttonLearn.contentDescription = "Go to Learn Page For ${word.english}"
-            binding.ivCheckMark.contentDescription = "Mark as Learned For ${word.english}"
+            binding.buttonLearn.contentDescription =
+                binding.root.context.getString(
+                    R.string.go_to_learn_page_for,
+                    word.english,
+                )
+            binding.ivCheckMark.contentDescription =
+                binding.root.context.getString(
+                    R.string.mark_as_learned_for,
+                    word.english,
+                )
 
             binding.buttonLearn.setOnClickListener { onItemClick(word) }
             binding.ivCheckMark.setOnClickListener {

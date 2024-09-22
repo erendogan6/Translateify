@@ -26,6 +26,7 @@ import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
     private val viewModel: RandomWordsViewModel by activityViewModels()

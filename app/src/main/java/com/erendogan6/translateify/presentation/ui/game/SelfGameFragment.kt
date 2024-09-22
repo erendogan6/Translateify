@@ -38,14 +38,14 @@ class SelfGameFragment : Fragment(R.layout.fragment_self_game) {
                 viewModel.onUserInput(userWord)
                 binding.etUserWord.text?.clear()
             } else {
-                Toast.makeText(requireContext(), "Kelime boş olamaz!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.kelime_bos_olamaz), Toast.LENGTH_SHORT).show()
             }
         }
 
         // Şu anki kelimeyi göster
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.currentWord.collect { word ->
-                binding.tvCurrentWord.text = word?.english ?: "Bilgisayar kelime veriyor..."
+                binding.tvCurrentWord.text = word?.english ?: getString(R.string.bilgisayar_kelime_veriyor)
             }
         }
 
@@ -75,8 +75,10 @@ class SelfGameFragment : Fragment(R.layout.fragment_self_game) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.gameOver.collect { isOver ->
                 if (isOver) {
-                    Toast.makeText(requireContext(), "Oyun bitti!", Toast.LENGTH_SHORT).show()
-                    binding.btnSubmit.isEnabled = false // Oyuncunun daha fazla kelime girmesini engelle
+                    Toast.makeText(requireContext(),
+                        getString(R.string.oyun_bitti),
+                        Toast.LENGTH_SHORT).show()
+                    binding.btnSubmit.isEnabled = false
                 }
             }
         }

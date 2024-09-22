@@ -1,7 +1,6 @@
 package com.erendogan6.translateify.data.remote
 
 import com.erendogan6.translateify.R
-import com.erendogan6.translateify.utils.ResourcesProvider
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.SerializationException
 import com.google.ai.client.generativeai.type.asTextOrNull
@@ -19,10 +18,10 @@ import javax.inject.Singleton
 class GeminiService
     @Inject
     constructor(
-        private val resourcesProvider: ResourcesProvider,
+        private val productionResourcesProvider: com.erendogan6.translateify.utils.ProductionResourcesProvider,
     ) {
         private val systemInstruction: String
-            get() = resourcesProvider.getString(R.string.translation_instruction)
+            get() = "Please provide the Turkish translation for the following word:"
 
         val model: GenerativeModel by lazy {
             GenerativeModel(
@@ -73,12 +72,12 @@ class GeminiService
                         ?.content
                         ?.parts
                         ?.firstOrNull()
-                        ?.asTextOrNull() ?: resourcesProvider.getString(R.string.general_error_message)
+                        ?.asTextOrNull() ?: productionResourcesProvider.getString(R.string.general_error_message)
                 } catch (e: SerializationException) {
-                    resourcesProvider.getString(R.string.serialization_error_message)
+                    productionResourcesProvider.getString(R.string.serialization_error_message)
                 } catch (e: Exception) {
                     Timber.e(e.localizedMessage)
-                    resourcesProvider.getString(R.string.error_fetching_translation)
+                    productionResourcesProvider.getString(R.string.error_fetching_translation)
                 }
             }
     }

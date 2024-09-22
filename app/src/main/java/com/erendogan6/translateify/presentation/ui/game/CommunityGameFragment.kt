@@ -106,11 +106,15 @@ class CommunityGameFragment : Fragment(R.layout.fragment_community_game) {
                 viewModel.onUserInput(userWord)
                 binding.etUserWord.text?.clear()
             } else {
-                Toast.makeText(requireContext(), "Kelime boş olamaz!", Toast.LENGTH_SHORT).show()
+                Toast
+                    .makeText(
+                        requireContext(),
+                        getString(R.string.kelime_bos_olamaz),
+                        Toast.LENGTH_SHORT,
+                    ).show()
             }
         }
 
-        // Handle "Enter" key press on the keyboard
         binding.etUserWord.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE) {
                 binding.btnSubmit.performClick()
@@ -125,15 +129,10 @@ class CommunityGameFragment : Fragment(R.layout.fragment_community_game) {
         if (!viewModel.notificationShown) {
             AlertDialog
                 .Builder(requireContext())
-                .setTitle("Oyun Kuralları")
+                .setTitle(getString(R.string.oyun_kurallari))
                 .setMessage(
-                    "Bu oyunda amacınız, diğer oyuncuların girdiği son kelimenin son harfiyle başlayan yeni bir kelime girmektir.\n\n" +
-                        "Kurallar:\n" +
-                        "1. Girilen kelime son 20 kelime içinde olmamalıdır.\n" +
-                        "2. Aynı kullanıcı art arda kelime giremez.\n" +
-                        "3. Kelimeniz, önceki kelimenin son harfiyle başlamalıdır.\n\n" +
-                        "İyi eğlenceler!",
-                ).setPositiveButton("Tamam") { dialog, _ ->
+                    getString(R.string.game_rules),
+                ).setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                     dialog.dismiss()
                 }.show()
             viewModel.setNotificationShown()

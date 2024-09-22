@@ -95,10 +95,20 @@ class WordDetailFragment :
                     if (!viewModel.isProcessing) {
                         viewModel.fetchTranslation(word.english)
                     } else {
-                        Toast.makeText(requireContext(), "AI işlemi devam ederken yeni bir işlem başlatılamaz.", Toast.LENGTH_SHORT).show()
+                        Toast
+                            .makeText(
+                                requireContext(),
+                                getString(R.string.ai_islemi_devam),
+                                Toast.LENGTH_SHORT,
+                            ).show()
                     }
                 } catch (e: Exception) {
-                    Timber.e("AI işlem hatası: ${e.message}")
+                    Timber.e(
+                        getString(
+                            R.string.ai_islem_hatasi,
+                            e.message,
+                        ),
+                    )
                 }
             }
         }
@@ -108,7 +118,12 @@ class WordDetailFragment :
                 if (!viewModel.isProcessing) {
                     startSpeechToText()
                 } else {
-                    Toast.makeText(requireContext(), "AI işlemi devam ederken konuşma tanıma yapılamaz.", Toast.LENGTH_SHORT).show()
+                    Toast
+                        .makeText(
+                            requireContext(),
+                            getString(R.string.konusma_yapilamaz),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                 }
             }
         }
