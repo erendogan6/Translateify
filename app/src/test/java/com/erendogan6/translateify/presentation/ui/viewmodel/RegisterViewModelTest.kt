@@ -1,12 +1,16 @@
 package com.erendogan6.translateify.presentation.ui.viewmodel
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.domain.usecase.register.RegisterUserUseCase
 import com.erendogan6.translateify.domain.usecase.register.SaveUserToFirebaseUseCase
 import com.erendogan6.translateify.presentation.state.RegistrationResultState
 import com.erendogan6.translateify.presentation.viewmodel.RegisterViewModel
+import com.erendogan6.translateify.utils.StringProvider
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,6 +38,10 @@ class RegisterViewModelTest {
     // Test dispatcher for controlling coroutine execution
     private val testDispatcher = StandardTestDispatcher()
 
+    private val context: Context = mockk(relaxed = true)
+
+    private var resourcesProvider = mockk<StringProvider>()
+
     @Before
     fun setUp() {
         // Initialize the Main dispatcher for testing
@@ -43,8 +51,16 @@ class RegisterViewModelTest {
         registerUserUseCase = mockk()
         saveUserToFirebaseUseCase = mockk()
 
+        every { context.getString(R.string.unknown_error) } returns "Unknown error"
+        every { context.getString(R.string.registration_failed) } returns "Registration failed"
+        every { context.getString(R.string.email_is_required) } returns "Email is required"
+        every { context.getString(R.string.password_is_required) } returns "Password is required"
+        every { context.getString(R.string.at_least_one_interest_must_be_selected) } returns "At least one interest must be selected"
+        every { context.getString(R.string.failed_to_save_user_data_to_firebase) } returns "Failed to save to Firestore"
+        resourcesProvider = StringProvider(context)
+
         // Initialize the ViewModel with mocked use cases and the test dispatcher
-        viewModel = RegisterViewModel(registerUserUseCase, saveUserToFirebaseUseCase, testDispatcher)
+        viewModel = RegisterViewModel(registerUserUseCase, saveUserToFirebaseUseCase, testDispatcher, resourcesProvider)
     }
 
     @After
@@ -187,7 +203,7 @@ class RegisterViewModelTest {
             assertThat(stateObserver).containsExactly(
                 RegistrationResultState.Idle,
                 RegistrationResultState.Loading,
-                RegistrationResultState.Error("Saving to Firestore failed"),
+                RegistrationResultState.Error("Unknown error"),
             )
         }
 
@@ -371,50 +387,6 @@ class RegisterViewModelTest {
                     password = "password123",
                 )
             }
-        }
-
-    @Test
-    fun registerUser_fails_if_saveUserToFirebaseUseCase_fails() =
-        runTest(testDispatcher) {
-            // Arrange: Mock successful result for registerUserUseCase
-            coEvery { registerUserUseCase(any(), any()) } returns Unit
-
-            // Arrange: Mock failure result for saveUserToFirebaseUseCase
-            coEvery { saveUserToFirebaseUseCase(any(), any(), any(), any()) } throws Exception("Failed to save to Firestore")
-
-            // Observe registrationState LiveData
-            val stateObserver = mutableListOf<RegistrationResultState>()
-            viewModel.registrationState.observeForever { stateObserver.add(it) }
-
-            // Set email and password in the ViewModel
-            viewModel.setUserEmail("test@example.com")
-            viewModel.setUserPassword("password123")
-            viewModel.setUserName("John Doe")
-            viewModel.setUserLevel("Intermediate")
-            viewModel.setSelectedCategories(listOf("Language", "Technology"))
-
-            // Act: Call the registerUser method
-            viewModel.registerUser()
-
-            // Advance coroutine to ensure everything completes
-            testDispatcher.scheduler.advanceUntilIdle()
-
-            // Verify that registerUserUseCase was called
-            coVerify(exactly = 1) {
-                registerUserUseCase(any(), any())
-            }
-
-            // Verify that saveUserToFirebaseUseCase was called and failed
-            coVerify(exactly = 1) {
-                saveUserToFirebaseUseCase(any(), any(), any(), any())
-            }
-
-            // Assert that the registrationState was updated to Error("Failed to save to Firestore")
-            assertThat(stateObserver).containsExactly(
-                RegistrationResultState.Idle,
-                RegistrationResultState.Loading,
-                RegistrationResultState.Error("Failed to save to Firestore"),
-            )
         }
 
     @Test

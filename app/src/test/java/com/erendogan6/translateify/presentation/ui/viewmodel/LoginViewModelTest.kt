@@ -1,10 +1,14 @@
 package com.erendogan6.translateify.presentation.ui.viewmodel
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.domain.usecase.login.LoginUseCase
 import com.erendogan6.translateify.presentation.viewmodel.LoginViewModel
+import com.erendogan6.translateify.utils.StringProvider
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
@@ -32,6 +36,10 @@ class LoginViewModelTest {
     // Test dispatcher to control coroutine execution
     private val testDispatcher = StandardTestDispatcher()
 
+    private val mockContext: Context = mockk(relaxed = true)
+
+    private var resourcesProvider = mockk<StringProvider>()
+
     @Before
     fun setUp() {
         // Initialize the Main dispatcher for testing
@@ -40,8 +48,15 @@ class LoginViewModelTest {
         // Initialize the mock objects
         loginUseCase = mockk()
 
+        every { mockContext.getString(R.string.email_cannot_be_empty) } returns "Email cannot be empty"
+        every { mockContext.getString(R.string.unknown_error) } returns "Unexpected error occurred"
+        every { mockContext.getString(R.string.error_during_login) } returns "Login failed"
+        every { mockContext.getString(R.string.error_during_login) } returns "Login failed"
+
+        resourcesProvider = StringProvider(mockContext)
+
         // Initialize the ViewModel with the mocked use case and test dispatcher
-        viewModel = LoginViewModel(loginUseCase, testDispatcher)
+        viewModel = LoginViewModel(loginUseCase, testDispatcher, resourcesProvider)
     }
 
     @After
