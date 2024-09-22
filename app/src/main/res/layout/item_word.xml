@@ -90,34 +90,32 @@
         android:layout_height="48dp"
         android:contentDescription="@string/mark_as_learned"
         android:src="@drawable/ic_checkbox"
-        android:padding="4dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_gravity="center"
         app:tint="@color/colorOnBackground" />
 
         <!-- Learn Button -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/buttonLearn"
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:gravity="center"
-            android:layout_gravity="center"
+            android:layout_height="48dp"
             android:background="@color/colorSecondaryVariant"
             android:backgroundTint="@color/colorSecondaryVariant"
             android:stateListAnimator="@android:anim/accelerate_interpolator"
-            app:cardElevation="5dp"
-            app:cardCornerRadius="10dp"
+            app:cardElevation="3dp"
+            app:cardCornerRadius="15dp"
             android:clickable="true">
 
             <TextView
-                android:id="@+id/buttonLearn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ogren"
                 android:textColor="@color/colorOnBackground"
                 android:gravity="center"
                 android:textSize="18sp"
-                android:paddingVertical="5dp"
-                android:paddingHorizontal="15dp"
+                android:clickable="false"
+                android:enabled="false"
+                android:paddingHorizontal="12dp"
                 android:layout_gravity="center"/>
 
 

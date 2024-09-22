@@ -11,6 +11,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -76,7 +77,7 @@ class GeminiService
                 } catch (e: SerializationException) {
                     resourcesProvider.getString(R.string.serialization_error_message)
                 } catch (e: Exception) {
-                    println(e.localizedMessage)
+                    Timber.e(e.localizedMessage)
                     resourcesProvider.getString(R.string.error_fetching_translation)
                 }
             }

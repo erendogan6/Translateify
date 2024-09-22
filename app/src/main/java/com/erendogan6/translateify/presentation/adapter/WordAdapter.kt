@@ -39,7 +39,6 @@ class WordAdapter(
             binding.tvWord.text = word.english
             binding.tvTranslation.text = word.translation
 
-            // Öğrenme durumuna göre ikonun renklerini ayarlayın
             if (word.isLearned) {
                 binding.ivCheckMark.setImageTintList(
                     ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.colorGreen)),
@@ -49,6 +48,9 @@ class WordAdapter(
                     ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.colorError)),
                 )
             }
+
+            binding.buttonLearn.contentDescription = "Go to Learn Page For ${word.english}"
+            binding.ivCheckMark.contentDescription = "Mark as Learned For ${word.english}"
 
             binding.buttonLearn.setOnClickListener { onItemClick(word) }
             binding.ivCheckMark.setOnClickListener {

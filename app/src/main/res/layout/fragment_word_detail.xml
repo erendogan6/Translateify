@@ -42,6 +42,8 @@
                 android:text="magma odası"
                 android:textSize="20sp"
                 android:textColor="@color/colorOnPrimary"
+                android:clickable="false"
+                android:enabled="false"
                 android:layout_marginTop="8dp"
                 tools:ignore="HardcodedText" />
 
