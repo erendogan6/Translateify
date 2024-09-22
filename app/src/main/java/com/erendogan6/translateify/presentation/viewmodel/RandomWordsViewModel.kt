@@ -29,8 +29,8 @@ class RandomWordsViewModel
         private val _words = MutableStateFlow<List<Word>>(emptyList())
         val words: StateFlow<List<Word>> = _words
 
-        private val _translation = MutableStateFlow<String?>(null)
-        val translation: StateFlow<String?> get() = _translation
+        private val _renderedHtml = MutableStateFlow<String?>(null)
+        val renderedHtml: StateFlow<String?> get() = _renderedHtml
 
         private val _imageUrl = MutableStateFlow<String?>(null)
         val imageUrl: StateFlow<String?> get() = _imageUrl
@@ -40,9 +40,8 @@ class RandomWordsViewModel
 
         private var isDataLoadedFromFirebase = false
 
-        fun setTranslationReset() {
-            _translation.value = null
-        }
+        var isProcessing = false
+            private set
 
         fun fetchWordsFromFirebase(
             selectedCategories: List<String>,
@@ -73,8 +72,20 @@ class RandomWordsViewModel
         }
 
         fun fetchTranslation(word: String) {
+            if (isProcessing) {
+                return
+            }
+            isProcessing = true
             viewModelScope.launch {
-                _translation.value = getWordTranslationUseCase(word)
+                try {
+                    val markdownText = getWordTranslationUseCase(word)
+
+                    _renderedHtml.value = markdownText
+                } catch (e: Exception) {
+                    _renderedHtml.value = "Çeviri işlemi başarısız oldu"
+                } finally {
+                    isProcessing = false
+                }
             }
         }
 

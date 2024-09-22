@@ -1,34 +1,29 @@
 package com.erendogan6.translateify.presentation.ui.word
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.speech.tts.TextToSpeech
-import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentWordDetailBinding
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.presentation.viewmodel.RandomWordsViewModel
-import com.vladsch.flexmark.html.HtmlRenderer
-import com.vladsch.flexmark.parser.Parser
 import dagger.hilt.android.AndroidEntryPoint
+import io.noties.markwon.Markwon
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -37,7 +32,7 @@ class WordDetailFragment :
     TextToSpeech.OnInitListener {
     private var _binding: FragmentWordDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: RandomWordsViewModel by activityViewModels()
+    private val viewModel: RandomWordsViewModel by viewModels()
     private var word: Word? = null
     private var tts: TextToSpeech? = null
     private val args: WordDetailFragmentArgs by navArgs()
@@ -69,49 +64,78 @@ class WordDetailFragment :
         word = args.word
 
         word?.let { word ->
-            binding.tvWordDetail.text = word.english
-            binding.tvTranslationDetail.text = word.translation
+            observeViewModel()
+            setupUI(word)
+        }
+    }
 
-            binding.btnToggleLearned.text =
-                if (word.isLearned) getString(R.string.unlearn_word) else getString(R.string.learn_word)
+    private fun setupUI(word: Word) {
+        binding.tvWordDetail.text = word.english
+        binding.tvTranslationDetail.text = word.translation
 
-            binding.btnToggleLearned.setOnClickListener {
-                viewModel.toggleLearnedStatus(word)
-                findNavController().popBackStack()
-            }
+        binding.btnToggleLearned.text =
+            if (word.isLearned) getString(R.string.unlearn_word) else getString(R.string.learn_word)
 
-            binding.btnFetchTranslation.setOnClickListener {
-                viewModel.fetchTranslation(word.english)
-            }
+        binding.btnToggleLearned.setOnClickListener {
+            viewModel.toggleLearnedStatus(word)
 
+            setFragmentResult(
+                "learnedStatusChanged",
+                Bundle().apply {
+                    putParcelable("updatedWord", word)
+                },
+            )
+
+            findNavController().popBackStack()
+        }
+
+        binding.btnFetchTranslation.setOnClickListener {
             lifecycleScope.launch {
-                viewModel.translation.collect { translation ->
-                    translation?.let {
-                        val markdownText = it
-                        val parser = Parser.builder().build()
-                        val document = parser.parse(markdownText)
-                        val renderer = HtmlRenderer.builder().build()
-                        val html = renderer.render(document)
-
-                        binding.tvTranslationDetail.text = Html.fromHtml(html, Html.FROM_HTML_MODE_COMPACT)
-                        viewModel.setTranslationReset()
+                try {
+                    if (!viewModel.isProcessing) {
+                        viewModel.fetchTranslation(word.english)
+                    } else {
+                        Toast.makeText(requireContext(), "AI işlemi devam ederken yeni bir işlem başlatılamaz.", Toast.LENGTH_SHORT).show()
                     }
+                } catch (e: Exception) {
+                    Timber.e("AI işlem hatası: ${e.message}")
                 }
             }
+        }
 
-            viewModel.fetchWordImage(word.english)
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                viewModel.imageUrl.collect { imageUrl ->
-                    loadImageWithGlide(imageUrl)
+        binding.btnSpeechToText.setOnClickListener {
+            lifecycleScope.launch {
+                if (!viewModel.isProcessing) {
+                    startSpeechToText()
+                } else {
+                    Toast.makeText(requireContext(), "AI işlemi devam ederken konuşma tanıma yapılamaz.", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
 
-            binding.btnPronounce.setOnClickListener {
-                pronounceWord(word)
+        binding.btnPronounce.setOnClickListener {
+            pronounceWord(word)
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.fetchWordImage(word!!.english)
+        val markwon = Markwon.create(requireContext())
+
+        lifecycleScope.launch {
+            viewModel.renderedHtml.collect { markdownText ->
+                markdownText?.let {
+                    markwon.setMarkdown(
+                        binding.tvTranslationDetail,
+                        markdownText,
+                    )
+                }
             }
-            binding.btnSpeechToText.setOnClickListener {
-                startSpeechToText()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.imageUrl.collect { imageUrl ->
+                loadImageWithGlide(imageUrl)
             }
         }
     }
@@ -123,24 +147,7 @@ class WordDetailFragment :
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .placeholder(R.drawable.logo)
             .error(R.drawable.logo)
-            .listener(
-                object : RequestListener<Drawable> {
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean,
-                    ): Boolean = false
-
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean,
-                    ): Boolean = false
-                },
-            ).into(binding.imageView)
+            .into(binding.imageView)
     }
 
     private fun pronounceWord(word: Word) {
@@ -166,22 +173,18 @@ class WordDetailFragment :
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         tts?.shutdown()
         speechRecognizer.destroy()
-        context?.let { Glide.with(it).clear(binding.imageView) }
+        super.onDestroy()
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        context?.let { Glide.with(it).clear(binding.imageView) }
-        _binding = null
-    }
-
-    override fun onStop() {
-        super.onStop()
-        context?.let {
-            Glide.with(it).clear(binding.imageView)
+        _binding?.let {
+            context?.let { context ->
+                Glide.with(context).clear(it.imageView)
+            }
         }
+        _binding = null
+        super.onDestroyView()
     }
 }

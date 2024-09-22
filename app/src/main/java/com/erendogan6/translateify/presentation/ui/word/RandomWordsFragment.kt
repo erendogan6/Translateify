@@ -1,10 +1,12 @@
 package com.erendogan6.translateify.presentation.ui.word
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -54,10 +56,21 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
         if (viewModel.words.value.isEmpty() && !isDataLoaded) {
             fetchUserPreferencesAndLoadWords()
         }
+
+        setFragmentResultListener("learnedStatusChanged") { _, bundle ->
+            val updatedWord =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    bundle.getParcelable("updatedWord", Word::class.java)
+                } else {
+                    bundle.getParcelable("updatedWord")
+                }
+            updatedWord?.let {
+                viewModel.toggleLearnedStatus(it)
+            }
+        }
     }
 
     private fun setupUI() {
-        // Setup RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         adapter =
             WordAdapter(
@@ -66,7 +79,6 @@ class RandomWordsFragment : Fragment(R.layout.fragment_random_words) {
             )
         binding.recyclerView.adapter = adapter
 
-        // Setup Lottie Animation
         binding.lottieAnimationView.setAnimation(R.raw.loading)
     }
 

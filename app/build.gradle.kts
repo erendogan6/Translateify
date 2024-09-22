@@ -64,7 +64,7 @@ dependencies {
     implementation(libs.generativeai)
 
     // Flexmark
-    implementation(libs.flexmark.all)
+    implementation(libs.markwon)
 
     // Retrofit
     implementation(libs.retrofit)
