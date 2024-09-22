@@ -11,7 +11,6 @@ Uygulama şu anda Google Play Store'da test aşamasında.
 
 ## Özellikler
 
-- **Günün Kelimesi:** Her gün yeni bir kelime önerisi ve bu kelimenin anlamı ile kullanım örnekleri.
 - **Kelime Hazinesi Geliştirme:** Hatırlamak istediğiniz kelimeleri kaydedin, öğrendiğiniz veya öğrenmediğiniz olarak işaretleyin.
 - **Anında Çeviri:** Karşılaştığınız herhangi bir kelimeyi anında çevirin.
 - **Etkileşimli Öğrenme:** Görseller, çeviriler ve örnek cümlelerle kelime dağarcığınızı geliştirin.
