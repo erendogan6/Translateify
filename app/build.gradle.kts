@@ -7,6 +7,7 @@ plugins {
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -17,8 +18,8 @@ android {
         applicationId = "com.erendogan6.translateify"
         minSdk = 26
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.3"
+        versionCode = 13
+        versionName = "1.13"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,11 +54,11 @@ dependencies {
 
     // Firebase
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.config.ktx)
-    implementation(libs.firebase.database.ktx)
 
     // Generative AI
     implementation(libs.generativeai)
@@ -78,10 +79,12 @@ dependencies {
 
     // Room Database
     implementation(libs.androidx.room.runtime)
-    implementation(libs.androidx.swiperefreshlayout)
     annotationProcessor(libs.androidx.room.compiler)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+
+    // SwipeRefreshLayout
+    implementation(libs.androidx.swiperefreshlayout)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -91,11 +94,11 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     // JSON Parsing
-    implementation(libs.google.gson)
+    implementation(libs.gson)
 
     // Chucker
-    debugImplementation(libs.library)
-    releaseImplementation(libs.library.no.op)
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
 
     // Glide
     implementation(libs.glide)
@@ -113,9 +116,9 @@ dependencies {
 
     // Unit Test Dependencies
     testImplementation(libs.junit)
-    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.assertj.android)
-    testImplementation(libs.mockk.mockk)
+    testImplementation(libs.mockk)
     testImplementation(libs.androidx.core.testing)
     testImplementation(libs.jetbrains.kotlinx.coroutines.test)
     testImplementation(libs.hilt.android.testing)
@@ -123,7 +126,7 @@ dependencies {
 
     // Android Instrumentation Test Dependencies
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.mockk.android)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
