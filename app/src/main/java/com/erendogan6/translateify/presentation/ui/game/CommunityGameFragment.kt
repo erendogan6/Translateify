@@ -42,13 +42,6 @@ class CommunityGameFragment : Fragment(R.layout.fragment_community_game) {
         adapter = CommunityWordAdapter()
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
-        // Add a divider between items
-        val dividerItemDecoration =
-            androidx.recyclerview.widget.DividerItemDecoration(
-                binding.recyclerView.context,
-                (binding.recyclerView.layoutManager as LinearLayoutManager).orientation,
-            )
-        binding.recyclerView.addItemDecoration(dividerItemDecoration)
     }
 
     private fun observeViewModel() {
@@ -74,9 +67,9 @@ class CommunityGameFragment : Fragment(R.layout.fragment_community_game) {
             viewModel.currentWord.collect { word ->
                 binding.tvCurrentWord.text =
                     if (word != null) {
-                        "Son Kelime: $word"
+                        getString(R.string.lastWord) + " " + word
                     } else {
-                        "Oyun Başlıyor!"
+                        getString(R.string.oyun_basliyor)
                     }
             }
         }
@@ -95,9 +88,9 @@ class CommunityGameFragment : Fragment(R.layout.fragment_community_game) {
                 binding.etUserWord.isEnabled = isUserTurn
                 binding.tvTurnIndicator.text =
                     if (isUserTurn) {
-                        "Sıra sizde"
+                        getString(R.string.sira_sizde)
                     } else {
-                        "Diğer oyuncuları bekleyin"
+                        getString(R.string.diger_oyunculari_bekleyin)
                     }
             }
         }

@@ -50,7 +50,6 @@
     <string name="sign_in_button">Giriş Yap</string>
     <string name="geri_git">Geri Git</string>
     <string name="app_logo_desc">Uygulama Logosu Açıklaması</string>
-    <string name="app_name_desc">Uygulama İsmi Açıklaması</string>
     <string name="app_tagline">Dil öğrenmenin hem eğlenceli hem de sihirli yolu!</string>
     <string name="button_get_started">MACERANA BAŞLA !</string>
     <string name="button_already_have_account">ZATEN BİR HESABIM VAR !</string>
@@ -63,7 +62,7 @@
     <string name="enter_english_word">İngilizce kelime girin</string>
     <string name="enter_translation">Çeviri girin</string>
     <string name="add_word_button">Kelime Ekle</string>
-    <string name="back_arrow_content_description">Geri Dön Butonu İkonu</string>
+    <string name="back_arrow_content_description">Geri Dön İkonu</string>
     <string name="question_text">İngilizce macerana nereden başlıyoruz?</string>
     <string name="option_1_text">İngilizceye sıfırdan başlıyorum!</string>
     <string name="option_2_text">Biraz temelim var, daha fazlasını öğrenmeye hazırım!</string>
@@ -82,7 +81,7 @@
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <string name="loading_message">Öğrenme yolculuğunu hazırlıyoruz.</string>
-    <string name="scoreboard_title">Skor Tablosu</string>
+    <string name="scoreboard_title">Kullanıcı Skor Tablosu</string>
     <string name="current_word">inovasyon</string>
     <string name="enter_word_hint">Bir kelime girin</string>
     <string name="submit">Gönder</string>
@@ -99,4 +98,7 @@
     <string name="turkish_flag">Türkiye Bayrağı</string>
     <string name="mark_as_learned">Öğrenildi olarak işaretle</string>
     <string name="kategori_konu">Kategori İkonu</string>
+    <string name="learned_words_description">Öğrenilen Kelimeler Listesi</string>
+    <string name="lastWord">Son Kelime: </string>
+    <string name="diger_oyunculari_bekleyin">Diğer Oyuncuları Bekleyin</string>
 </resources>

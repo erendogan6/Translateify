@@ -1,14 +1,12 @@
 <resources>
     <string name="app_name">Translateify</string>
     <string name="app_logo">App Logo</string>
-    <string name="speech_to_text">Speech to Text</string>
     <string name="general_error_message">An error occurred while fetching the translation.</string>
     <string name="serialization_error_message">An error occurred during serialization.</string>
     <string name="error_fetching_translation">Error fetching translation. Please try again.</string>
     <string name="speak_prompt">Please Speak Now</string>
     <string name="learn_word">Learn</string>
     <string name="unlearn_word">Unlearn</string>
-    <string name="app_name_desc">App Name Description</string>
     <string name="speech_not_recognized">Speech Not Recognized</string>
     <string name="detected_word">Detected Pronunciation: %S</string>
     <string name="daily_life_and_communication">Daily Life and Communication</string>
@@ -62,7 +60,7 @@
     <string name="enter_english_word">Enter English word</string>
     <string name="enter_translation">Enter translation</string>
     <string name="add_word_button">Add Word</string>
-    <string name="back_arrow_content_description">Back Button Icon</string>
+    <string name="back_arrow_content_description">Back Icon</string>
     <string name="question_text">Where are we starting your English adventure?</string>
     <string name="option_1_text">I’m starting from scratch in English!</string>
     <string name="option_2_text">I have a basic understanding, ready to learn more!</string>
@@ -80,7 +78,7 @@
     <string name="notification_prompt">Would you like to receive notifications? 📬</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="scoreboard_title">Scoreboard</string>
+    <string name="scoreboard_title">Scoreboard of Users</string>
     <string name="loading_message">Preparing your learning journey.</string>
     <string name="current_word">innovation</string>
     <string name="enter_word_hint">Enter a word</string>
@@ -98,4 +96,7 @@
     <string name="mark_as_learned">Mark as Learned</string>
     <string name="user_score_display">Score: %1$d</string>
     <string name="kategori_konu">Category Icon</string>
+    <string name="learned_words_description">List of Learned Words</string>
+    <string name="lastWord">Last Word: </string>
+    <string name="diger_oyunculari_bekleyin">Wait Other Players</string>
 </resources>
