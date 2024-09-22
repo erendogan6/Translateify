@@ -2,6 +2,7 @@ package com.erendogan6.translateify.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.domain.usecase.AddWordUseCase
 import com.erendogan6.translateify.domain.usecase.GetWordImageUseCase
@@ -9,6 +10,7 @@ import com.erendogan6.translateify.domain.usecase.GetWordTranslationUseCase
 import com.erendogan6.translateify.domain.usecase.LoadWordsUseCase
 import com.erendogan6.translateify.domain.usecase.UpdateLearnedStatusUseCase
 import com.erendogan6.translateify.presentation.state.UiState
+import com.erendogan6.translateify.utils.StringProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +27,7 @@ class RandomWordsViewModel
         private val getWordTranslationUseCase: GetWordTranslationUseCase,
         private val getWordImageUseCase: GetWordImageUseCase,
         private val loadWordsUseCase: LoadWordsUseCase,
+        private val stringProvider: StringProvider,
     ) : ViewModel() {
         private val _words = MutableStateFlow<List<Word>>(emptyList())
         val words: StateFlow<List<Word>> = _words
@@ -59,7 +62,16 @@ class RandomWordsViewModel
                         }
                     }
                 } catch (e: Exception) {
-                    _uiState.value = UiState.Error("Error loading words: ${e.message}")
+                    _uiState.value =
+                        e.message
+                            ?.let {
+                                stringProvider.getString(
+                                    R.string.error_loading_words,
+                                    it,
+                                )
+                            }?.let {
+                                UiState.Error(it)
+                            }!!
                     Timber.e("Error loading words: ${e.message}")
                 }
             }
@@ -82,7 +94,8 @@ class RandomWordsViewModel
 
                     _renderedHtml.value = markdownText
                 } catch (e: Exception) {
-                    _renderedHtml.value = "Çeviri işlemi başarısız oldu"
+                    _renderedHtml.value =
+                        stringProvider.getString(R.string.ceviri_basarisiz)
                 } finally {
                     isProcessing = false
                 }

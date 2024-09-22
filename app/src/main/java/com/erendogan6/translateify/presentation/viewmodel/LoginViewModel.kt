@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.erendogan6.translateify.R
 import com.erendogan6.translateify.domain.usecase.login.LoginUseCase
+import com.erendogan6.translateify.utils.ResourcesProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -18,6 +20,7 @@ class LoginViewModel
     constructor(
         private val loginUseCase: LoginUseCase,
         private val dispatcher: CoroutineDispatcher = Dispatchers.Main,
+        private val resourcesProvider: ResourcesProvider,
     ) : ViewModel() {
         private val _isLoading = MutableLiveData<Boolean>()
         val isLoading: LiveData<Boolean> get() = _isLoading
@@ -32,14 +35,15 @@ class LoginViewModel
             email: String,
             password: String,
         ) {
-            // Validation for empty email or password
             if (email.isBlank()) {
-                _errorMessage.value = "Email cannot be empty"
+                _errorMessage.value =
+                    resourcesProvider.getString(R.string.email_cannot_be_empty)
                 return
             }
 
             if (password.isBlank()) {
-                _errorMessage.value = "Password cannot be empty"
+                _errorMessage.value =
+                    resourcesProvider.getString(R.string.password_cannot_be_empty)
                 return
             }
 
@@ -62,7 +66,14 @@ class LoginViewModel
                 } catch (e: Exception) {
                     _isLoading.value = false
                     _errorMessage.value = e.message
-                    Timber.e("Error during login: ${e.message}")
+                    Timber.e(
+                        e.message?.let {
+                            resourcesProvider.getString(
+                                R.string.error_during_login,
+                                it,
+                            )
+                        },
+                    )
                 }
             }
         }

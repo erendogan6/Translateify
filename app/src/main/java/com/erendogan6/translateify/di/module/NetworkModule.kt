@@ -6,7 +6,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.erendogan6.translateify.BuildConfig
 import com.erendogan6.translateify.data.remote.GeminiService
 import com.erendogan6.translateify.data.remote.PexelsService
-import com.erendogan6.translateify.utils.ResourcesProvider
+import com.erendogan6.translateify.utils.StringProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,5 +68,5 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGeminiService(resourcesProvider: ResourcesProvider): GeminiService = GeminiService(resourcesProvider)
+    fun provideGeminiService(stringProvider: StringProvider): GeminiService = GeminiService(stringProvider)
 }

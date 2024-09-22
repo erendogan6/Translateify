@@ -18,7 +18,7 @@ import javax.inject.Singleton
 class GeminiService
     @Inject
     constructor(
-        private val productionResourcesProvider: com.erendogan6.translateify.utils.ProductionResourcesProvider,
+        private val stringProvider: com.erendogan6.translateify.utils.StringProvider,
     ) {
         private val systemInstruction: String
             get() = "Please provide the Turkish translation for the following word:"
@@ -72,12 +72,12 @@ class GeminiService
                         ?.content
                         ?.parts
                         ?.firstOrNull()
-                        ?.asTextOrNull() ?: productionResourcesProvider.getString(R.string.general_error_message)
+                        ?.asTextOrNull() ?: stringProvider.getString(R.string.general_error_message)
                 } catch (e: SerializationException) {
-                    productionResourcesProvider.getString(R.string.serialization_error_message)
+                    stringProvider.getString(R.string.serialization_error_message)
                 } catch (e: Exception) {
                     Timber.e(e.localizedMessage)
-                    productionResourcesProvider.getString(R.string.error_fetching_translation)
+                    stringProvider.getString(R.string.error_fetching_translation)
                 }
             }
     }

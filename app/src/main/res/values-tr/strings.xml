@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Translateify</string>
-    <string name="speech_to_text">Sesten Metine</string>
     <string name="speak_prompt">Lütfen Şimdi Konuşun</string>
     <string name="learn_word">Öğren</string>
     <string name="unlearn_word">Öğrenildi</string>
@@ -31,11 +30,9 @@
     <string name="error_name">Lütfen adınızı girin</string>
     <string name="please_input_mail">Geçerli bir e-posta adresi girin</string>
     <string name="error_password">Şifre en az 6 karakter olmalıdır</string>
-    <string name="geri">Geri</string>
     <string name="oyun_basliyor">Oyun Başlıyor!</string>
     <string name="sira_sizde">Sıra sizde</string>
     <string name="kelimenizi_girin">Kelimenizi girin</string>
-    <string name="gonder">Gönder</string>
     <string name="oyun_modunu_secin">Oyun Modunu Seçin</string>
     <string name="topluluk_oyunu">Topluluk Oyunu</string>
     <string name="tek_kisilik_oyun">Tek Kişilik Oyun</string>
