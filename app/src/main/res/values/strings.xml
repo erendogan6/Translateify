@@ -29,11 +29,9 @@
     <string name="error_name">Please enter your name</string>
     <string name="please_input_mail">Please enter a valid email address</string>
     <string name="error_password">Password must be at least 6 characters long</string>
-    <string name="geri">Back</string>
     <string name="oyun_basliyor">The game is starting!</string>
     <string name="sira_sizde">It\'s your turn</string>
     <string name="kelimenizi_girin">Enter your word</string>
-    <string name="gonder">Submit</string>
     <string name="oyun_modunu_secin">Select Game Mode</string>
     <string name="topluluk_oyunu">Community Game</string>
     <string name="tek_kisilik_oyun">Single Player Game</string>
@@ -99,4 +97,35 @@
     <string name="learned_words_description">List of Learned Words</string>
     <string name="lastWord">Last Word: </string>
     <string name="diger_oyunculari_bekleyin">Wait Other Players</string>
+    <string name="game_rules">
+        The goal of this game is to enter a new word that starts with the last letter of the last word entered by other players.\n\n
+        Rules:\n
+        1. The word entered must not have been used within the last 20 words.\n
+        2. The same user cannot enter consecutive words.\n
+        3. Your word must start with the last letter of the previous word.\n\n
+        Have fun!
+    </string>
+    <string name="word_added_successfully">Word added successfully!</string>
+    <string name="please_fill_in_both_fields">Please fill in both fields</string>
+    <string name="maximum_categories_can_be_selected">Maximum %1$s categories can be selected.</string>
+    <string name="email_cannot_be_empty">Email cannot be empty</string>
+    <string name="password_cannot_be_empty">Password cannot be empty</string>
+    <string name="error_during_login">Error during login: %1$s</string>
+    <string name="error_loading_words">Error loading words: %1$s</string>
+    <string name="email_is_required">Email is required</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="at_least_one_interest_must_be_selected">At least one interest must be selected</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="failed_to_save_user_data_to_firebase">Failed to save user data to Firebase</string>
+    <string name="go_to_learn_page_for">Go to Learn Page For %1$s</string>
+    <string name="mark_as_learned_for">Mark as Learned For %1$s</string>
+    <string name="sent">Sent</string>
+    <string name="kelime_bos_olamaz">Word cannot be empty!</string>
+    <string name="oyun_kurallari">Game Rules</string>
+    <string name="ceviri_basarisiz">Translation failed</string>
+    <string name="bilgisayar_kelime_veriyor">Computer is providing a word…</string>
+    <string name="oyun_bitti">Game over!</string>
+    <string name="ai_islem_hatasi">AI process error: %1$s</string>
+    <string name="konusma_yapilamaz">Speech recognition cannot be performed while AI is processing.</string>
+    <string name="ai_islemi_devam">A new process cannot be started while AI is processing.</string>
 </resources>

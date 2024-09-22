@@ -101,4 +101,35 @@
     <string name="learned_words_description">Öğrenilen Kelimeler Listesi</string>
     <string name="lastWord">Son Kelime: </string>
     <string name="diger_oyunculari_bekleyin">Diğer Oyuncuları Bekleyin</string>
+    <string name="game_rules">
+        Bu oyunda amacınız, diğer oyuncuların girdiği son kelimenin son harfiyle başlayan yeni bir kelime girmektir.\n\n
+        Kurallar:\n
+        1. Girilen kelime son 20 kelime içinde olmamalıdır.\n
+        2. Aynı kullanıcı art arda kelime giremez.\n
+        3. Kelimeniz, önceki kelimenin son harfiyle başlamalıdır.\n\n
+        İyi eğlenceler!
+    </string>
+    <string name="kelime_bos_olamaz">Kelime boş olamaz!</string>
+    <string name="oyun_kurallari">Oyun Kuralları</string>
+    <string name="ceviri_basarisiz">Çeviri işlemi başarısız oldu</string>
+    <string name="bilgisayar_kelime_veriyor">Bilgisayar kelime veriyor…</string>
+    <string name="oyun_bitti">Oyun bitti!</string>
+    <string name="ai_islem_hatasi">AI işlem hatası: %1$s</string>
+    <string name="konusma_yapilamaz">AI işlemi devam ederken konuşma tanıma yapılamaz.</string>
+    <string name="ai_islemi_devam">AI işlemi devam ederken yeni bir işlem başlatılamaz.</string>
+    <string name="word_added_successfully">Kelime başarıyla eklendi!</string>
+    <string name="please_fill_in_both_fields">Lütfen her iki alanı da doldurun</string>
+    <string name="maximum_categories_can_be_selected">En fazla %1$s kategori seçilebilir.</string>
+    <string name="email_cannot_be_empty">E-posta boş olamaz</string>
+    <string name="password_cannot_be_empty">Şifre boş olamaz</string>
+    <string name="error_during_login">Giriş sırasında hata: %1$s</string>
+    <string name="error_loading_words">Kelimeler yüklenirken hata: %1$s</string>
+    <string name="email_is_required">E-posta gereklidir</string>
+    <string name="password_is_required">Şifre gereklidir</string>
+    <string name="at_least_one_interest_must_be_selected">En az bir ilgi alanı seçilmelidir</string>
+    <string name="unknown_error">Bilinmeyen hata</string>
+    <string name="failed_to_save_user_data_to_firebase">Kullanıcı verileri Firebase\'e kaydedilemedi</string>
+    <string name="go_to_learn_page_for">%1$s için Öğrenme Sayfasına Git</string>
+    <string name="mark_as_learned_for">%1$s için Öğrenildi Olarak İşaretle</string>
+    <string name="sent">Gönderildi</string>
 </resources>
