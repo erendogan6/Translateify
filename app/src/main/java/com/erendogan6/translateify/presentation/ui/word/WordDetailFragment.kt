@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentWordDetailBinding
 import com.erendogan6.translateify.domain.model.Word
@@ -156,13 +155,19 @@ class WordDetailFragment :
     }
 
     private fun loadImageWithGlide(imageUrl: String?) {
-        Glide
-            .with(this)
-            .load(imageUrl)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .placeholder(R.drawable.logo)
-            .error(R.drawable.logo)
-            .into(binding.imageView)
+        try {
+            Glide
+                .with(this@WordDetailFragment)
+                .load(imageUrl)
+                .placeholder(R.drawable.logo)
+                .error(R.drawable.logo)
+                .into(binding.imageView)
+        } catch (e: Exception) {
+            Timber.e(
+                e,
+                getString(R.string.failed_to_load_image),
+            )
+        }
     }
 
     private fun pronounceWord(word: Word) {
@@ -188,18 +193,16 @@ class WordDetailFragment :
     }
 
     override fun onDestroy() {
+        super.onDestroy()
         tts?.shutdown()
         speechRecognizer.destroy()
-        super.onDestroy()
     }
 
     override fun onDestroyView() {
-        _binding?.let {
-            context?.let { context ->
-                Glide.with(context).clear(it.imageView)
-            }
+        super.onDestroyView()
+        _binding?.let { binding ->
+            Glide.with(this).clear(binding.imageView)
         }
         _binding = null
-        super.onDestroyView()
     }
 }

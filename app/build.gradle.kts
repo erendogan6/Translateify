@@ -18,8 +18,8 @@ android {
         applicationId = "com.erendogan6.translateify"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.14"
+        versionCode = 17
+        versionName = "1.17"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
