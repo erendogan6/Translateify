@@ -34,6 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
+            android:contentDescription="@string/list_of_random_words"
             android:padding="16dp" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

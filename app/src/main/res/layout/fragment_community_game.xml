@@ -79,7 +79,7 @@
             android:id="@+id/cardInputContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"
+            android:layout_weight="0.95"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
 
@@ -108,10 +108,10 @@
         <!-- Submit Button -->
         <ImageView
             android:id="@+id/btnSubmit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="4dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.05"
             android:src="@drawable/ic_send"
             android:contentDescription="@string/sent"
             app:tint="@color/colorSecondaryVariant" />

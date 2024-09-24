@@ -129,4 +129,6 @@
     <string name="go_to_learn_page_for">%1$s için Öğrenme Sayfasına Git</string>
     <string name="mark_as_learned_for">%1$s için Öğrenildi Olarak İşaretle</string>
     <string name="sent">Gönderildi</string>
+    <string name="failed_to_load_image">Resim Yüklenmesinde Hata Oluştu</string>
+    <string name="list_of_random_words">Rastgele Kelime Listesi</string>
 </resources>

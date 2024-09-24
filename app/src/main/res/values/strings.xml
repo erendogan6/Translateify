@@ -128,4 +128,6 @@
     <string name="ai_islem_hatasi">AI process error: %1$s</string>
     <string name="konusma_yapilamaz">Speech recognition cannot be performed while AI is processing.</string>
     <string name="ai_islemi_devam">A new process cannot be started while AI is processing.</string>
+    <string name="failed_to_load_image">Failed to load image</string>
+    <string name="list_of_random_words">List Of Random Words</string>
 </resources>
