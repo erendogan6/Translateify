@@ -1,6 +1,7 @@
 package com.erendogan6.translateify.presentation.ui.word
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
@@ -15,12 +16,18 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.erendogan6.translateify.R
 import com.erendogan6.translateify.databinding.FragmentWordDetailBinding
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.presentation.viewmodel.RandomWordsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.noties.markwon.Markwon
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.Locale
@@ -148,8 +155,10 @@ class WordDetailFragment :
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.imageUrl.collect { imageUrl ->
-                loadImageWithGlide(imageUrl)
+            viewModel.imageUrl.collectLatest { imageUrl ->
+                if (imageUrl != null) {
+                    loadImageWithGlide(imageUrl)
+                }
             }
         }
     }
@@ -157,10 +166,33 @@ class WordDetailFragment :
     private fun loadImageWithGlide(imageUrl: String?) {
         try {
             Glide
-                .with(this@WordDetailFragment)
+                .with(this)
                 .load(imageUrl)
-                .placeholder(R.drawable.logo)
-                .error(R.drawable.logo)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .listener(
+                    object : RequestListener<Drawable> {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            model: Any,
+                            target: Target<Drawable>?,
+                            dataSource: DataSource,
+                            isFirstResource: Boolean,
+                        ): Boolean {
+                            Timber.d("Glide image loaded successfully for URL: $imageUrl")
+                            return false
+                        }
+
+                        override fun onLoadFailed(
+                            e: GlideException?,
+                            model: Any?,
+                            target: Target<Drawable>,
+                            isFirstResource: Boolean,
+                        ): Boolean {
+                            Timber.e(e, "Glide image load failed for URL: $imageUrl")
+                            return false
+                        }
+                    },
+                ).error(R.drawable.logo)
                 .into(binding.imageView)
         } catch (e: Exception) {
             Timber.e(

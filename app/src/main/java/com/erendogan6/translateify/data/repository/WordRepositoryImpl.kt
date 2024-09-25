@@ -54,9 +54,11 @@ class WordRepositoryImpl(
                         .src.original
                 imageUrl
             } else {
+                Timber.e("No images found for $word")
                 null
             }
         } catch (e: Exception) {
+            Timber.e("Error fetching image from Pexels: ${e.message}")
             null
         }
 
