@@ -89,3 +89,7 @@ Projeye katkıda bulunmak isteyenler için katkı kuralları ve adımları CONTR
 
 ##  Lisans ## 
 Bu proje MIT Lisansı altında lisanslanmıştır.
+
+## Gizlilik Politikası
+
+Translateify uygulamasının gizlilik politikasını PRIVACY_POLICY.md dosyasında açıklanmıştır.
