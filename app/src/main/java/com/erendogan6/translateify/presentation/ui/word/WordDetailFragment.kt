@@ -98,30 +98,31 @@ class WordDetailFragment :
         binding.btnFetchTranslation.setOnClickListener {
             lifecycleScope.launch {
                 try {
-                    if (!viewModel.isProcessing) {
+                    if (!viewModel.fetchIsProcessing) {
+                        binding.fetchAnimation.visibility = View.VISIBLE
+
                         viewModel.fetchTranslation(word.english)
+
                     } else {
                         Toast
                             .makeText(
-                                requireContext(),
-                                getString(R.string.ai_islemi_devam),
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                            requireContext(),
+                            getString(R.string.ai_islemi_devam),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 } catch (e: Exception) {
+                    binding.fetchAnimation.visibility = View.GONE
                     Timber.e(
-                        getString(
-                            R.string.ai_islem_hatasi,
-                            e.message,
-                        ),
-                    )
+                        getString(R.string.ai_islem_hatasi,
+                            e.message))
                 }
             }
         }
 
         binding.btnSpeechToText.setOnClickListener {
             lifecycleScope.launch {
-                if (!viewModel.isProcessing) {
+                if (!viewModel.fetchIsProcessing) {
                     startSpeechToText()
                 } else {
                     Toast
@@ -150,6 +151,7 @@ class WordDetailFragment :
                         binding.tvTranslationDetail,
                         markdownText,
                     )
+                    binding.fetchAnimation.visibility = View.GONE
                 }
             }
         }
@@ -165,6 +167,8 @@ class WordDetailFragment :
 
     private fun loadImageWithGlide(imageUrl: String?) {
         try {
+            binding.loadingAnimation.visibility = View.VISIBLE
+            binding.imageView.visibility = View.INVISIBLE
             Glide
                 .with(this)
                 .load(imageUrl)
@@ -178,6 +182,8 @@ class WordDetailFragment :
                             dataSource: DataSource,
                             isFirstResource: Boolean,
                         ): Boolean {
+                            binding.loadingAnimation.visibility = View.GONE
+                            binding.imageView.visibility = View.VISIBLE
                             Timber.d("Glide image loaded successfully for URL: $imageUrl")
                             return false
                         }
@@ -188,13 +194,18 @@ class WordDetailFragment :
                             target: Target<Drawable>,
                             isFirstResource: Boolean,
                         ): Boolean {
+                            binding.loadingAnimation.visibility = View.GONE
+                            binding.imageView.visibility = View.VISIBLE
                             Timber.e(e, "Glide image load failed for URL: $imageUrl")
                             return false
                         }
                     },
-                ).error(R.drawable.logo)
+                )
+                .error(R.drawable.logo)
                 .into(binding.imageView)
         } catch (e: Exception) {
+            binding.loadingAnimation.visibility = View.GONE
+            binding.imageView.visibility = View.VISIBLE
             Timber.e(
                 e,
                 getString(R.string.failed_to_load_image),

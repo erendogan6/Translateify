@@ -43,7 +43,7 @@ class RandomWordsViewModel
 
         private var isDataLoadedFromFirebase = false
 
-        var isProcessing = false
+         var fetchIsProcessing = false
             private set
 
         fun fetchWordsFromFirebase(
@@ -84,10 +84,10 @@ class RandomWordsViewModel
         }
 
         fun fetchTranslation(word: String) {
-            if (isProcessing) {
+            if (fetchIsProcessing) {
                 return
             }
-            isProcessing = true
+            fetchIsProcessing = true
             viewModelScope.launch {
                 try {
                     val markdownText = getWordTranslationUseCase(word)
@@ -97,7 +97,7 @@ class RandomWordsViewModel
                     _renderedHtml.value =
                         stringProvider.getString(R.string.ceviri_basarisiz)
                 } finally {
-                    isProcessing = false
+                    fetchIsProcessing = false
                 }
             }
         }
