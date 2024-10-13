@@ -1,11 +1,13 @@
 # Seyahat Asistanım
 
  <img src="https://i.hizliresim.com/g0u2wxk.png" width="230" height="230">
+ 
+## Google Play Store
+https://play.google.com/store/apps/details?id=com.erendogan6.translateify
 
 ## Proje Hakkında
 **Translateify**, İngilizce öğrenmek isteyen Türk kullanıcılar için tasarlanmış bir Android uygulamasıdır. Uygulama, eğlenceli ve etkileşimli bir öğrenme deneyimi sunar ve kullanıcıların kelime hazinelerini geliştirirken aynı zamanda dil becerilerini de pratik etmelerine yardımcı olur. Günlük kelime önerileri, çeviri egzersizleri, ve konuşma tanıma gibi özellikler sayesinde, kullanıcılar dil öğrenme yolculuklarını kişiselleştirebilir ve hedeflerine ulaşabilirler.
 
-Uygulama şu anda Google Play Store'da test aşamasında.
 
  <img src="https://i.hizliresim.com/akcilji.jpeg" width="280" height="630">
 
