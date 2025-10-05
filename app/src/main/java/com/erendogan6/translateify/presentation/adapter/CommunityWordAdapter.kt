@@ -24,7 +24,7 @@ class CommunityWordAdapter : ListAdapter<CommunityWord, CommunityWordAdapter.Com
         holder.bind(getItem(position))
     }
 
-    inner class CommunityWordViewHolder(
+    class CommunityWordViewHolder(
         private val binding: ItemCommunityWordBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(word: CommunityWord) {

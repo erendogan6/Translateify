@@ -48,7 +48,7 @@ class CategoryAdapter(
                             binding.root.context,
                             binding.root.context.getString(
                                 R.string.maximum_categories_can_be_selected,
-                                maxSelection,
+                                maxSelection.toString(),
                             ),
                             Toast.LENGTH_SHORT,
                         ).show()

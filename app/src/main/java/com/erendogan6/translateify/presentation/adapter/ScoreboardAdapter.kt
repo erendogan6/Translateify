@@ -25,7 +25,7 @@ class ScoreboardAdapter : ListAdapter<UserScore, ScoreboardAdapter.ScoreViewHold
         holder.bind(getItem(position))
     }
 
-    inner class ScoreViewHolder(
+    class ScoreViewHolder(
         private val binding: ItemUserScoreBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(userScore: UserScore) {
