@@ -9,7 +9,6 @@
     <string name="general_error_message">Çeviri alırken bir hata oluştu.</string>
     <string name="serialization_error_message">Serileştirme sırasında bir hata oluştu.</string>
     <string name="error_fetching_translation">Çeviri alınırken hata oluştu. Lütfen tekrar deneyin.</string>
-    <string name="translation_instruction" >Please provide the Turkish translation for the following word:</string>
     <string name="app_logo">Uygulama Logosu</string>
     <string name="daily_life_and_communication">Günlük Yaşam ve İletişim</string>
     <string name="emotions_and_expressions">Duygular ve İfadeler</string>

@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class StringProvider
     @Inject
     constructor(
-        @ApplicationContext private val context: Context,
+        @param:ApplicationContext private val context: Context,
     ) : ResourcesProvider {
         override fun getString(resId: Int): String = context.getString(resId)
 

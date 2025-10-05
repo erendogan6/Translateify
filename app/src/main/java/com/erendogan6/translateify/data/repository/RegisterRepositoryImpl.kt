@@ -57,7 +57,7 @@ class RegisterRepositoryImpl(
                 .set(userPreferences)
                 .await()
         } catch (e: Exception) {
-            Timber.e("Error saving register to Firestore: " + e.message)
+            Timber.e("Error saving register to Firestore: %s", e.message)
             throw e
         }
     }

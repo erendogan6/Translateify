@@ -18,7 +18,6 @@
     <string name="science">Science</string>
     <string name="nature_and_environment">Nature and Environment</string>
     <string name="select_at_least_one_category">Select at least one category</string>
-    <string name="translation_instruction" >Please provide the Turkish translation for the following word:</string>
     <string name="ok">Okey</string>
     <string name="cancel">Cancel</string>
     <string name="notification_permission_required">Notification Permission Required</string>

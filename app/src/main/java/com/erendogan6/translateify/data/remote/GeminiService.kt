@@ -6,8 +6,8 @@ import com.google.ai.client.generativeai.type.SerializationException
 import com.google.ai.client.generativeai.type.asTextOrNull
 import com.google.ai.client.generativeai.type.content
 import com.google.ai.client.generativeai.type.generationConfig
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.Firebase
+import com.google.firebase.remoteconfig.remoteConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -20,8 +20,7 @@ class GeminiService
     constructor(
         private val stringProvider: com.erendogan6.translateify.utils.StringProvider,
     ) {
-        private val systemInstruction: String
-            get() = "Please provide the Turkish translation for the following word:"
+        private val systemInstruction: String = "Please provide the Turkish translation for the following word:"
 
         val model: GenerativeModel by lazy {
             GenerativeModel(
@@ -73,7 +72,7 @@ class GeminiService
                         ?.parts
                         ?.firstOrNull()
                         ?.asTextOrNull() ?: stringProvider.getString(R.string.general_error_message)
-                } catch (e: SerializationException) {
+                } catch (_: SerializationException) {
                     stringProvider.getString(R.string.serialization_error_message)
                 } catch (e: Exception) {
                     Timber.e(e.localizedMessage)

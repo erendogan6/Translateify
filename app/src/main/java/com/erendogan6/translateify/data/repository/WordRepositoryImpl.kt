@@ -7,9 +7,9 @@ import com.erendogan6.translateify.data.remote.GeminiService
 import com.erendogan6.translateify.data.remote.PexelsService
 import com.erendogan6.translateify.domain.model.Word
 import com.erendogan6.translateify.domain.repository.WordRepository
+import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.remoteConfig
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map

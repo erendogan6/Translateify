@@ -108,14 +108,14 @@ class RandomWordsViewModel
                     val imageUrl = getWordImageUseCase(word)
                     _imageUrl.value = imageUrl
                 } catch (e: Exception) {
-                    Timber.e("Error fetching image: " + e.message)
+                    Timber.e("Error fetching image: %s", e.message)
                 }
             }
         }
 
         fun shuffleWords() {
             _words.value = _words.value.shuffled()
-            Timber.d("Shuffled words: " + _words.value)
+            Timber.d("Shuffled words: %s", _words.value)
         }
 
         fun toggleLearnedStatus(word: Word) {
@@ -130,7 +130,7 @@ class RandomWordsViewModel
                         _words.value + updatedWord
                     }
 
-                Timber.d("Updated learned status for word: " + updatedWord.id)
+                Timber.d("Updated learned status for word: %s", updatedWord.id)
             }
         }
     }
